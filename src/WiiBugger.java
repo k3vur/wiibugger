@@ -5,8 +5,9 @@ public class WiiBugger {
 	}
 	public static void printParty() {
 		System.out.println(putYourHandsUp());
+		System.out.println("*FFREEEIIIIBBIIIEEERRRR!!\n");
 	}
 	public static String putYourHandsUp() {
-		return "\\m/ _m_ \\m/ _m_ \\m/";
+		return "\\m/ _m_ \\m/ _m_ \\m/\n";
 	}
 }
