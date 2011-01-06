@@ -85,6 +85,11 @@ public class WRLImpl extends WiiRemoteAdapter
     	 */
     	System.setProperty("bluecove.jsr82.psm_minimum_off","true");
     	
+    	/*
+    	 * Wiimote needs Widcomm Bluetooth stack under windows to communicate
+    	 */
+    	System.setProperty("bluecove.stack.first", "widcomm");
+    	
         //basic console logging options...
         WiiRemoteJ.setConsoleLoggingAll();
         //WiiRemoteJ.setConsoleLoggingOff();
@@ -163,7 +168,7 @@ public class WRLImpl extends WiiRemoteAdapter
             
             //Find and connect to a Wii Remote
             WiiRemote remote = null;
-            
+//            remote = WiiRemoteJ.findRemote();
             while (remote == null) {
                 try {
                     remote = WiiRemoteJ.findRemote();
