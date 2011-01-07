@@ -4,11 +4,11 @@
     </description>
 
   <!-- set properties for this build -->
-  <property environment="env"/>
-  <property file="build-nxt.properties"/>
   <property name="src" location="src/wiibugger/nxt"/>
   <property name="bin" location="bin/nxt" />
-  <property name="binary" value="wiibugger.nxj" />
+  <property name="binary" value="wiibugger.nxj"/>
+  <property name="nxj_home" value="/Users/kevin/lejos_nxj"/>
+  <property file="build-nxt.properties"/>
 	
   <!-- deletes class files -->
   <target name="clean" description="clean up all generated files">
@@ -26,9 +26,9 @@
     </javac>
   </target>
 
-  <target name="link" depends="compile" description="link the binary" >
+  <target name="link" depends="compile" description="link the binary">
     <!-- Link the binary and create a signature file -->
-    <java classname="js.tinyvm.TinyVM">
+    <java classname="js.tinyvm.TinyVM" failonerror="true">
       <arg value="--bootclasspath"/>
       <arg path="lib/LeJOS/classes.jar" /> 
       <arg value="--classpath"/>
@@ -47,28 +47,12 @@
     </java>
   </target>
 	
-  <target name="upload" depends="link"
-        description="upload the binary" >
-    <java classname="lejos.pc.tools.NXJUpload" fork="true">
-      <jvmarg value="-Djava.library.path=${nxj.library.path}"/>
-      <jvmarg value="-Dnxj.home=${nxj.home}"/>
-      <arg value="${binary}"/>
-      <classpath>
-        <pathelement location="lib/LeJOS/jtools.jar" />
-        <pathelement location="lib/LeJOS.pctools.jar"/>
-  	    <pathelement location="lib/LeJOS.pccomm.jar" />
-		<pathelement location="lib/LeJOS/commons-cli.jar" />
-		<pathelement location="lib/LeJOS/bcel.jar" />
-  	    <pathelement location="lib/LeJOS/bluecove-2.1.0.jar"/>
-      </classpath>
-    </java>
-  </target>
-	
-  <target name="uploadandrun" depends="link" description="upload and run the binary" >
-    <java classname="lejos.pc.tools.NXJUpload" fork="true">
-      <jvmarg value="-Djava.library.path=${env.NXJ_HOME}/bin"/>
-      <jvmarg value="-Dnxj.home=${env.NXJ_HOME}"/>
-      <jvmarg line="-d32" />
+  <target name="uploadandrun" depends="link" description="upload and run the binary">
+  	<echo>${nxj_home}</echo>
+    <java classname="lejos.pc.tools.NXJUpload" fork="true" failonerror="true">
+	  <jvmarg value="-d32"/>
+      <jvmarg value="-Djava.library.path=${nxj_home}/bin"/>
+      <jvmarg value="-Dnxj.home=${nxj_home}"/>
       <arg value="${bin}/${binary}"/>
       <arg value="-r"/>
       <classpath>
