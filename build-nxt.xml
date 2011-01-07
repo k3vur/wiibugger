@@ -1,0 +1,84 @@
+<project name="Wiibugger-NXT" default="uploadandrun">
+    <description>
+    	This builds the NXT-Part of Wiibugger
+    </description>
+
+  <!-- set properties for this build -->
+  <property environment="env"/>
+  <property file="build-nxt.properties"/>
+  <property name="src" location="src/wiibugger/nxt"/>
+  <property name="bin" location="bin/nxt" />
+  <property name="binary" value="wiibugger.nxj" />
+	
+  <!-- deletes class files -->
+  <target name="clean" description="clean up all generated files">
+    <delete file="${bin}" />
+	<mkdir dir="${bin}" />
+  </target>
+
+  <target name="compile" depends="clean" description="compile the source" >
+    <!-- Compile the java code from ${src}  -->
+    <javac srcdir="${src}" destdir="${bin}">
+	  <bootclasspath>
+	    <pathelement location="lib/LeJOS/classes.jar" />
+	    <pathelement location="lib/LeJOS/jtools.jar" />
+	  </bootclasspath>
+    </javac>
+  </target>
+
+  <target name="link" depends="compile" description="link the binary" >
+    <!-- Link the binary and create a signature file -->
+    <java classname="js.tinyvm.TinyVM">
+      <arg value="--bootclasspath"/>
+      <arg path="lib/LeJOS/classes.jar" /> 
+      <arg value="--classpath"/>
+      <arg path="${bin}" /> 
+      <arg value="--writeorder" />
+      <arg value="LE" />
+      <arg value="wiibugger.nxt.Main"/>
+      <arg value="-o"/>
+      <arg value="${bin}/${binary}"/>
+      <arg value="-v"/>
+      <classpath>
+        <pathelement location="lib/LeJOS/jtools.jar"/>
+  		<pathelement location="lib/LeJOS/commons-cli.jar"/>
+  		<pathelement location="lib/LeJOS/bcel.jar"/>
+      </classpath>
+    </java>
+  </target>
+	
+  <target name="upload" depends="link"
+        description="upload the binary" >
+    <java classname="lejos.pc.tools.NXJUpload" fork="true">
+      <jvmarg value="-Djava.library.path=${nxj.library.path}"/>
+      <jvmarg value="-Dnxj.home=${nxj.home}"/>
+      <arg value="${binary}"/>
+      <classpath>
+        <pathelement location="lib/LeJOS/jtools.jar" />
+        <pathelement location="lib/LeJOS.pctools.jar"/>
+  	    <pathelement location="lib/LeJOS.pccomm.jar" />
+		<pathelement location="lib/LeJOS/commons-cli.jar" />
+		<pathelement location="lib/LeJOS/bcel.jar" />
+  	    <pathelement location="lib/LeJOS/bluecove-2.1.0.jar"/>
+      </classpath>
+    </java>
+  </target>
+	
+  <target name="uploadandrun" depends="link" description="upload and run the binary" >
+    <java classname="lejos.pc.tools.NXJUpload" fork="true">
+      <jvmarg value="-Djava.library.path=${env.NXJ_HOME}/bin"/>
+      <jvmarg value="-Dnxj.home=${env.NXJ_HOME}"/>
+      <jvmarg line="-d32" />
+      <arg value="${bin}/${binary}"/>
+      <arg value="-r"/>
+      <classpath>
+        <pathelement location="lib/LeJOS/jtools.jar"/>
+        <pathelement location="lib/LeJOS/pctools.jar"/>
+      	<pathelement location="lib/LeJOS/pccomm.jar"/>
+  		<pathelement location="lib/LeJOS/commons-cli.jar"/>
+  		<pathelement location="lib/LeJOS/bcel.jar"/>
+      	<pathelement location="lib/LeJOS/bluecove-2.1.0.jar"/>
+      </classpath>
+    </java>
+  </target>
+</project>
