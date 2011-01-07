@@ -10,6 +10,14 @@
   <property name="nxj_home" value="/Users/kevin/lejos_nxj"/>
   <property file="build-nxt.properties"/>
 	
+  <!-- 64 bit macs need the -d32 switch in the jvm to use the nxt-usb drivers -->
+  <condition property="d32Flag" value="-d32" else="">
+	<and>
+	  <os family="mac"/>
+	  <os arch="x86_64"/>
+	</and>
+  </condition>
+	
   <!-- deletes class files -->
   <target name="clean" description="clean up all generated files">
     <delete file="${bin}" />
@@ -48,9 +56,8 @@
   </target>
 	
   <target name="uploadandrun" depends="link" description="upload and run the binary">
-  	<echo>${nxj_home}</echo>
     <java classname="lejos.pc.tools.NXJUpload" fork="true" failonerror="true">
-	  <jvmarg value="-d32"/>
+	  <jvmarg value="${d32Flag}"/>
       <jvmarg value="-Djava.library.path=${nxj_home}/bin"/>
       <jvmarg value="-Dnxj.home=${nxj_home}"/>
       <arg value="${bin}/${binary}"/>
