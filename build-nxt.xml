@@ -7,11 +7,10 @@
   <property name="src" location="src/wiibugger/nxt"/>
   <property name="bin" location="bin/nxt" />
   <property name="binary" value="wiibugger.nxj"/>
-  <property name="nxj_home" value="/Users/kevin/lejos_nxj"/>
   <property file="build-nxt.properties"/>
 	
   <!-- 64 bit macs need the -d32 switch in the jvm to use the nxt-usb drivers -->
-  <condition property="d32Flag" value="-d32" else="">
+  <condition property="d32Flag" value="-d32" else="-client">
 	<and>
 	  <os family="mac"/>
 	  <os arch="x86_64"/>
