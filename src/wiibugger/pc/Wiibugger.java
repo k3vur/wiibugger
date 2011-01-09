@@ -1,15 +1,31 @@
 package wiibugger.pc;
 
-import java.io.DataOutputStream;
-
-import lejos.pc.comm.NXTConnector;
 import wiibugger.pc.ui.UserInterface;
+import wiibugger.pc.wiimote.DeviceList;
+import wiiremotej.WiiRemote;
 
 public class Wiibugger {
 
-	static NXTConnector connector;
-	static DataOutputStream nxtOut;
+//	static NXTConnector connector;
+//	static DataOutputStream nxtOut;
 	
+	private static DeviceList<NXTDevice> nxtList;
+	private static DeviceList<WiiRemote> wiimoteList;
+	
+	public static DeviceList<NXTDevice> getNXTList() {
+		if (Wiibugger.nxtList == null) {
+			Wiibugger.nxtList = new DeviceList<NXTDevice>();
+		}
+		return Wiibugger.nxtList;
+	}
+
+	public static DeviceList<WiiRemote> getWiimoteList() {
+		if (Wiibugger.wiimoteList == null) {
+			Wiibugger.wiimoteList = new DeviceList<WiiRemote>();
+		}
+		return Wiibugger.wiimoteList;
+	}
+
 	public static void main(String[] args) {
 		
 		/**
@@ -58,7 +74,7 @@ public class Wiibugger {
 //        }
 
 	}
-
+	
 	/**
 	 * Returns true if the program is being run in 64 bit mode,
 	 * and false if it isn't

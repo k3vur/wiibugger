@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
+import wiibugger.pc.Wiibugger;
+
 public class UserInterface {
 	
 	private static Font labelFont;
@@ -122,6 +124,7 @@ public class UserInterface {
 	private static JList getWiimoteList() {
 		if (UserInterface.wiimoteList == null) {
 			wiimoteList = new JList();
+			wiimoteList.setModel(Wiibugger.getWiimoteList());
 		}
 		return UserInterface.wiimoteList;
 	}
