@@ -55,23 +55,6 @@ public class Wiibugger {
     	System.setProperty("bluecove.stack.first", "widcomm");
     	
     	UserInterface.init();
-    	
-		
-		/*
-		 * Wii Connection
-		 */
-//		System.out.println("Trying to connect wo WiiMote");
-//        //Find and connect to a Wii Remote
-//        WiiRemote remote = null;
-//        while (remote == null) {
-//            try {
-//                remote = WiiRemoteJ.findRemote();
-//            } catch(Exception e) {
-//                remote = null;
-//                e.printStackTrace();
-//                System.out.println("Failed to connect remote. Trying again.");
-//            }
-//        }
 
 	}
 	
