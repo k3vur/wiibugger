@@ -9,6 +9,8 @@ public class Wiibugger {
 //	static NXTConnector connector;
 //	static DataOutputStream nxtOut;
 	
+	public static final String applicationTitle = "Wiibugger";
+	
 	private static DeviceList<NXTDevice> nxtList;
 	private static DeviceList<WiiRemote> wiimoteList;
 	
@@ -28,7 +30,7 @@ public class Wiibugger {
 
 	public static void main(String[] args) {
 		
-		/**
+		/*
 		 * Some things can only be run as 32 bit mode (like Blue cove).
 		 * Exit if run as 64 bit mode.
 		 */

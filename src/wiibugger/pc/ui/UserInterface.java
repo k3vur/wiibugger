@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
+import wiibugger.pc.ScanWiimoteAction;
 import wiibugger.pc.Wiibugger;
 
 public class UserInterface {
@@ -34,7 +35,7 @@ public class UserInterface {
 
 	private static JFrame getMainWindow() {
 		if (UserInterface.mainWindow == null) {
-			mainWindow = new JFrame("Wiibugger");
+			mainWindow = new JFrame(Wiibugger.applicationTitle);
 			mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			mainWindow.setSize(800, 600);
 			
@@ -95,10 +96,7 @@ public class UserInterface {
 
 	private static JButton getScanWiimotesButton() {
 		if (UserInterface.scanWiimoteButton == null) {
-			scanWiimoteButton = new JButton("Scan");
-			
-			// TODO wiimote scanbutton actionlistener
-			scanWiimoteButton.addActionListener(null);
+			scanWiimoteButton = new JButton(new ScanWiimoteAction());
 		}
 		return UserInterface.scanWiimoteButton;
 	}
@@ -125,6 +123,7 @@ public class UserInterface {
 		if (UserInterface.wiimoteList == null) {
 			wiimoteList = new JList();
 			wiimoteList.setModel(Wiibugger.getWiimoteList());
+			wiimoteList.setCellRenderer(new WiimoteListCellRenderer());
 		}
 		return UserInterface.wiimoteList;
 	}
@@ -145,6 +144,12 @@ public class UserInterface {
 	
 	public static void init() {
 		
+		/*
+		 * Some Mac-Settings
+		 */
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		System.setProperty("com.apple.mrj.application.apple.menu.about.name", Wiibugger.applicationTitle);
+		
     	/*
     	 * Set native look and feel.
     	 */
@@ -152,7 +157,7 @@ public class UserInterface {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			System.out.println("Could not use native look and feel");
-		} 
+		}
 		
 		getMainWindow().setVisible(true);
 	}

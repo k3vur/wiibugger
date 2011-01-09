@@ -3,6 +3,8 @@ package wiibugger.pc.nxt;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import lejos.pc.comm.NXTInfo;
+
 /**
  * Represents an NXT device with in- and output stream
  * @author kevin
@@ -10,7 +12,8 @@ import java.io.IOException;
  */
 public class NXTDevice {
 	
-	private static DataOutputStream dataOut;
+	private DataOutputStream dataOut;
+	private NXTInfo info;
 	
 	/**
 	 * Trys to connect to an NXT and returns NXTDevice-Object
@@ -34,6 +37,11 @@ public class NXTDevice {
 	public void send(short data) throws IOException {
 		dataOut.write(data);
 		dataOut.flush();
+	}
+	
+	@Override
+	public String toString() {
+		return info.deviceAddress;
 	}
 	
 }

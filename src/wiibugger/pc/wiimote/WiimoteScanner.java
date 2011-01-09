@@ -7,18 +7,18 @@ import wiiremotej.WiiRemoteJ;
 
 public class WiimoteScanner extends Thread {
 
-	private DeviceList<WiiRemote> wiimoteList;
-	private int numberOfScans;
-	
-	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans) {
-		this.wiimoteList = wiimoteList;
-		this.numberOfScans = numberOfScans;
-	}
-	
 	public static WiimoteScanner scan(DeviceList<WiiRemote> wiimoteList, int numberOfScans) {
 		WiimoteScanner scanner = new WiimoteScanner(wiimoteList, numberOfScans);
 		scanner.start();
 		return scanner;
+	}
+	private int numberOfScans;
+	
+	private DeviceList<WiiRemote> wiimoteList;
+	
+	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans) {
+		this.wiimoteList = wiimoteList;
+		this.numberOfScans = numberOfScans;
 	}
 	
 	@Override

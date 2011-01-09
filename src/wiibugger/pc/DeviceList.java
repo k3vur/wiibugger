@@ -10,42 +10,55 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<DeviceType> wiimoteList;
+	private ArrayList<DeviceType> deviceList;
 	
 	public DeviceList() {
-		this.wiimoteList = new ArrayList<DeviceType>();
+		this.deviceList = new ArrayList<DeviceType>();
 	}
 
-	@Override
-	public Object getElementAt(int i) {
-		return this.wiimoteList.get(i);
+	public void add(DeviceType remote) {
+		this.deviceList.add(remote);
+		this.fireIntervalAdded(this, getSize()-1, getSize()-1);
 	}
 
-	@Override
-	public int getSize() {
-		return this.wiimoteList.size();
+	public void clear() {
+		this.deviceList.clear();
+		this.fireIntervalRemoved(this, 0, getSize()-1);
 	}
 	
-	public void add(DeviceType remote) {
-		this.wiimoteList.add(remote);
-		this.fireIntervalAdded(this, getSize()-1, getSize()-1);
+	@Override
+	public Object getElementAt(int i) {
+		return this.deviceList.get(i);
+	}
+	
+	@Override
+	public int getSize() {
+		return this.deviceList.size();
+	}
+	
+	public void remove(int i) {
+		this.deviceList.remove(i);
+		this.fireIntervalRemoved(this, i, i);
 	}
 	
 	public void remove(WiiRemote remote) {
-		int index = this.wiimoteList.indexOf(remote);
+		int index = this.deviceList.indexOf(remote);
 		if (index != -1) {
 			remove(index);
 		}
 	}
 	
-	public void remove(int i) {
-		this.wiimoteList.remove(i);
-		this.fireIntervalRemoved(this, i, i);
-	}
-	
-	public void clear() {
-		this.wiimoteList.clear();
-		this.fireIntervalRemoved(this, 0, getSize()-1);
+	private String getString(Object o) {
+		String ret = null;
+		
+		if (o instanceof WiiRemote) {
+			WiiRemote remote = (WiiRemote) o;
+			ret = remote.getBluetoothAddress();
+		} else {
+			ret = o.toString();
+		}
+		
+		return ret;
 	}
 
 }
