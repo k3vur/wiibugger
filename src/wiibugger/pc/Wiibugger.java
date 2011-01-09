@@ -17,19 +17,27 @@ public class Wiibugger {
 	private static DeviceList<WiiRemote> wiimoteList;
 	
 	public static void disconnectAllDevices() {
+		disconnectWiimotes();
+		disconnectNXTs();
+	}
+	
+	private static void disconnectNXTs() {
+		// TODO Wiibugger.disconnectNXTs()		
+	}
+
+	public static void disconnectWiimotes() {
+		System.out.println("Disconnecting Wiimotes...");
 		
 		ArrayList<WiiRemote> wiimotes = getWiimoteList().toArrayList();
 		for (WiiRemote wiimote: wiimotes) {
 			wiimote.disconnect();
 		}
 		getWiimoteList().clear();
-		
-		// TODO Disconnect NXTs
 	}
 
 	public static void exit() {
-		System.out.println("Disconnecting devices...");
 		disconnectAllDevices();
+		System.out.println("Exiting...");
 		System.exit(0);
 	}
 

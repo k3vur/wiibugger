@@ -17,7 +17,7 @@ public class WiimoteScanner extends Thread {
 		return scanner;
 	}
 	
-	private Runnable callAfterFinish;
+	private Runnable callback;
 	
 	private int numberOfScans;
 	
@@ -26,7 +26,7 @@ public class WiimoteScanner extends Thread {
 	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
 		this.wiimoteList = wiimoteList;
 		this.numberOfScans = numberOfScans;
-		this.callAfterFinish = callAfterFinish;
+		this.callback = callAfterFinish;
 	}
 	
 	/**
@@ -58,8 +58,8 @@ public class WiimoteScanner extends Thread {
 			
 		}
 		
-		if (callAfterFinish != null) {
-			callAfterFinish.run();
+		if (callback != null) {
+			callback.run();
 		}
 		
 		System.out.println("Finished scanning");
