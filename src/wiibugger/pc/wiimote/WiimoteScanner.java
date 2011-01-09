@@ -1,7 +1,5 @@
 package wiibugger.pc.wiimote;
 
-import java.io.IOException;
-
 import wiibugger.pc.DeviceList;
 import wiiremotej.WiiRemote;
 import wiiremotej.WiiRemoteJ;
