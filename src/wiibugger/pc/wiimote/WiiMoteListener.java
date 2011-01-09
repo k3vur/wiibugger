@@ -23,19 +23,6 @@ public class WiiMoteListener extends WiiRemoteAdapter
         this.remote = remote;
     }
     
-    public void disconnected()
-    {
-        System.out.println("Remote disconnected... Please Wii again.");
-        System.exit(0);
-    }
-    
-    public void statusReported(WRStatusEvent evt)
-    {
-        System.out.println("Battery level: " + (double)evt.getBatteryLevel()/2+ "%");
-        System.out.println("Continuous: " + evt.isContinuousEnabled());
-        System.out.println("Remote continuous: " + remote.isContinuousEnabled());
-    }
-      
     public void accelerationInputReceived(WRAccelerationEvent evt)
     {
 
@@ -44,6 +31,19 @@ public class WiiMoteListener extends WiiRemoteAdapter
         	this.roll = evt.getRoll();
         }
         
+    }
+    
+    public void disconnected()
+    {
+        System.out.println("Remote disconnected... Please Wii again.");
+        System.exit(0);
+    }
+      
+    public void statusReported(WRStatusEvent evt)
+    {
+        System.out.println("Battery level: " + (double)evt.getBatteryLevel()/2+ "%");
+        System.out.println("Continuous: " + evt.isContinuousEnabled());
+        System.out.println("Remote continuous: " + remote.isContinuousEnabled());
     }
       
 }

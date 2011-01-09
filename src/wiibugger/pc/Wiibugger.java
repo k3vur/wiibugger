@@ -16,13 +16,30 @@ public class Wiibugger {
 	private static DeviceList<NXTDevice> nxtList;
 	private static DeviceList<WiiRemote> wiimoteList;
 	
+	public static void disconnectAllDevices() {
+		
+		ArrayList<WiiRemote> wiimotes = getWiimoteList().toArrayList();
+		for (WiiRemote wiimote: wiimotes) {
+			wiimote.disconnect();
+		}
+		getWiimoteList().clear();
+		
+		// TODO Disconnect NXTs
+	}
+
+	public static void exit() {
+		System.out.println("Disconnecting devices...");
+		disconnectAllDevices();
+		System.exit(0);
+	}
+
 	public static DeviceList<NXTDevice> getNXTList() {
 		if (Wiibugger.nxtList == null) {
 			Wiibugger.nxtList = new DeviceList<NXTDevice>();
 		}
 		return Wiibugger.nxtList;
 	}
-
+	
 	public static DeviceList<WiiRemote> getWiimoteList() {
 		if (Wiibugger.wiimoteList == null) {
 			Wiibugger.wiimoteList = new DeviceList<WiiRemote>();
@@ -61,7 +78,7 @@ public class Wiibugger {
     	UserInterface.init();
 
 	}
-	
+
 	/**
 	 * Returns true if the program is being run in 64 bit mode,
 	 * and false if it isn't
@@ -70,23 +87,6 @@ public class Wiibugger {
 	 */
 	public static boolean runsAs64Bit() {
 		return System.getProperty("sun.arch.data.model").indexOf("64") != -1;
-	}
-
-	public static void disconnectAllDevices() {
-		
-		ArrayList<WiiRemote> wiimotes = getWiimoteList().toArrayList();
-		for (WiiRemote wiimote: wiimotes) {
-			wiimote.disconnect();
-		}
-		getWiimoteList().clear();
-		
-		// TODO Disconnect NXTs
-	}
-
-	public static void exit() {
-		System.out.println("Disconnecting devices...");
-		disconnectAllDevices();
-		System.exit(0);
 	}
 
 }

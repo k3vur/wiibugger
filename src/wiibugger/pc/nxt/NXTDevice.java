@@ -12,9 +12,6 @@ import lejos.pc.comm.NXTInfo;
  */
 public class NXTDevice {
 	
-	private DataOutputStream dataOut;
-	private NXTInfo info;
-	
 	/**
 	 * Trys to connect to an NXT and returns NXTDevice-Object
 	 * @return NXTDevice-object if successful, null if can't find any.
@@ -23,6 +20,9 @@ public class NXTDevice {
 		// TODO NXTDevice.connectToNXT
 		return null;
 	}
+	private DataOutputStream dataOut;
+	
+	private NXTInfo info;
 	
 	public void send(byte data) throws IOException {
 		dataOut.write(data);
