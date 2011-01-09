@@ -47,18 +47,5 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 			remove(index);
 		}
 	}
-	
-	private String getString(Object o) {
-		String ret = null;
-		
-		if (o instanceof WiiRemote) {
-			WiiRemote remote = (WiiRemote) o;
-			ret = remote.getBluetoothAddress();
-		} else {
-			ret = o.toString();
-		}
-		
-		return ret;
-	}
 
 }
