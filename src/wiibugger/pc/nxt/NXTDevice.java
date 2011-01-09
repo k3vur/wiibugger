@@ -1,4 +1,4 @@
-package wiibugger.pc;
+package wiibugger.pc.nxt;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

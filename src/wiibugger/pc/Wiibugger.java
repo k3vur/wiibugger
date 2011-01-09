@@ -1,7 +1,7 @@
 package wiibugger.pc;
 
+import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.ui.UserInterface;
-import wiibugger.pc.wiimote.DeviceList;
 import wiiremotej.WiiRemote;
 
 public class Wiibugger {

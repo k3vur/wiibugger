@@ -1,4 +1,4 @@
-package wiibugger.pc.wiimote;
+package wiibugger.pc;
 
 import java.util.ArrayList;
 
