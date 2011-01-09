@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import wiiremotej.WiiRemote;
+import wiibugger.pc.wiimote.WiimoteScanner;
 
-public class ScanWiimoteAction extends AbstractAction {
+public class ScanWiimoteAction extends AbstractAction implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,13 @@ public class ScanWiimoteAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		Wiibugger.getWiimoteList().add(new WiiRemote(null));
+		this.setEnabled(false);
+		WiimoteScanner.scan(Wiibugger.getWiimoteList(), 2, this);
+	}
+
+	@Override
+	public void run() {
+		this.setEnabled(true);
 	}
 
 }

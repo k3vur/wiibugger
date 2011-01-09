@@ -22,8 +22,10 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 	}
 
 	public void clear() {
-		this.deviceList.clear();
-		this.fireIntervalRemoved(this, 0, getSize()-1);
+		if (this.deviceList.size() > 0) {
+			this.deviceList.clear();
+			this.fireIntervalRemoved(this, 0, getSize()-1);
+		}
 	}
 	
 	@Override

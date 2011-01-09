@@ -6,19 +6,27 @@ import wiiremotej.WiiRemoteJ;
 
 
 public class WiimoteScanner extends Thread {
-
+	
 	public static WiimoteScanner scan(DeviceList<WiiRemote> wiimoteList, int numberOfScans) {
-		WiimoteScanner scanner = new WiimoteScanner(wiimoteList, numberOfScans);
+		return scan(wiimoteList, numberOfScans, null);
+	}
+
+	public static WiimoteScanner scan(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
+		WiimoteScanner scanner = new WiimoteScanner(wiimoteList, numberOfScans, callAfterFinish);
 		scanner.start();
 		return scanner;
 	}
+	
+	private Runnable callAfterFinish;
+	
 	private int numberOfScans;
 	
 	private DeviceList<WiiRemote> wiimoteList;
 	
-	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans) {
+	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
 		this.wiimoteList = wiimoteList;
 		this.numberOfScans = numberOfScans;
+		this.callAfterFinish = callAfterFinish;
 	}
 	
 	@Override
@@ -38,6 +46,12 @@ public class WiimoteScanner extends Thread {
 				remote = null;
 			}
 		}
+		
+		if (callAfterFinish != null) {
+			callAfterFinish.run();
+		}
+		
+		System.out.println("Finished scanning");
 	}
 	
 }
