@@ -3,6 +3,8 @@ package wiibugger.pc.ui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,7 +38,6 @@ public class UserInterface {
 	private static JFrame getMainWindow() {
 		if (UserInterface.mainWindow == null) {
 			mainWindow = new JFrame(Wiibugger.applicationTitle);
-			mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			mainWindow.setSize(800, 600);
 			
 			JPanel mainWindowPanel = new JPanel(new BorderLayout());
@@ -44,6 +45,13 @@ public class UserInterface {
 			mainWindowPanel.add(getRunButton(), BorderLayout.SOUTH);
 			
 			mainWindow.add(mainWindowPanel);
+			
+			mainWindow.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					Wiibugger.exit();
+				}
+			});
 		}
 		return UserInterface.mainWindow;
 	}

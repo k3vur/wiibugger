@@ -17,7 +17,7 @@ public class ScanWiimoteAction extends AbstractAction implements Runnable {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		this.setEnabled(false);
-		WiimoteScanner.scan(Wiibugger.getWiimoteList(), 2, this);
+		WiimoteScanner.scan(Wiibugger.getWiimoteList(), 1, this);
 	}
 
 	@Override

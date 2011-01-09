@@ -1,5 +1,7 @@
 package wiibugger.pc;
 
+import java.util.ArrayList;
+
 import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.ui.UserInterface;
 import wiiremotej.WiiRemote;
@@ -68,6 +70,23 @@ public class Wiibugger {
 	 */
 	public static boolean runsAs64Bit() {
 		return System.getProperty("sun.arch.data.model").indexOf("64") != -1;
+	}
+
+	public static void disconnectAllDevices() {
+		
+		ArrayList<WiiRemote> wiimotes = getWiimoteList().toArrayList();
+		for (WiiRemote wiimote: wiimotes) {
+			wiimote.disconnect();
+		}
+		getWiimoteList().clear();
+		
+		// TODO Disconnect NXTs
+	}
+
+	public static void exit() {
+		System.out.println("Disconnecting devices...");
+		disconnectAllDevices();
+		System.exit(0);
 	}
 
 }

@@ -22,9 +22,10 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 	}
 
 	public void clear() {
-		if (this.deviceList.size() > 0) {
+		int size = this.deviceList.size();
+		if (size > 0) {
 			this.deviceList.clear();
-			this.fireIntervalRemoved(this, 0, getSize()-1);
+			this.fireIntervalRemoved(this, 0, size-1);
 		}
 	}
 	
@@ -48,6 +49,11 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 		if (index != -1) {
 			remove(index);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<DeviceType> toArrayList() {
+		return (ArrayList<DeviceType>) deviceList.clone();
 	}
 
 }
