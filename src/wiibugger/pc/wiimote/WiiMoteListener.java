@@ -10,7 +10,7 @@ import wiiremotej.event.WiiRemoteAdapter;
  * This class handles the Wiimote input
  */
 
-public class WiimoteListener extends WiiRemoteAdapter
+public class WiiMoteListener extends WiiRemoteAdapter
 {
 	
 	// TODO implement the actual WiimoteListener

@@ -5,7 +5,7 @@ import java.io.IOException;
 import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
-import wiibugger.pc.wiimote.WiimoteListener;
+import wiibugger.pc.wiimote.WiiMoteListener;
 import wiiremotej.WiiRemote;
 
 public class Wiibugger {
@@ -20,7 +20,7 @@ public class Wiibugger {
 	
 	private static DeviceList<WiiRemote> wiimoteList;
 	
-	private static WiimoteListener wiimoteListener;
+	private static WiiMoteListener wiimoteListener;
 		
 	public static void disconnectAllDevices() {
 		disconnectWiimotes();
@@ -96,7 +96,7 @@ public class Wiibugger {
 			return false;
 		}
 		
-		wiimoteListener = new WiimoteListener();
+		wiimoteListener = new WiiMoteListener();
 		
 		try {
 			wiimote1.addWiiRemoteListener(wiimoteListener);
