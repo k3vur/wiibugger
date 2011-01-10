@@ -163,7 +163,8 @@ public class Wiibugger {
 	public static void setWiimote1(WiiRemote wiimote) {
 		
 		try {
-			Wiibugger.wiimote1 = wiimote;
+			wiimote1.setLEDLights(new boolean[] { true, true, true, true });
+			wiimote1 = wiimote;
 			wiimote1.setLEDLights(new boolean[] { true, false, false, false });
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -180,8 +181,9 @@ public class Wiibugger {
 	public static void setWiimote2(WiiRemote wiimote) {
 
 		try {
-			Wiibugger.wiimote2 = wiimote;
-			wiimote1.setLEDLights(new boolean[] { false, false, false, true });
+			wiimote2.setLEDLights(new boolean[] { true, true, true, true });
+			wiimote2 = wiimote;
+			wiimote2.setLEDLights(new boolean[] { false, false, false, true });
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
