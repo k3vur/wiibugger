@@ -18,7 +18,24 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Wiibugger");
 		Button.ESCAPE.addButtonListener(new ExitListener());
+		System.out.println("Waiting for connection...");
+		btConnection = Bluetooth.waitForConnection();
 		
+		System.out.println("connected");
+		inStream = btConnection.openDataInputStream();
+		
+		int angle;
+		try {
+			angle = (int)inStream.readShort();
+			Motor.A.rotateTo(angle);
+			System.out.println(angle);
+		} catch (IOException e) {
+			System.out.println("IOException");
+		}
+		while(true) {
+			char a = 4;
+		}
+		/*
 		while (true) {
 			System.out.println("Waiting for connection...");
 			btConnection = Bluetooth.waitForConnection();
@@ -37,6 +54,7 @@ public class Main {
 			}
 			
 		}
+		*/
 	}
 
 }

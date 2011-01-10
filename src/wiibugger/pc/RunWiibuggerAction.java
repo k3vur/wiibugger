@@ -13,6 +13,10 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	private DeviceList<NXTDevice> nxtDevices;
+
+	public RunWiibuggerAction() {
+		super("Run Wiibugger :-)");
+	}
 	
 	// TODO place this in a better location (own class or so)
 	@Override
@@ -23,6 +27,14 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 		nxtDevices = Wiibugger.getNXTList();
 		
 		NXTDevice nxt = (NXTDevice)nxtDevices.getElementAt(0);
+
+		try {
+			nxt.send((short)(Math.random()*360));
+		} catch (IOException e) {
+			System.out.println("could not write short");
+			e.printStackTrace();
+		}
+		/*
 		while(true) {
 			try {
 				nxt.send((short)(Math.random()*360));
@@ -38,13 +50,15 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+		*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.run();
+		
 		this.setEnabled(false);
+		this.run();
+		this.setEnabled(true);
 		
 	}
 

@@ -86,8 +86,7 @@ public class UserInterface {
 	
 	private static Component getRunButton() {
 		if (UserInterface.runButton == null) {
-			runButton = new JButton("Run Wiibugger!");
-			runButton.addActionListener(new RunWiibuggerAction());
+			runButton = new JButton(new RunWiibuggerAction());
 		}
 		return UserInterface.runButton;
 	}
@@ -110,8 +109,7 @@ public class UserInterface {
 	
 	private static JButton getScanNXTButton() {
 		if (UserInterface.scanNXTButton == null) {
-			scanNXTButton = new JButton("Scan");
-			scanNXTButton.addActionListener(new ScanNxtAction());
+			scanNXTButton = new JButton(new ScanNxtAction());
 		}
 		return UserInterface.scanNXTButton;
 	}

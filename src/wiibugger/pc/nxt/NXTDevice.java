@@ -72,7 +72,9 @@ public class NXTDevice {
 	}
 	
 	public boolean open() {
+		
 		System.out.println("Open connection to NXT " + info.deviceAddress + "...");
+		
 		try {
 			this.communication.open(info);
 		} catch (NXTCommException e) {
@@ -80,13 +82,13 @@ public class NXTDevice {
 			e.printStackTrace();
 			return false;
 		}
+		
 		dataOut = new DataOutputStream(communication.getOutputStream());
 		
 		if(dataOut == null) {
 			System.out.println("DataOutputStream could not be created on NXT " + info.deviceAddress);
 			return false;
-		}
-		
+		} 
 		System.out.println("Created Outputstream to NXT " + info.deviceAddress + "...");		
 		return true;
 	}
