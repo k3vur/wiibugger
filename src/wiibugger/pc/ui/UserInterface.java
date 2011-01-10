@@ -169,7 +169,6 @@ public class UserInterface {
 			wiimoteList.setModel(Wiibugger.getWiimoteList());
 			wiimoteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			wiimoteList.setCellRenderer(new WiimoteListCellRenderer());
-			// TODO ListSelectionListener for WiimoteList => Select which wiimotes to use
 		}
 		return UserInterface.wiimoteList;
 	}
