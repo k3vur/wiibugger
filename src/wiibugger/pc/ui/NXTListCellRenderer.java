@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import wiibugger.pc.nxt.NXTDevice;
-import wiiremotej.WiiRemote;
 
 public class NXTListCellRenderer extends DefaultListCellRenderer {
 

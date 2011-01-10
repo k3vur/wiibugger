@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Panel;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,11 +24,13 @@ public class UserInterface {
 	
 	private static Font labelFont;
 	private static JFrame mainWindow;
-	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton;
+	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton, setWiimote1Button, setWiimote2Button;
 	private static JSplitPane splitPane;
 	private static JLabel wiimoteLabel, nxtLabel;
 	private static JList wiimoteList, nxtList;
-	private static JPanel wiimotePanel, nxtPanel, runPanel;
+	private static JPanel wiimotePanel, wiimoteToolbar, nxtPanel, runPanel;
+	private static SetWiimoteListener setWiimoteListener;
+	private static RunWiibuggerAction runWiibuggerAction;
 	
 	private static Font getLabelFont() {
 		if (UserInterface.labelFont == null) {
@@ -150,13 +152,8 @@ public class UserInterface {
 
 	private static JPanel getWiimotePanel() {
 		if (UserInterface.wiimotePanel == null) {
-			wiimotePanel = new JPanel(new BorderLayout());
-			
-			JPanel topPanel = new JPanel(new BorderLayout());
-			topPanel.add(getWiiLabel(), BorderLayout.WEST);
-			topPanel.add(getScanWiimotesButton(), BorderLayout.EAST);
-			
-			wiimotePanel.add(topPanel, BorderLayout.NORTH);			
+			wiimotePanel = new JPanel(new BorderLayout());      
+			wiimotePanel.add(getWiimoteToolbar(), BorderLayout.NORTH);      
 			wiimotePanel.add(new JScrollPane(getWiimoteList()), BorderLayout.CENTER);
 		}
 		return UserInterface.wiimotePanel;
@@ -180,6 +177,51 @@ public class UserInterface {
 		}
 		
 		getMainWindow().setVisible(true);
+	}
+	
+
+	public static JButton getSetWiimote1Button() {	
+		if (UserInterface.setWiimote1Button == null) {
+			setWiimote1Button = new JButton("Set 1");
+			setWiimote1Button.addActionListener(getSetWiimoteListener());
+		} 	
+		return UserInterface.setWiimote1Button;
+	}
+	
+	public static JButton getSetWiimote2Button() {
+		if (UserInterface.setWiimote2Button == null) {
+			setWiimote2Button = new JButton("Set 2");
+			setWiimote2Button.addActionListener(getSetWiimoteListener());
+		}
+		return UserInterface.setWiimote2Button;
+	}
+	
+	private static ActionListener getSetWiimoteListener() {
+		if (UserInterface.setWiimoteListener == null) {
+			setWiimoteListener = new SetWiimoteListener(getWiimoteList());
+		}
+		return UserInterface.setWiimoteListener;
+	}
+	
+	private static JPanel getWiimoteToolbar() {
+		if (UserInterface.wiimoteToolbar == null) {
+			wiimoteToolbar = new JPanel(new BorderLayout());
+			wiimoteToolbar.add(getWiiLabel(), BorderLayout.WEST);
+
+			JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			buttons.add(getSetWiimote1Button());
+			buttons.add(getSetWiimote2Button());
+			buttons.add(getScanWiimotesButton());
+			wiimoteToolbar.add(buttons, BorderLayout.EAST);
+		}
+		return UserInterface.wiimoteToolbar;
+	}
+
+	public static RunWiibuggerAction getRunWiibuggerAction() {
+		if (UserInterface.runWiibuggerAction == null) {
+			runWiibuggerAction = new RunWiibuggerAction();
+		}
+		return UserInterface.runWiibuggerAction;
 	}
 	
 }
