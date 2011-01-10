@@ -147,7 +147,7 @@ public class Wiibugger {
 	}
 
 	public static boolean readyToRun() {
-		return wiimote1 != null && wiimote2 != null;
+		return (wiimote1 != null && wiimote2 != null);
 	}
 	
 	/**

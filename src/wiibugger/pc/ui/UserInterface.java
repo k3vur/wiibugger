@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -42,12 +44,18 @@ public class UserInterface {
 	private static JFrame getMainWindow() {
 		if (UserInterface.mainWindow == null) {
 			mainWindow = new JFrame(Wiibugger.applicationTitle);
-			mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			mainWindow.setSize(800, 600);
 			
 			JPanel mainWindowPanel = new JPanel(new BorderLayout());
 			mainWindowPanel.add(getSplitPane(), BorderLayout.CENTER);
 			mainWindowPanel.add(getRunPanel(), BorderLayout.SOUTH);
+			
+			mainWindow.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent evt) {
+					Wiibugger.exit();
+				}
+			});
 			
 			mainWindow.add(mainWindowPanel);
 		}
@@ -88,7 +96,7 @@ public class UserInterface {
 	
 	private static Component getRunButton() {
 		if (UserInterface.runButton == null) {
-			runButton = new JButton(new RunWiibuggerAction());
+			runButton = new JButton(getRunWiibuggerAction());
 		}
 		return UserInterface.runButton;
 	}
