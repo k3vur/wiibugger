@@ -2,7 +2,9 @@ package wiibugger.pc.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Panel;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
+import wiibugger.pc.RunWiibuggerAction;
 import wiibugger.pc.ScanNxtAction;
 import wiibugger.pc.ScanWiimoteAction;
 import wiibugger.pc.Wiibugger;
@@ -21,11 +24,11 @@ public class UserInterface {
 	
 	private static Font labelFont;
 	private static JFrame mainWindow;
-	private static JButton runButton, scanWiimoteButton, scanNXTButton;
+	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton;
 	private static JSplitPane splitPane;
 	private static JLabel wiimoteLabel, nxtLabel;
 	private static JList wiimoteList, nxtList;
-	private static JPanel wiimotePanel, nxtPanel;
+	private static JPanel wiimotePanel, nxtPanel, runPanel;
 	
 	private static Font getLabelFont() {
 		if (UserInterface.labelFont == null) {
@@ -42,7 +45,7 @@ public class UserInterface {
 			
 			JPanel mainWindowPanel = new JPanel(new BorderLayout());
 			mainWindowPanel.add(getSplitPane(), BorderLayout.CENTER);
-			mainWindowPanel.add(getRunButton(), BorderLayout.SOUTH);
+			mainWindowPanel.add(getRunPanel(), BorderLayout.SOUTH);
 			
 			mainWindow.add(mainWindowPanel);
 		}
@@ -84,10 +87,27 @@ public class UserInterface {
 	private static Component getRunButton() {
 		if (UserInterface.runButton == null) {
 			runButton = new JButton("Run Wiibugger!");
+			runButton.addActionListener(new RunWiibuggerAction());
 		}
 		return UserInterface.runButton;
 	}
 
+	private static Component getStopButton() {
+		if (UserInterface.stopButton == null) {
+			stopButton = new JButton("Stop Wiibugger :-(");
+		}
+		return UserInterface.stopButton;
+	}
+	
+	private static JPanel getRunPanel() {
+		if(runPanel == null) {
+			runPanel = new JPanel();
+			runPanel.add(getRunButton());
+			runPanel.add(getStopButton());
+		}
+		return UserInterface.runPanel;
+	}
+	
 	private static JButton getScanNXTButton() {
 		if (UserInterface.scanNXTButton == null) {
 			scanNXTButton = new JButton("Scan");

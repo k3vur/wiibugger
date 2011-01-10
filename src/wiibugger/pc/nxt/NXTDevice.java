@@ -32,20 +32,7 @@ public class NXTDevice {
 	public NXTDevice(NXTComm communication, NXTInfo info) {
 		this.info = info;
 		this.communication = communication;
-		initConnection();
 	}
-	
-	private void initConnection() {
-		try {
-			this.communication.open(info);
-		} catch (NXTCommException e) {
-			System.out.println("Could not open connection to NXT " + info.deviceAddress + "...");
-			e.printStackTrace();
-		}
-		dataOut = new DataOutputStream(communication.getOutputStream());
-		System.out.println("Created Outputstream to NXT " + info.deviceAddress + "...");
-	}
-	
 	
 	/**
 	 * Trys to connect to an NXT and returns NXTDevice-Object
@@ -84,18 +71,58 @@ public class NXTDevice {
 		return nxtDevices;
 	}
 	
+	public boolean open() {
+		System.out.println("Open connection to NXT " + info.deviceAddress + "...");
+		try {
+			this.communication.open(info);
+		} catch (NXTCommException e) {
+			System.out.println("Could not open connection to NXT " + info.deviceAddress + "...");
+			e.printStackTrace();
+			return false;
+		}
+		dataOut = new DataOutputStream(communication.getOutputStream());
+		
+		if(dataOut == null) {
+			System.out.println("DataOutputStream could not be created on NXT " + info.deviceAddress);
+			return false;
+		}
+		
+		System.out.println("Created Outputstream to NXT " + info.deviceAddress + "...");		
+		return true;
+	}
+	
+	public boolean close() {
+		
+		try {
+			this.communication.close();
+		} catch (IOException e) {
+			System.out.println("Could not close connection of NXT " + info.deviceAddress);
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 	public void send(byte data) throws IOException {
+		if(dataOut == null) {
+			this.open();
+		}
 		dataOut.write(data);
 		dataOut.flush();
 	}
 	
 	public void send(int data) throws IOException {
+		if(dataOut == null) {
+			this.open();
+		}
 		dataOut.write(data);
 		dataOut.flush();
 	}
 	
 	public void send(short data) throws IOException {
-		dataOut.write(data);
+		if(dataOut == null) {
+			this.open();
+		}
+		dataOut.writeShort(data);
 		dataOut.flush();
 	}
 	
