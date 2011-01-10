@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
+import wiibugger.pc.RunWiibuggerAction;
 import wiibugger.pc.ScanWiimoteAction;
 import wiibugger.pc.Wiibugger;
 
@@ -87,7 +88,7 @@ public class UserInterface {
 	
 	private static Component getRunButton() {
 		if (UserInterface.runButton == null) {
-			runButton = new JButton("Run Wiibugger!");
+			runButton = new JButton(new RunWiibuggerAction());
 		}
 		return UserInterface.runButton;
 	}
@@ -132,6 +133,7 @@ public class UserInterface {
 			wiimoteList = new JList();
 			wiimoteList.setModel(Wiibugger.getWiimoteList());
 			wiimoteList.setCellRenderer(new WiimoteListCellRenderer());
+			// TODO ListSelectionListener for WiimoteList => Select which wiimotes to use
 		}
 		return UserInterface.wiimoteList;
 	}

@@ -1,9 +1,11 @@
 package wiibugger.pc;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 import wiibugger.pc.nxt.NXTDevice;
+import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
+import wiibugger.pc.wiimote.WiimoteListener;
 import wiiremotej.WiiRemote;
 
 public class Wiibugger {
@@ -14,8 +16,12 @@ public class Wiibugger {
 	public static final String applicationTitle = "Wiibugger";
 	
 	private static DeviceList<NXTDevice> nxtList;
+	private static WiiRemote wiimote1, wiimote2; // TODO rename the two wiimotes?
+	
 	private static DeviceList<WiiRemote> wiimoteList;
 	
+	private static WiimoteListener wiimoteListener;
+		
 	public static void disconnectAllDevices() {
 		disconnectWiimotes();
 		disconnectNXTs();
@@ -24,15 +30,36 @@ public class Wiibugger {
 	private static void disconnectNXTs() {
 		// TODO Wiibugger.disconnectNXTs()		
 	}
-
+	
 	public static void disconnectWiimotes() {
 		System.out.println("Disconnecting Wiimotes...");
-		
-		ArrayList<WiiRemote> wiimotes = getWiimoteList().toArrayList();
-		for (WiiRemote wiimote: wiimotes) {
+
+		for (WiiRemote wiimote : getWiimoteList().toArrayList()) {
 			wiimote.disconnect();
 		}
 		getWiimoteList().clear();
+	}
+
+	public static void disconnectWiimotesExcept(WiiRemote[] wiimotes) {
+		System.out.println("Disconnecting Wiimotes...");
+		
+		DeviceList<WiiRemote> wiimoteList = getWiimoteList();
+		boolean removeCurrWiimote = true;
+		for (WiiRemote currWiimote: wiimoteList.toArrayList()) {
+			
+			for (WiiRemote dontRemoveThis: wiimotes) {
+				if (currWiimote == dontRemoveThis) {
+					removeCurrWiimote = false;
+				}
+			}
+			
+			if (removeCurrWiimote) {
+				wiimoteList.remove(currWiimote);
+				currWiimote.disconnect();
+			} else {
+				removeCurrWiimote = true;
+			}
+		}
 	}
 
 	public static void exit() {
@@ -53,6 +80,24 @@ public class Wiibugger {
 			Wiibugger.wiimoteList = new DeviceList<WiiRemote>();
 		}
 		return Wiibugger.wiimoteList;
+	}
+
+	public static void initWiimotes() {
+		wiimoteListener = new WiimoteListener();
+		
+		try {
+			wiimote1.setLEDIlluminated(0, true);
+			wiimote1.addWiiRemoteListener(wiimoteListener);
+			wiimote1.setAccelerometerEnabled(true);
+			
+			wiimote2.setLEDIlluminated(3, true);
+			wiimote2.addWiiRemoteListener(wiimoteListener);
+			wiimote2.setAccelerometerEnabled(true);
+			// TODO enable Buttons on one of the wiimotes (driving!)
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
@@ -95,6 +140,10 @@ public class Wiibugger {
 	 */
 	public static boolean runsAs64Bit() {
 		return System.getProperty("sun.arch.data.model").indexOf("64") != -1;
+	}
+
+	public static void startNXTMessager() {
+		NXTMessager.getNXTMessager().start();
 	}
 
 }
