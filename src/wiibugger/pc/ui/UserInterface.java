@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 
+import wiibugger.pc.ScanNxtAction;
 import wiibugger.pc.ScanWiimoteAction;
 import wiibugger.pc.Wiibugger;
 
@@ -59,6 +60,9 @@ public class UserInterface {
 	private static JList getNXTList() {
 		if (UserInterface.nxtList == null) {
 			nxtList = new JList();
+
+			nxtList.setModel(Wiibugger.getNXTList());
+			nxtList.setCellRenderer(new NXTListCellRenderer());
 		}
 		return UserInterface.nxtList;
 	}
@@ -87,9 +91,7 @@ public class UserInterface {
 	private static JButton getScanNXTButton() {
 		if (UserInterface.scanNXTButton == null) {
 			scanNXTButton = new JButton("Scan");
-			
-			// TODO nxt scanbutton actionlistener
-			scanNXTButton.addActionListener(null);
+			scanNXTButton.addActionListener(new ScanNxtAction());
 		}
 		return UserInterface.scanNXTButton;
 	}
