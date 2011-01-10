@@ -75,6 +75,14 @@ public class Wiibugger {
 		return Wiibugger.nxtList;
 	}
 	
+	public static WiiRemote getWiimote1() {
+		return Wiibugger.wiimote1;
+	}
+
+	public static WiiRemote getWiimote2() {
+		return Wiibugger.wiimote2;
+	}
+
 	public static DeviceList<WiiRemote> getWiimoteList() {
 		if (Wiibugger.wiimoteList == null) {
 			Wiibugger.wiimoteList = new DeviceList<WiiRemote>();
@@ -82,22 +90,28 @@ public class Wiibugger {
 		return Wiibugger.wiimoteList;
 	}
 
-	public static void initWiimotes() {
+	public static boolean initWiimotes() {
+		
+		if (wiimote1 == null || wiimote2 == null) {
+			return false;
+		}
+		
 		wiimoteListener = new WiimoteListener();
 		
 		try {
-			wiimote1.setLEDIlluminated(0, true);
 			wiimote1.addWiiRemoteListener(wiimoteListener);
 			wiimote1.setAccelerometerEnabled(true);
 			
-			wiimote2.setLEDIlluminated(3, true);
 			wiimote2.addWiiRemoteListener(wiimoteListener);
 			wiimote2.setAccelerometerEnabled(true);
 			// TODO enable Buttons on one of the wiimotes (driving!)
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			wiimote1.removeWiiRemoteListener(wiimoteListener);
+			wiimote2.removeWiiRemoteListener(wiimoteListener);
+			return false;
 		}
+		
+		return true;
 	}
 
 	public static void main(String[] args) {
@@ -132,6 +146,10 @@ public class Wiibugger {
 
 	}
 
+	public static boolean readyToRun() {
+		return wiimote1 != null && wiimote2 != null;
+	}
+	
 	/**
 	 * Returns true if the program is being run in 64 bit mode,
 	 * and false if it isn't
@@ -142,8 +160,42 @@ public class Wiibugger {
 		return System.getProperty("sun.arch.data.model").indexOf("64") != -1;
 	}
 
+	public static void setWiimote1(WiiRemote wiimote) {
+		
+		try {
+			Wiibugger.wiimote1 = wiimote;
+			wiimote1.setLEDLights(new boolean[] { true, false, false, false });
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (wiimote1 == wiimote2) {
+			wiimote2 = null;
+		}
+		
+		System.out.println("Set Wiimote 1 to " + wiimote1.getBluetoothAddress());
+	}
+
+	public static void setWiimote2(WiiRemote wiimote) {
+
+		try {
+			Wiibugger.wiimote2 = wiimote;
+			wiimote1.setLEDLights(new boolean[] { false, false, false, true });
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (wiimote2 == wiimote1) {
+			wiimote1 = null;
+		}
+		
+		System.out.println("Set Wiimote 2 to " + wiimote2.getBluetoothAddress());
+	}
+
 	public static void startNXTMessager() {
 		NXTMessager.getNXTMessager().start();
 	}
-
+	
 }

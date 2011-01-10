@@ -1,5 +1,7 @@
 package wiibugger.pc.wiimote;
 
+import wiibugger.pc.Wiibugger;
+import wiiremotej.WiiRemote;
 import wiiremotej.event.WRAccelerationEvent;
 import wiiremotej.event.WRStatusEvent;
 import wiiremotej.event.WiiRemoteAdapter;
@@ -12,16 +14,19 @@ public class WiimoteListener extends WiiRemoteAdapter
 {
 	
 	// TODO implement the actual WiimoteListener
-	
-    private static boolean accelerometerSource = true; //true = wii remote, false = nunchuk
-    public double roll;
     
     public void accelerationInputReceived(WRAccelerationEvent evt) {
 
-        if (accelerometerSource) {
-        	this.roll = evt.getRoll();
-        }
+    	WiiRemote wiimote = evt.getSource();
         
+    	if (wiimote == Wiibugger.getWiimote1()) {
+    		System.out.print("Wiimote 1: ");
+    	} else if (wiimote == Wiibugger.getWiimote2()) {
+    		System.out.print("Wiimote 2: ");
+    	}
+    	
+    	System.out.println("Input received!");
+    	
     }
     
     public void disconnected()

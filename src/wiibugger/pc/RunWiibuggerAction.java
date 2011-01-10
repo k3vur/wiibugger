@@ -10,12 +10,20 @@ public class RunWiibuggerAction extends AbstractAction {
 
 	public RunWiibuggerAction() {
 		super("Run Wiibugger!");
+		this.setEnabled(false);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Wiibugger.startNXTMessager();
 		Wiibugger.initWiimotes();
+		// TODO add some fancy message that wiibugger is running
+	}
+
+	public void enableIfReady() {
+		if (Wiibugger.readyToRun()) {
+			this.setEnabled(true);
+		}
 	}
 
 }
