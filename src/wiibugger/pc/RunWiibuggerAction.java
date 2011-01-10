@@ -32,6 +32,7 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 		}
 	}
 
+	
 	// TODO place this in a better location (own class or so)
 	@Override
 	public void run() {
