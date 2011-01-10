@@ -3,7 +3,6 @@ package wiibugger.pc.nxt;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import lejos.nxt.comm.BTConnection;
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
@@ -19,15 +18,6 @@ public class NXTDevice {
 	private DataOutputStream dataOut;
 	private NXTComm communication;
 	private NXTInfo info;
-	private BTConnection connection;
-	
-	
-	// TODO not needed if pc also can querry nxt
-	public NXTDevice(BTConnection connection) {
-		this.connection = connection;
-		dataOut = this.connection.openDataOutputStream();
-		
-	}
 	
 	public NXTDevice(NXTComm communication, NXTInfo info) {
 		this.info = info;
@@ -57,12 +47,6 @@ public class NXTDevice {
 			return null;
 		}
 
-		// connecting with mac address would be simpler...
-		// NXTInfo nxtInfo = new NXTInfo("NXT", "00:16:53:00:78:48");
-
-		//
-		//connection = Bluetooth.waitForConnection(timeout, BTConnection.PACKET);
-		
 		NXTDevice[] nxtDevices = new NXTDevice[nxtInfo.length];
 		
 		for(int i = 0; i < nxtInfo.length; i++) {
@@ -108,7 +92,7 @@ public class NXTDevice {
 		if(dataOut == null) {
 			this.open();
 		}
-		dataOut.write(data);
+		dataOut.writeByte(data);
 		dataOut.flush();
 	}
 	
@@ -116,7 +100,7 @@ public class NXTDevice {
 		if(dataOut == null) {
 			this.open();
 		}
-		dataOut.write(data);
+		dataOut.writeInt(data);
 		dataOut.flush();
 	}
 	

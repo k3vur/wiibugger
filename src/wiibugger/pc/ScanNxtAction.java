@@ -17,7 +17,7 @@ public class ScanNxtAction extends AbstractAction implements Runnable {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.setEnabled(false);
-		NXTScanner.scan(Wiibugger.getNXTList(), 2, this);
+		NXTScanner.scan(Wiibugger.getNXTList(), this);
 		
 	}
 	
