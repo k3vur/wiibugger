@@ -3,6 +3,8 @@ package wiibugger.pc.wiimote;
 import wiibugger.pc.DeviceList;
 import wiiremotej.WiiRemote;
 import wiiremotej.WiiRemoteJ;
+import wiiusej.WiiUseApiManager;
+import wiiusej.Wiimote;
 
 
 public class WiimoteScanner extends Thread {
@@ -36,6 +38,27 @@ public class WiimoteScanner extends Thread {
 	public void run() {
 		System.out.println("Scanning for Wiimotes...");
 		
+		String os = System.getProperty("os.name"); 
+		if(os.equals("Windows 7")) {
+			scanWiiuseJ();
+		} else {
+			scanWiiRemoteJ();
+		}
+	}
+	
+	private void scanWiiuseJ() {
+		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
+		
+		if(wiimotes.length == 0) {
+			System.out.println("No Wiimote Found");
+			return;
+		}
+		for(int i = 0; i < wiimotes.length; i++) {
+			System.out.println("Found wiimote " + wiimotes[i].getId());
+		}
+	}
+
+	private void scanWiiRemoteJ() {
 		WiiRemote remote = null;
 		for (int i = 0; i < numberOfScans; i++) {
 			
@@ -60,8 +83,7 @@ public class WiimoteScanner extends Thread {
 		
 		if (callback != null) {
 			callback.run();
-		}
-		
+		}		
 		System.out.println("Finished scanning");
 	}
 	

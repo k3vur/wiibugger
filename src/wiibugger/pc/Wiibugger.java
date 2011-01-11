@@ -1,6 +1,10 @@
 package wiibugger.pc;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+
+import lejos.pc.comm.NXTConnector;
 
 import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
@@ -145,7 +149,8 @@ public class Wiibugger {
     	/*
     	 * Wiimote needs Widcomm Bluetooth stack under windows to communicate
     	 */
-    	System.setProperty("bluecove.stack.first", "widcomm");
+    	//System.setProperty("bluecove.stack.first", "widcomm");
+  
     	
     	UserInterface.init();
 

@@ -1,11 +1,13 @@
 package wiibugger.pc.nxt;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
+import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 
 /**
@@ -29,6 +31,7 @@ public class NXTDevice {
 	 * @return NXTDevice-object if successful, null if can't find any.
 	 */
 	public static NXTDevice[] connectToNXT() {
+			
 		NXTComm communication = null;
 		try {
 			communication = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
@@ -53,6 +56,7 @@ public class NXTDevice {
 			nxtDevices[i] = new NXTDevice(communication, nxtInfo[i]);
 		}
 		return nxtDevices;
+		
 	}
 	
 	public boolean open() {
