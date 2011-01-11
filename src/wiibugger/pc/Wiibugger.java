@@ -28,7 +28,12 @@ public class Wiibugger {
 	}
 	
 	private static void disconnectNXTs() {
-		// TODO Wiibugger.disconnectNXTs()		
+		System.out.println("Disconnecting NXTs...");
+		
+		for (NXTDevice nxt: getNXTList().toArrayList()) {
+			nxt.close();
+		}
+		getNXTList().clear();
 	}
 	
 	public static void disconnectWiimotes() {
