@@ -40,7 +40,7 @@ public class NXTDevice {
 
 		NXTInfo[] nxtInfo = null;
 		try {
-			nxtInfo = communication.search("NXT",NXTCommFactory.BLUETOOTH);
+			nxtInfo = communication.search(null ,NXTCommFactory.BLUETOOTH);
 		} catch (NXTCommException e) {
 			System.out.println("Could not get Information of any NXT Device...");
 			e.printStackTrace();
