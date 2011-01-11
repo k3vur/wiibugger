@@ -32,29 +32,8 @@ public class Main {
 		} catch (IOException e) {
 			System.out.println("IOException");
 		}
-		while(true) {
-			char a = 4;
-		}
-		/*
-		while (true) {
-			System.out.println("Waiting for connection...");
-			btConnection = Bluetooth.waitForConnection();
-			System.out.println("connected");
-			inStream = btConnection.openDataInputStream();
-			
-			while(true) {
-				int angle;
-				try {
-					angle = (int)inStream.readShort();
-					Motor.A.rotateTo(angle);
-					System.out.println(angle);
-				} catch (IOException e) {
-					System.out.println("IOException");
-				}
-			}
-			
-		}
-		*/
+		Button.waitForPress();
+		
 	}
 
 }

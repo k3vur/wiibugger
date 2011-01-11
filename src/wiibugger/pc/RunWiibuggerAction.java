@@ -16,11 +16,14 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 
 	public RunWiibuggerAction() {
 		super("Run Wiibugger!");
-		this.setEnabled(false);
+		//this.setEnabled(false);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		
+		this.run();
+		
 		Wiibugger.startNXTMessager();
 		Wiibugger.initWiimotes();
 		// TODO add some fancy message that wiibugger is running
@@ -49,23 +52,7 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 			System.out.println("could not write short");
 			e.printStackTrace();
 		}
-		/*
-		while(true) {
-			try {
-				nxt.send((short)(Math.random()*360));
-				
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (IOException e) {
-				System.out.println("could not write short");
-				e.printStackTrace();
-			}
-		}
-		*/
+		
 	}
 
 }
