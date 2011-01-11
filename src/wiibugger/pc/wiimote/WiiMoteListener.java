@@ -17,7 +17,7 @@ public class WiiMoteListener extends WiiRemoteAdapter
     
     public void accelerationInputReceived(WRAccelerationEvent evt) {
 
-    	WiiRemote wiimote = evt.getSource();
+    	WiimoteDevice wiimote = evt.getSource();
         
     	if (wiimote == Wiibugger.getWiimote1()) {
     		System.out.print("Wiimote 1: ");

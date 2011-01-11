@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 
 import wiibugger.pc.Wiibugger;
-import wiiremotej.WiiRemote;
+import wiibugger.pc.wiimote.WiimoteDevice;
 
 public class SetWiimoteListener implements ActionListener {
 
@@ -20,7 +20,7 @@ public class SetWiimoteListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		JButton source = (JButton) evt.getSource();
-		WiiRemote selectedWiimote = (WiiRemote) wiimoteList.getSelectedValue();
+		WiimoteDevice selectedWiimote = (WiimoteDevice) wiimoteList.getSelectedValue();
 		
 		if (selectedWiimote != null) {
 			if (source == UserInterface.getSetWiimote1Button()) {

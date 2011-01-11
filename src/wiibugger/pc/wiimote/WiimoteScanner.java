@@ -9,11 +9,11 @@ import wiiusej.Wiimote;
 
 public class WiimoteScanner extends Thread {
 	
-	public static WiimoteScanner scan(DeviceList<WiiRemote> wiimoteList, int numberOfScans) {
+	public static WiimoteScanner scan(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans) {
 		return scan(wiimoteList, numberOfScans, null);
 	}
 
-	public static WiimoteScanner scan(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
+	public static WiimoteScanner scan(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
 		WiimoteScanner scanner = new WiimoteScanner(wiimoteList, numberOfScans, callAfterFinish);
 		scanner.start();
 		return scanner;
@@ -23,9 +23,9 @@ public class WiimoteScanner extends Thread {
 	
 	private int numberOfScans;
 	
-	private DeviceList<WiiRemote> wiimoteList;
+	private DeviceList<WiimoteDevice> wiimoteList;
 	
-	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callback) {
+	private WiimoteScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
 		this.wiimoteList = wiimoteList;
 		this.numberOfScans = numberOfScans;
 		this.callback = callback;
