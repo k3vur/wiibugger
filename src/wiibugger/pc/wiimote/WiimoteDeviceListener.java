@@ -1,23 +1,29 @@
 package wiibugger.pc.wiimote;
 
+import java.util.EventObject;
+
 import wiibugger.pc.Wiibugger;
-import wiiremotej.WiiRemote;
-import wiiremotej.event.WRAccelerationEvent;
 import wiiremotej.event.WRStatusEvent;
-import wiiremotej.event.WiiRemoteAdapter;
 
 /**
  * This class handles the Wiimote input
  */
 
-public class WiiMoteListener extends WiiRemoteAdapter
+public class WiimoteDeviceListener
 {
 	
 	// TODO implement the actual WiimoteListener
+	
+	
     
-    public void accelerationInputReceived(WRAccelerationEvent evt) {
+    public void accelerationInputReceived(EventObject evt) {
 
-    	WiimoteDevice wiimote = evt.getSource();
+    	WiimoteDevice wiimote;
+    	if (evt.getSource() instanceof WiimoteDevice) {
+    		wiimote = (WiimoteDevice) evt.getSource();
+    	} else {
+    		return;
+    	}
         
     	if (wiimote == Wiibugger.getWiimote1()) {
     		System.out.print("Wiimote 1: ");

@@ -5,7 +5,7 @@ import java.io.IOException;
 import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
-import wiibugger.pc.wiimote.WiiMoteListener;
+import wiibugger.pc.wiimote.WiimoteDeviceListener;
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiiremotej.WiiRemote;
 
@@ -21,7 +21,7 @@ public class Wiibugger {
 	
 	private static DeviceList<WiimoteDevice> wiimoteList;
 	
-	private static WiiMoteListener wiimoteListener;
+	private static WiimoteDeviceListener wiimoteListener;
 		
 	public static void disconnectAllDevices() {
 		disconnectWiimotes();
@@ -102,7 +102,7 @@ public class Wiibugger {
 			return false;
 		}
 		
-		wiimoteListener = new WiiMoteListener();
+		wiimoteListener = new WiimoteDeviceListener();
 		
 		wiimote1.addWiiRemoteListener(wiimoteListener);
 		wiimote1.setAccelerometerEnabled(true);
