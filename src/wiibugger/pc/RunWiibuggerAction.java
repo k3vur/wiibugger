@@ -16,8 +16,8 @@ public class RunWiibuggerAction extends AbstractAction implements Runnable {
 
 	public RunWiibuggerAction() {
 		super("Run Wiibugger!");
-		
-		this.setEnabled(false);
+		//this.setEnabled(false);
+		// TODO UNCOMMENT THIS BEFORE RELEASING!
 	}
 	
 	@Override
