@@ -23,10 +23,10 @@ public class WiimoteScanner extends Thread {
 	
 	private DeviceList<WiiRemote> wiimoteList;
 	
-	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
+	private WiimoteScanner(DeviceList<WiiRemote> wiimoteList, int numberOfScans, Runnable callback) {
 		this.wiimoteList = wiimoteList;
 		this.numberOfScans = numberOfScans;
-		this.callback = callAfterFinish;
+		this.callback = callback;
 	}
 	
 	/**

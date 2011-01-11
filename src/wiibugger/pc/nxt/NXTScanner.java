@@ -7,19 +7,19 @@ public class NXTScanner extends Thread {
 	public static NXTScanner scan(DeviceList<NXTDevice> nxtList) {
 		return scan(nxtList, null);
 	}
-	public static NXTScanner scan(DeviceList<NXTDevice> nxtList, Runnable callAfterFinish) {
-		NXTScanner scanner = new NXTScanner(nxtList, callAfterFinish);
+	public static NXTScanner scan(DeviceList<NXTDevice> nxtList, Runnable callback) {
+		NXTScanner scanner = new NXTScanner(nxtList, callback);
 		scanner.start();
 		return scanner;
 	}
 
-	private Runnable callAfterFinish;
+	private Runnable callback;
 	
 	private DeviceList <NXTDevice> nxtList;
 	
-	public NXTScanner(DeviceList<NXTDevice> nxtList, Runnable callAfterFinish) {
+	public NXTScanner(DeviceList<NXTDevice> nxtList, Runnable callback) {
 		this.nxtList = nxtList;
-		this.callAfterFinish = callAfterFinish;
+		this.callback = callback;
 	}
 	
 	@Override
@@ -34,8 +34,8 @@ public class NXTScanner extends Thread {
 		} else
 			System.out.println("No NXT found. Connect NXT Bluetooth with PC, turn it on and scan again.");
 		
-		if(callAfterFinish != null) {
-			callAfterFinish.run();
+		if(callback != null) {
+			callback.run();
 		}		
 	}
 }
