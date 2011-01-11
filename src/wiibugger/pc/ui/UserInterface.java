@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -49,6 +50,7 @@ public class UserInterface {
 			JPanel mainWindowPanel = new JPanel(new BorderLayout());
 			mainWindowPanel.add(getSplitPane(), BorderLayout.CENTER);
 			mainWindowPanel.add(getRunPanel(), BorderLayout.SOUTH);
+			mainWindowPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
 			
 			mainWindow.addWindowListener(new WindowAdapter() {
 				@Override
@@ -137,6 +139,7 @@ public class UserInterface {
 			splitPane.setLeftComponent(getWiimotePanel());
 			splitPane.setRightComponent(getNXTPanel());
 			splitPane.setDividerLocation(0.5);
+			splitPane.setBorder(BorderFactory.createEmptyBorder());
 		}
 		return UserInterface.splitPane;
 	}

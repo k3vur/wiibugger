@@ -11,7 +11,7 @@ public class ScanNxtAction extends AbstractAction implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	public ScanNxtAction() {
-		super("scan");
+		super("Scan");
 	}
 	
 	@Override
