@@ -29,20 +29,20 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 
 	@Override
 	public void accelerationInputReceived(WRAccelerationEvent evt) {
-		double xAcceleration = evt.getXAcceleration();
-		double yAcceleration = evt.getYAcceleration();
-		double zAcceleration = evt.getZAcceleration();
+//		double xAcceleration = evt.getXAcceleration();
+//		double yAcceleration = evt.getYAcceleration();
+//		double zAcceleration = evt.getZAcceleration();
 		
 		//System.out.println("x: " + xAcceleration + "y: " + yAcceleration + "z: " + zAcceleration);
 	}
 
 	@Override
 	public void buttonInputReceived(WRButtonEvent evt) {
-		if (evt.isPressed(WRButtonEvent.A)) {
+		if (evt.wasPressed(WRButtonEvent.A)) {
 			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.A_BUTTON);
 		}
 		
-		if (evt.isPressed(WRButtonEvent.B)) {
+		if (evt.wasPressed(WRButtonEvent.B)) {
 			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.B_BUTTON);
 		}
 	}
