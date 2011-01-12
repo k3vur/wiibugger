@@ -34,6 +34,8 @@ public class UserInterface {
 	private static JPanel wiimotePanel, wiimoteToolbar, nxtPanel, runPanel;
 	private static SetWiimoteListener setWiimoteListener;
 	private static RunWiibuggerAction runWiibuggerAction;
+	private static ScanNxtAction scanNXTAction;
+	private static ScanWiimoteAction scanWiimoteAction;
 	
 	private static Font getLabelFont() {
 		if (UserInterface.labelFont == null) {
@@ -121,14 +123,14 @@ public class UserInterface {
 	
 	private static JButton getScanNXTButton() {
 		if (UserInterface.scanNXTButton == null) {
-			scanNXTButton = new JButton(new ScanNxtAction());
+			scanNXTButton = new JButton(getScanNXTAction());
 		}
 		return UserInterface.scanNXTButton;
 	}
 
 	private static JButton getScanWiimotesButton() {
 		if (UserInterface.scanWiimoteButton == null) {
-			scanWiimoteButton = new JButton(new ScanWiimoteAction());
+			scanWiimoteButton = new JButton(getScanWiimotesAction());
 		}
 		return UserInterface.scanWiimoteButton;
 	}
@@ -233,6 +235,20 @@ public class UserInterface {
 			runWiibuggerAction = new RunWiibuggerAction();
 		}
 		return UserInterface.runWiibuggerAction;
+	}
+
+	public static ScanWiimoteAction getScanWiimotesAction() {
+		if (scanWiimoteAction == null) {
+			scanWiimoteAction = new ScanWiimoteAction();
+		}
+		return scanWiimoteAction;
+	}
+	
+	public static ScanNxtAction getScanNXTAction() {
+		if (scanNXTAction == null) {
+			scanNXTAction = new ScanNxtAction();
+		}
+		return scanNXTAction;
 	}
 	
 }
