@@ -18,6 +18,7 @@ public class WiiuseJScanner extends WiimoteScanner {
 	
 	@Override
 	public void run() {
+		System.out.println("Scanning for Wiimotes using WiiuseJ...");
 		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
 		
 		if(wiimotes.length == 0) {
@@ -27,6 +28,8 @@ public class WiiuseJScanner extends WiimoteScanner {
 		for(int i = 0; i < wiimotes.length; i++) {
 			System.out.println("Found wiimote " + wiimotes[i].getId());
 		}
+		
+		System.out.println("Finished scanning");
 	}
 
 }

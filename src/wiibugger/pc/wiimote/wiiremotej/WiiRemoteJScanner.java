@@ -21,7 +21,7 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 	 */
 	@Override
 	public void run() {
-		System.out.println("Scanning for Wiimotes...");
+		System.out.println("Scanning for Wiimotes using WiiRemoteJ...");
 		
 		WiiRemote remote = null;
 		for (int i = 0; i < numberOfScans; i++) {
