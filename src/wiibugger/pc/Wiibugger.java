@@ -1,5 +1,8 @@
 package wiibugger.pc;
 
+import javax.bluetooth.BluetoothStateException;
+import javax.bluetooth.LocalDevice;
+
 import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
@@ -109,7 +112,7 @@ public class Wiibugger {
 	public static void main(String[] args) {
 		
 		/*
-		 * Some things can only be run as 32 bit mode (like Blue cove).
+		 * Some things can only be run as 32 bit mode (like Bluecove).
 		 * Exit if run as 64 bit mode.
 		 */
 		if (Wiibugger.runsAs64Bit()) {
@@ -129,11 +132,24 @@ public class Wiibugger {
     	 */
     	System.setProperty("bluecove.jsr82.psm_minimum_off","true");
     	
-    	/*
-    	 * Wiimote needs Widcomm Bluetooth stack under windows to communicate
-    	 */
-    	//System.setProperty("bluecove.stack.first", "widcomm");
-  
+    	if (!LocalDevice.isPowerOn()) {
+    		System.out.println(
+    				"Bluetooth seems to be turned off.\n" +
+    				"Please turn it on before running Wiibugger.");
+    		System.exit(0);
+    	}
+    	
+    	try {
+			LocalDevice bluetoothDevice = LocalDevice.getLocalDevice();
+			System.out.println(
+					"Your bluetooth-device:\n" +
+					"Name:\t" +bluetoothDevice.getFriendlyName() + "\n" +
+					"Adress:\t" + bluetoothDevice.getBluetoothAddress() + ")");
+		} catch (BluetoothStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     	
     	UserInterface.init();
 
