@@ -1,5 +1,6 @@
-package wiibugger.pc.wiimote;
+package wiibugger.pc.wiimote.wiiremotej;
 
+import wiibugger.pc.wiimote.WiimoteDevice;
 import wiiremotej.WiiRemote;
 
 public class WiiRemoteJDevice extends WiimoteDevice {
@@ -17,7 +18,7 @@ public class WiiRemoteJDevice extends WiimoteDevice {
 	}
 
 	@Override
-	public void addWiiRemoteListener(WiimoteDeviceListener listener) {
+	public void addWiiRemoteListener() {
 		// TODO Auto-generated method stub
 
 	}
@@ -29,7 +30,7 @@ public class WiiRemoteJDevice extends WiimoteDevice {
 	}
 
 	@Override
-	public void removeWiiRemoteListener(WiimoteDeviceListener listener) {
+	public void removeWiiRemoteListener() {
 		// TODO Auto-generated method stub
 
 	}

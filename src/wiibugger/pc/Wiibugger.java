@@ -4,7 +4,6 @@ import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiibugger.pc.wiimote.WiimoteDeviceListener;
 
 public class Wiibugger {
 
@@ -17,9 +16,7 @@ public class Wiibugger {
 	private static WiimoteDevice wiimote1, wiimote2; // TODO rename the two wiimotes?
 	
 	private static DeviceList<WiimoteDevice> wiimoteList;
-	
-	private static WiimoteDeviceListener wiimoteListener;
-		
+			
 	public static void disconnectAllDevices() {
 		disconnectWiimotes();
 		disconnectNXTs();
@@ -98,13 +95,11 @@ public class Wiibugger {
 		if (wiimote1 == null || wiimote2 == null) {
 			return false;
 		}
-		
-		wiimoteListener = new WiimoteDeviceListener();
-		
-		wiimote1.addWiiRemoteListener(wiimoteListener);
+				
+		wiimote1.addWiiRemoteListener();
 		wiimote1.setAccelerometerEnabled(true);
 		
-		wiimote2.addWiiRemoteListener(wiimoteListener);
+		wiimote2.addWiiRemoteListener();
 		wiimote2.setAccelerometerEnabled(true);
 		// TODO enable Buttons on one of the wiimotes (driving!)
 		

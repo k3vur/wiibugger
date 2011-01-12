@@ -1,6 +1,8 @@
-package wiibugger.pc.wiimote;
+package wiibugger.pc.wiimote.wiiremotej;
 
 import wiibugger.pc.DeviceList;
+import wiibugger.pc.wiimote.WiimoteDevice;
+import wiibugger.pc.wiimote.WiimoteScanner;
 import wiiremotej.WiiRemote;
 import wiiremotej.WiiRemoteJ;
 
@@ -8,6 +10,10 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 
 	protected WiiRemoteJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
 		super(wiimoteList, numberOfScans, callback);
+	}
+	
+	public static WiiRemoteJScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {		
+		return new WiiRemoteJScanner(wiimoteList, numberOfScans, callback);
 	}
 
 	/**

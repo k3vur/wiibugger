@@ -2,6 +2,8 @@ package wiibugger.pc.wiimote;
 
 import wiibugger.pc.DeviceList;
 import wiibugger.pc.Wiibugger;
+import wiibugger.pc.wiimote.wiiremotej.WiiRemoteJScanner;
+import wiibugger.pc.wiimote.wiiusej.WiiuseJScanner;
 
 
 public abstract class WiimoteScanner extends Thread {
@@ -16,13 +18,13 @@ public abstract class WiimoteScanner extends Thread {
 		return scanner;
 	}
 	
-	private static WiimoteScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
+	public static WiimoteScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
 		WiimoteScanner scanner;
 		
 		if (Wiibugger.isMac()) {
-			scanner = new WiiRemoteJScanner(wiimoteList, numberOfScans, callback);
+			scanner = WiiRemoteJScanner.getScanner(wiimoteList, numberOfScans, callback);
 		} else {
-			scanner = new WiiuseJScanner(wiimoteList, numberOfScans, callback);
+			scanner = WiiuseJScanner.getScanner(wiimoteList, numberOfScans, callback);
 		}
 		
 		return scanner;

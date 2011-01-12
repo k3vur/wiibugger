@@ -1,8 +1,6 @@
 package wiibugger.pc.wiimote.wiiusej;
 
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiibugger.pc.wiimote.WiimoteDeviceListener;
-import wiiremotej.event.WiiRemoteListener;
 import wiiusej.Wiimote;
 
 public class WiiuseJDevice extends WiimoteDevice{
