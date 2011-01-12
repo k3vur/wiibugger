@@ -241,5 +241,11 @@ public class Wiibugger {
 	    return (os.indexOf("linux") >= 0);
  
 	}
+
+	public static void initNXTs() {
+		for (NXTDevice nxt: nxtList.toArrayList()) {
+			nxt.open();
+		}
+	}
 	
 }
