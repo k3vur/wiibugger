@@ -1,7 +1,7 @@
 package wiibugger.pc.wiimote;
 
 
-public abstract class WiimoteDevice {
+public interface WiimoteDevice {
 
 	public abstract void setLEDLights(boolean[] LEDs);
 	

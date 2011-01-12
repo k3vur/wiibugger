@@ -16,8 +16,15 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiuseJListener implements WiimoteListener{
 
+	public WiiuseJListener() {
+		System.out.println("WiiuseJListener added");
+		
+	}
+	
 	@Override
-	public void onButtonsEvent(WiimoteButtonsEvent arg0) {
+	public void onButtonsEvent(WiimoteButtonsEvent event) {
+		if(event.isButtonAPressed())
+			System.out.println("bla");
 	}
 
 	@Override
@@ -64,9 +71,11 @@ public class WiiuseJListener implements WiimoteListener{
 
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent event) {
-		event.getRawAcceleration().getX();
-		event.getRawAcceleration().getY();
-		event.getRawAcceleration().getZ();
+		float x = event.getRawAcceleration().getX();
+		float y = event.getRawAcceleration().getY();
+		float z = event.getRawAcceleration().getZ();
+
+		System.out.println("x: " + x + "y: " + y + "z: " + z);
 	}
 
 	@Override

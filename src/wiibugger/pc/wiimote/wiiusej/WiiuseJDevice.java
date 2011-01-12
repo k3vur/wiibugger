@@ -1,9 +1,13 @@
 package wiibugger.pc.wiimote.wiiusej;
 
 import wiibugger.pc.wiimote.WiimoteDevice;
+import wiiusej.WiiUseApi;
+import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
+import wiiusej.wiiusejevents.utils.WiiUseApiListener;
+import wiiusej.wiiusejevents.wiiuseapievents.WiiUseApiEvent;
 
-public class WiiuseJDevice extends WiimoteDevice{
+public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	private Wiimote wiimote;
 	private WiiuseJListener listener;
@@ -24,7 +28,7 @@ public class WiiuseJDevice extends WiimoteDevice{
 
 	@Override
 	public void setAccelerometerEnabled(boolean enabled) {
-		// not needed i guess
+		this.activateMotionSensing(wiimote.getId());
 	}
 
 	@Override

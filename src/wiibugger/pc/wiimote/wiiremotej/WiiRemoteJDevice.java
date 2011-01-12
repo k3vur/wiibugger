@@ -5,7 +5,7 @@ import java.io.IOException;
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiiremotej.WiiRemote;
 
-public class WiiRemoteJDevice extends WiimoteDevice {
+public class WiiRemoteJDevice implements WiimoteDevice {
 
 	private WiiRemote wiimote;
 	
