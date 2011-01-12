@@ -33,7 +33,7 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 		double yAcceleration = evt.getYAcceleration();
 		double zAcceleration = evt.getZAcceleration();
 		
-		System.out.println("x: " + xAcceleration + "y: " + yAcceleration + "z: " + zAcceleration);
+		//System.out.println("x: " + xAcceleration + "y: " + yAcceleration + "z: " + zAcceleration);
 	}
 
 	@Override

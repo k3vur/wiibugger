@@ -12,7 +12,7 @@ public class NXTMessager extends Thread {
 	private static NXTMessager messager;
 	
 	public static NXTMessager getNXTMessager() {
-		if (messager == null) {
+		if (messager == null || messager.getState() == Thread.State.TERMINATED) {
 			messager = new NXTMessager();
 		}
 		return messager;
@@ -56,5 +56,10 @@ public class NXTMessager extends Thread {
 	
 	public void send(NXTMessage message) {
 		messageQueue.offer(message);
+	}
+
+	synchronized public void quit() {
+		sending = false;
+		messageQueue.clear();
 	}
 }

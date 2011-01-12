@@ -16,7 +16,8 @@ public class RunWiibuggerAction extends AbstractAction {
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {	
+	public void actionPerformed(ActionEvent arg0) {
+		System.out.println("Starting Wiibugger...");
 		Wiibugger.startNXTMessager();
 		Wiibugger.initWiimotes();
 		// TODO add some fancy message that wiibugger is running

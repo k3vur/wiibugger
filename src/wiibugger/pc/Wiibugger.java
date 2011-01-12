@@ -66,6 +66,7 @@ public class Wiibugger {
 	}
 
 	public static void exit() {
+		stopNXTMessager();
 		disconnectAllDevices();
 		System.out.println("Exiting...");
 		System.exit(0);
@@ -106,14 +107,14 @@ public class Wiibugger {
 		
 		wiimote1 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(0);
 		wiimote1.setLEDLights(new boolean[] { true, false, false, false });
-		wiimote1.enableEventHandling();
 		wiimote1.setAccelerometerEnabled(true);
+		wiimote1.enableEventHandling();
 		
 
 		wiimote2 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(1);
 		wiimote2.setLEDLights(new boolean[] { false, false, false, true });
-		wiimote2.enableEventHandling();
 		wiimote2.setAccelerometerEnabled(true);
+		wiimote2.enableEventHandling();
 		// TODO enable Buttons on one of the wiimotes (driving!)
 		
 		return true;
@@ -214,6 +215,10 @@ public class Wiibugger {
 
 	public static void startNXTMessager() {
 		NXTMessager.getNXTMessager().start();
+	}
+	
+	public static void stopNXTMessager() {
+		NXTMessager.getNXTMessager().quit();
 	}
 
 	public static boolean isWindows(){
