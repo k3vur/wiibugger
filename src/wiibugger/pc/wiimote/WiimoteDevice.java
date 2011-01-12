@@ -5,11 +5,11 @@ public abstract class WiimoteDevice {
 
 	public abstract void setLEDLights(boolean[] LEDs);
 	
-	public abstract void addWiiRemoteListener(WiimoteDeviceListener listener);
+	public abstract void addWiiRemoteListener();
 	
 	public abstract void setAccelerometerEnabled(boolean enabled);
 	
-	public abstract void removeWiiRemoteListener(WiimoteDeviceListener listener);
+	public abstract void removeWiiRemoteListener();
 
 	public abstract void disconnect();
 
