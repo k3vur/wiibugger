@@ -29,8 +29,11 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 
 	@Override
 	public void accelerationInputReceived(WRAccelerationEvent evt) {
-		// TODO Auto-generated method stub
-
+		double xAcceleration = evt.getXAcceleration();
+		double yAcceleration = evt.getYAcceleration();
+		double zAcceleration = evt.getZAcceleration();
+		
+		System.out.println("x: " + xAcceleration + "y: " + yAcceleration + "z: " + zAcceleration);
 	}
 
 	@Override
