@@ -27,7 +27,7 @@ public class WiiuseJScanner extends WiimoteScanner {
 			return;
 		}
 		for(int i = 0; i < wiimotes.length; i++) {
-			wiimotes[i].setLeds(true, true, true, true);
+		//	wiimotes[i].setLeds(true, true, true, true);
 			Wiibugger.getWiimoteList().add(new WiiuseJDevice(wiimotes[i]));;
 			System.out.println("Found wiimote " + wiimotes[i].getId());
 		}

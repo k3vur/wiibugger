@@ -58,9 +58,8 @@ public class NXTDevice {
 	}
 	
 	public boolean open() {
-		
 		System.out.println("Open connection to NXT " + info.deviceAddress + "...");
-		
+
 		try {
 			this.communication.open(info);
 		} catch (NXTCommException e) {

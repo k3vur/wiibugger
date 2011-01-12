@@ -1,4 +1,5 @@
 package wiibugger.pc.wiimote.wiiusej;
+import wiibugger.pc.wiimote.WiimoteEventHandler;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
@@ -12,6 +13,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.GuitarHeroRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
+import wiiusej.wiiusejevents.wiiuseapievents.WiimoteEvent;
 
 
 public class WiiuseJListener implements WiimoteListener{
@@ -24,7 +26,10 @@ public class WiiuseJListener implements WiimoteListener{
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent event) {
 		if(event.isButtonAPressed())
-			System.out.println("bla");
+			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.A_BUTTON);
+
+		if(event.isButtonBPressed())
+			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.B_BUTTON);
 	}
 
 	@Override

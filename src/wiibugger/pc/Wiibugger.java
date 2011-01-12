@@ -95,13 +95,23 @@ public class Wiibugger {
 
 	public static boolean initWiimotes() {
 		
+		/* TODO reenable if you want the set1/2 buttons back
 		if (wiimote1 == null || wiimote2 == null) {
 			return false;
 		}
-				
+		*/
+		
+		if(Wiibugger.getWiimoteList().getSize() < 2)
+			return false;
+		
+		wiimote1 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(0);
+		wiimote1.setLEDLights(new boolean[] { true, false, false, false });
 		wiimote1.enableEventHandling();
 		wiimote1.setAccelerometerEnabled(true);
 		
+
+		wiimote2 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(1);
+		wiimote2.setLEDLights(new boolean[] { false, false, false, true });
 		wiimote2.enableEventHandling();
 		wiimote2.setAccelerometerEnabled(true);
 		// TODO enable Buttons on one of the wiimotes (driving!)
@@ -198,6 +208,9 @@ public class Wiibugger {
 		
 		System.out.println("Set Wiimote 2 to " + wiimote2.getBluetoothAddress());
 	}
+	
+	
+	
 
 	public static void startNXTMessager() {
 		NXTMessager.getNXTMessager().start();

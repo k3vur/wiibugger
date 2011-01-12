@@ -18,7 +18,7 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 	
 	@Override
 	public void disconnect() {
-		wiimote.disconnect();
+		wiimote.disconnect();		
 	}
 
 	@Override
@@ -28,18 +28,19 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	@Override
 	public void setAccelerometerEnabled(boolean enabled) {
-		this.activateMotionSensing(wiimote.getId());
+		//this.activateMotionSensing(wiimote.getId());
 	}
 
 	@Override
 	public void setLEDLights(boolean[] LEDs) {
-		wiimote.setLeds(LEDs[0], LEDs[1], LEDs[2], LEDs[4]);
+		wiimote.setLeds(LEDs[0], LEDs[1], LEDs[2], LEDs[3]);
 	}
 
 	@Override
 	public void enableEventHandling() {
 		WiiuseJListener listener = new WiiuseJListener();
 		wiimote.addWiiMoteEventListeners(listener);
+		System.out.println("listener added");
 	}
 
 	@Override

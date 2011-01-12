@@ -29,6 +29,8 @@ public class NXTMessager extends Thread {
 		 * Just a dummy to make the constructor private
 		 */
 		super();
+		sending = true;
+		messageQueue = new LinkedBlockingQueue<NXTMessage>();
 	}
 	
 	synchronized private void deliverNextMessage() throws InterruptedException, IOException {
@@ -38,8 +40,7 @@ public class NXTMessager extends Thread {
 	}
 
 	public void run() {
-		while (sending) {
-						
+		while (sending) {					
 			try {
 				deliverNextMessage();
 				Thread.sleep(NXTMessager.interval);
@@ -56,5 +57,4 @@ public class NXTMessager extends Thread {
 	public void send(NXTMessage message) {
 		messageQueue.offer(message);
 	}
-
 }
