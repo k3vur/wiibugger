@@ -13,7 +13,6 @@ import wiiusej.wiiusejevents.wiiuseapievents.GuitarHeroRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
-import wiiusej.wiiusejevents.wiiuseapievents.WiimoteEvent;
 
 
 public class WiiuseJListener implements WiimoteListener{

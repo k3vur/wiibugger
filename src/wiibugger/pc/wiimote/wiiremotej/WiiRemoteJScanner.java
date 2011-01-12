@@ -1,5 +1,7 @@
 package wiibugger.pc.wiimote.wiiremotej;
 
+import java.io.IOException;
+
 import wiibugger.pc.DeviceList;
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiibugger.pc.wiimote.WiimoteScanner;
@@ -28,9 +30,14 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 			
 			try {
 				remote = WiiRemoteJ.findRemote();
-			} catch (Exception e) {
-				// TODO: handle findRemote() exception
-				System.out.println("Exception while finding Wiimotes");
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			if (remote != null) {

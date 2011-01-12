@@ -1,11 +1,8 @@
 package wiibugger.pc.wiimote.wiiusej;
 
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiiusej.WiiUseApi;
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
-import wiiusej.wiiusejevents.utils.WiiUseApiListener;
-import wiiusej.wiiusejevents.wiiuseapievents.WiiUseApiEvent;
 
 public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 

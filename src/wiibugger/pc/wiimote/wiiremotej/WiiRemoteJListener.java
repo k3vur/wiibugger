@@ -1,5 +1,6 @@
 package wiibugger.pc.wiimote.wiiremotej;
 
+import wiibugger.pc.wiimote.WiimoteEventHandler;
 import wiiremotej.WiiRemoteExtension;
 import wiiremotej.event.WRAccelerationEvent;
 import wiiremotej.event.WRButtonEvent;
@@ -34,8 +35,13 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 
 	@Override
 	public void buttonInputReceived(WRButtonEvent evt) {
-		// TODO Auto-generated method stub
-
+		if (evt.isPressed(WRButtonEvent.A)) {
+			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.A_BUTTON);
+		}
+		
+		if (evt.isPressed(WRButtonEvent.B)) {
+			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.B_BUTTON);
+		}
 	}
 
 	@Override
