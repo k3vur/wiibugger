@@ -29,13 +29,13 @@ public class WiiuseJDevice extends WiimoteDevice{
 	}
 
 	@Override
-	public void addWiiRemoteListener() {
+	public void enableEventHandling() {
 		WiiuseJListener listener = new WiiuseJListener();
 		wiimote.addWiiMoteEventListeners(listener);
 	}
 
 	@Override
-	public void removeWiiRemoteListener() {
+	public void disableEventHandling() {
 		wiimote.removeWiiMoteEventListeners(listener);
 	}
 }

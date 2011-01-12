@@ -1,50 +1,62 @@
 package wiibugger.pc.wiimote.wiiremotej;
 
+import java.io.IOException;
+
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiiremotej.WiiRemote;
 
 public class WiiRemoteJDevice extends WiimoteDevice {
 
-	private WiiRemote wiiRemoteJ;
+	private WiiRemote wiimote;
 	
 	public WiiRemoteJDevice(WiiRemote wiimote) {
-		this.wiiRemoteJ = wiimote;
+		this.wiimote = wiimote;
 	}
 
 	@Override
 	public void setLEDLights(boolean[] LEDs) {
-		// TODO Auto-generated method stub
-
+		try {
+			wiimote.setLEDLights(LEDs);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void addWiiRemoteListener() {
-		// TODO Auto-generated method stub
-
+	public void enableEventHandling() {
+		wiimote.addWiiRemoteListener(WiiRemoteJListener.getListener());
 	}
 
 	@Override
 	public void setAccelerometerEnabled(boolean enabled) {
-		// TODO Auto-generated method stub
-
+		try {
+			wiimote.setAccelerometerEnabled(enabled);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void removeWiiRemoteListener() {
-		// TODO Auto-generated method stub
-
+	public void disableEventHandling() {
+		wiimote.removeWiiRemoteListener(WiiRemoteJListener.getListener());
 	}
 
 	@Override
 	public void disconnect() {
-		// TODO Auto-generated method stub
-
+		wiimote.disconnect();
 	}
 
 	@Override
 	public String getBluetoothAddress() {
-		// TODO Auto-generated method stub
-		return null;
+		return wiimote.getBluetoothAddress();
 	}
 
 }

@@ -96,10 +96,10 @@ public class Wiibugger {
 			return false;
 		}
 				
-		wiimote1.addWiiRemoteListener();
+		wiimote1.enableEventHandling();
 		wiimote1.setAccelerometerEnabled(true);
 		
-		wiimote2.addWiiRemoteListener();
+		wiimote2.enableEventHandling();
 		wiimote2.setAccelerometerEnabled(true);
 		// TODO enable Buttons on one of the wiimotes (driving!)
 		
