@@ -8,6 +8,10 @@ public class WiiuseJDevice extends WiimoteDevice{
 	private Wiimote wiimote;
 	private WiiuseJListener listener;
 
+	WiiuseJDevice(Wiimote wiimote) {
+		this.wiimote = wiimote;
+	}
+	
 	@Override
 	public void disconnect() {
 		wiimote.disconnect();
@@ -37,5 +41,10 @@ public class WiiuseJDevice extends WiimoteDevice{
 	@Override
 	public void disableEventHandling() {
 		wiimote.removeWiiMoteEventListeners(listener);
+	}
+	
+	@Override
+	public String toString() {
+		return this.wiimote.getId()+"";
 	}
 }

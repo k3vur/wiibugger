@@ -24,5 +24,4 @@ public class ScanWiimoteAction extends AbstractAction implements Runnable {
 	public void run() {
 		this.setEnabled(true);
 	}
-
 }

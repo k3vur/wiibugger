@@ -6,7 +6,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import wiiremotej.WiiRemote;
+import wiibugger.pc.wiimote.WiimoteDevice;
 
 /**
  * Overrides getListCellRendererComponent because WiiRemote doesn't have a toString() method.
@@ -20,7 +20,7 @@ public class WiimoteListCellRenderer extends DefaultListCellRenderer {
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		JLabel label = (JLabel)super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-		String labelText = ((WiiRemote) value).getBluetoothAddress();
+		String labelText = ((WiimoteDevice) value).getBluetoothAddress();
 		
 		if (labelText == null) {
 			labelText = "No Adress"; 

@@ -40,6 +40,5 @@ public abstract class WiimoteScanner extends Thread {
 		this.wiimoteList = wiimoteList;
 		this.numberOfScans = numberOfScans;
 		this.callback = callback;
-	}
-	
+	}	
 }

@@ -63,9 +63,10 @@ public class WiiuseJListener implements WiimoteListener{
 	}
 
 	@Override
-	public void onMotionSensingEvent(MotionSensingEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void onMotionSensingEvent(MotionSensingEvent event) {
+		event.getRawAcceleration().getX();
+		event.getRawAcceleration().getY();
+		event.getRawAcceleration().getZ();
 	}
 
 	@Override
