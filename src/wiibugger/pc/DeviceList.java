@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.AbstractListModel;
 
-import wiiremotej.WiiRemote;
-
 public class DeviceList<DeviceType> extends AbstractListModel {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +42,7 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 		this.fireIntervalRemoved(this, i, i);
 	}
 	
-	public void remove(WiiRemote remote) {
+	public void remove(DeviceType remote) {
 		int index = this.deviceList.indexOf(remote);
 		if (index != -1) {
 			remove(index);

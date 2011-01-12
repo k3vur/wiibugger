@@ -1,13 +1,10 @@
 package wiibugger.pc;
 
-import java.io.IOException;
-
 import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
-import wiibugger.pc.wiimote.WiimoteDeviceListener;
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiiremotej.WiiRemote;
+import wiibugger.pc.wiimote.WiimoteDeviceListener;
 
 public class Wiibugger {
 
@@ -193,6 +190,27 @@ public class Wiibugger {
 
 	public static void startNXTMessager() {
 		NXTMessager.getNXTMessager().start();
+	}
+
+	public static boolean isWindows(){
+		 
+		String os = System.getProperty("os.name").toLowerCase();
+	    return (os.indexOf( "win" ) >= 0); 
+ 
+	}
+ 
+	public static boolean isMac(){
+ 
+		String os = System.getProperty("os.name").toLowerCase();
+	    return (os.indexOf( "mac" ) >= 0); 
+ 
+	}
+ 
+	public static boolean isLinux(){
+ 
+		String os = System.getProperty("os.name").toLowerCase();
+	    return (os.indexOf("linux") >= 0);
+ 
 	}
 	
 }
