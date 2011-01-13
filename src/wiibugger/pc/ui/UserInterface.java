@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import wiibugger.pc.RunWiibuggerAction;
 import wiibugger.pc.ScanNxtAction;
 import wiibugger.pc.ScanWiimoteAction;
+import wiibugger.pc.StopWiibuggerAction;
 import wiibugger.pc.Wiibugger;
 
 public class UserInterface {
@@ -34,6 +35,7 @@ public class UserInterface {
 	private static JPanel wiimotePanel, wiimoteToolbar, nxtPanel, runPanel;
 	private static SetWiimoteListener setWiimoteListener;
 	private static RunWiibuggerAction runWiibuggerAction;
+	private static StopWiibuggerAction stopWiibuggerAction;
 	private static ScanNxtAction scanNXTAction;
 	private static ScanWiimoteAction scanWiimoteAction;
 	
@@ -105,7 +107,7 @@ public class UserInterface {
 
 	private static Component getStopButton() {
 		if (UserInterface.stopButton == null) {
-			stopButton = new JButton("Stop Wiibugger :-(");
+			stopButton = new JButton(getStopWiibuggerAction());
 		}
 		return UserInterface.stopButton;
 	}
@@ -232,6 +234,13 @@ public class UserInterface {
 			runWiibuggerAction = new RunWiibuggerAction();
 		}
 		return UserInterface.runWiibuggerAction;
+	}
+	
+	public static StopWiibuggerAction getStopWiibuggerAction() {
+		if(UserInterface.stopButton == null) {
+			stopWiibuggerAction = new StopWiibuggerAction();
+		}
+		return UserInterface.stopWiibuggerAction;
 	}
 
 	public static ScanWiimoteAction getScanWiimotesAction() {

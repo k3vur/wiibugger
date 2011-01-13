@@ -39,9 +39,10 @@ public class NXTDevice {
 			return null;
 		}
 		
+		/*
 		try {
 			int available = communication.available();
-			if( available < 1) {
+			if( available == 0) {
 				System.out.println("No NXT connected");
 				return null;
 			} else {
@@ -51,6 +52,7 @@ public class NXTDevice {
 			System.out.println("No NXT available...");
 			e1.printStackTrace();
 		}
+		*/
 		NXTInfo[] nxtInfo = null;
 		try {
 			nxtInfo = communication.search(null ,NXTCommFactory.BLUETOOTH);

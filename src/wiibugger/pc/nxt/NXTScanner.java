@@ -25,7 +25,7 @@ public class NXTScanner extends Thread {
 	@Override
 	public void run() {
 		System.out.println("Scanning for NXT's...");
-
+		
 		NXTDevice[] nxtDevices = NXTDevice.connectToNXT();
 		if(nxtDevices != null) {
 			for(NXTDevice dev : nxtDevices) {
