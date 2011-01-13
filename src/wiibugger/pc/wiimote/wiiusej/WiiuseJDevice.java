@@ -15,7 +15,8 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 	
 	@Override
 	public void disconnect() {
-		wiimote.disconnect();		
+		wiimote.disconnect();	
+		
 	}
 
 	@Override

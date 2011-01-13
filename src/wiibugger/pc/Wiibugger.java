@@ -7,6 +7,8 @@ import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
 import wiibugger.pc.wiimote.WiimoteDevice;
+import wiibugger.pc.wiimote.wiiusej.WiiuseJListener;
+import wiiusej.WiiUseApiManager;
 
 public class Wiibugger {
 
@@ -40,6 +42,7 @@ public class Wiibugger {
 		for (WiimoteDevice wiimote : getWiimoteList().toArrayList()) {
 			wiimote.disconnect();
 		}
+		
 		getWiimoteList().clear();
 	}
 
@@ -159,8 +162,7 @@ public class Wiibugger {
 		} catch (BluetoothStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-    	
+		}	
     	
     	UserInterface.init();
 
@@ -209,9 +211,6 @@ public class Wiibugger {
 		
 		System.out.println("Set Wiimote 2 to " + wiimote2.getBluetoothAddress());
 	}
-	
-	
-	
 
 	public static void startNXTMessager() {
 		NXTMessager.getNXTMessager().start();

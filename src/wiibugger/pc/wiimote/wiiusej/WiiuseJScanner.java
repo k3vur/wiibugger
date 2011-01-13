@@ -21,7 +21,6 @@ public class WiiuseJScanner extends WiimoteScanner {
 	public void run() {
 		System.out.println("Scanning for Wiimotes using WiiuseJ...");
 		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
-		
 		if(wiimotes.length == 0) {
 			System.out.println("No Wiimote Found");
 			return;
