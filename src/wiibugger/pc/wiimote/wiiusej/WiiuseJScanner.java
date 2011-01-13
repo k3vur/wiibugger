@@ -9,18 +9,18 @@ import wiiusej.Wiimote;
 
 public class WiiuseJScanner extends WiimoteScanner {
 
-	protected WiiuseJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
-		super(wiimoteList, numberOfScans, callback);
+	protected WiiuseJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {
+		super(wiimoteList, numberOfWiimotes, callback);
 	}
 	
-	public static WiiuseJScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {		
-		return new WiiuseJScanner(wiimoteList, numberOfScans, callback);
+	public static WiiuseJScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {		
+		return new WiiuseJScanner(wiimoteList, numberOfWiimotes, callback);
 	}
 	
 	@Override
 	public void run() {
 		System.out.println("Scanning for Wiimotes using WiiuseJ...");
-		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(2, true);
+		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(numberOfWiimotes, true);
 		
 		if(wiimotes.length == 0) {
 			System.out.println("No Wiimote Found");

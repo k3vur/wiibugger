@@ -11,12 +11,12 @@ import wiiremotej.event.WiiDeviceDiscoveryListener;
 
 public class WiiRemoteJScanner extends WiimoteScanner implements WiiDeviceDiscoveryListener {
 
-	protected WiiRemoteJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
-		super(wiimoteList, numberOfScans, callback);
+	protected WiiRemoteJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {
+		super(wiimoteList, numberOfWiimotes, callback);
 	}
 	
-	public static WiiRemoteJScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {		
-		return new WiiRemoteJScanner(wiimoteList, numberOfScans, callback);
+	public static WiiRemoteJScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {		
+		return new WiiRemoteJScanner(wiimoteList, numberOfWiimotes, callback);
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class WiiRemoteJScanner extends WiimoteScanner implements WiiDeviceDiscov
 	public void run() {
 		System.out.println("Scanning for Wiimotes using WiiRemoteJ...");
 		
-		WiiRemoteJ.findRemotes(this, 2);
+		WiiRemoteJ.findRemotes(this, numberOfWiimotes);
 		try {
 			Thread.sleep(15000);
 			WiiRemoteJ.stopFind();
