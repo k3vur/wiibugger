@@ -7,13 +7,10 @@ import lejos.nxt.Button;
 import lejos.nxt.Motor;
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
+import wiibugger.communication.NXTMessage;
 
 
 public class Main {
-	
-	public static final byte MOTOR_A = 1;
-	public static final byte MOTOR_B = 2;
-	public static final byte MOTOR_C = 3;
 
 	static BTConnection btConnection;
 	static DataInputStream inStream;
@@ -31,32 +28,67 @@ public class Main {
 		
 		running = true;
 		
-		byte motor;
-		short speed;
+		short input;
 		while(running) {
 			try {
-				motor = inStream.readByte();
-				speed = inStream.readShort();
-				processMessage(motor, speed);
+				input = inStream.readShort();
+				processMessage(input);
 			} catch (IOException e) {
 				System.out.println("IOException");
 			}
 		}
 	}
 	
-	public static void processMessage(byte motor, short speed) {
-		switch(motor) {
-		case MOTOR_A:
-			Motor.A.forward();
+	public static void processMessage(short input) {
+		NXTMessage msg = new NXTMessage(input);
+		
+		short port = msg.getPort();
+		if(port == NXTMessage.PORT_A || port == NXTMessage.PORT_B || port == NXTMessage.PORT_C)
+			motorAction(msg);
+		
+	}
+	
+	private static void motorAction(NXTMessage msg) {
+		Motor motor = null;
+		switch(msg.getPort()) {
+		case NXTMessage.PORT_A:
+			motor = Motor.A;
 			break;
-		case MOTOR_B:
-			Motor.A.stop();
+		case NXTMessage.PORT_B:
+			motor = Motor.B;
 			break;
-		case MOTOR_C:
-			Motor.C.forward();
+		case NXTMessage.PORT_C:
+			motor = Motor.C;
 			break;
 		default:
-			System.out.println("Motor does not exist");
+			System.out.println("unkown port");
+			return;
+		}
+		
+		switch(msg.getOperation()) {
+		case NXTMessage.MOTOR_FORWARD:
+			if(msg.getValue() != 0)
+				motor.setSpeed(msg.getValue());
+			motor.forward();
+			break;
+		case NXTMessage.MOTOR_BACKWARD:
+			if(msg.getValue() != 0)
+				motor.setSpeed(msg.getValue());
+			motor.backward();
+			break;
+		case NXTMessage.MOTOR_STOP:
+			motor.stop();
+			break;
+		case NXTMessage.MOTOR_ROTATE:
+			motor.rotate(msg.getValue());
+			break;
+		case NXTMessage.MOTOR_ROTATE_TO:
+			motor.rotateTo(msg.getValue());
+		case NXTMessage.MOTOR_FLOAT:
+			motor.flt();
+			break;
+		default:
+			System.out.println("motor action unkown");
 		}
 	}
 }

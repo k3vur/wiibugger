@@ -3,6 +3,9 @@ package wiibugger.pc.nxt;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import wiibugger.communication.NXTMessage;
+import wiibugger.pc.Wiibugger;
+
 
 
 public class NXTMessager extends Thread {
@@ -35,8 +38,8 @@ public class NXTMessager extends Thread {
 	
 	synchronized private void deliverNextMessage() throws InterruptedException, IOException {
 		currMessage = messageQueue.take();
-		currMessage.device.send(currMessage.motor);
-		currMessage.device.send(currMessage.speed);
+		NXTDevice nxt = Wiibugger.getNXTList().getElementAt(currMessage.getNxtDevice());
+		nxt.send(currMessage.getOutput());
 	}
 
 	public void run() {

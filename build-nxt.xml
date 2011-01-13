@@ -4,7 +4,7 @@
     </description>
 
   <!-- set properties for this build -->
-  <property name="src" location="src/wiibugger/nxt"/>
+  <property name="src" location="src/wiibugger"/>
   <property name="bin" location="bin/nxt" />
   <property name="binary" value="wiibugger.nxj"/>
   <property file="build-nxt.properties"/>
@@ -23,13 +23,15 @@
 	<mkdir dir="${bin}" />
   </target>
 
-  <target name="compile" depends="clean" description="compile the source" >
+  <target name="compile" depends="clean" description="compile the source">
     <!-- Compile the java code from ${src}  -->
-    <javac srcdir="${src}" destdir="${bin}">
+    <javac srcdir="${src}" destdir="${bin}" failonerror="true">
 	  <bootclasspath>
 	    <pathelement location="lib/LeJOS/classes.jar" />
 	    <pathelement location="lib/LeJOS/jtools.jar" />
 	  </bootclasspath>
+    	<include name="nxt/*.java"/>
+    	<include name="communication/*.java"/>
     </javac>
   </target>
 

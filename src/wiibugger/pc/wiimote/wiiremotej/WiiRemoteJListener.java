@@ -39,11 +39,11 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 	@Override
 	public void buttonInputReceived(WRButtonEvent evt) {
 		if (evt.wasPressed(WRButtonEvent.A)) {
-			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.A_BUTTON);
+			WiimoteEventHandler.ButtonPressed(WiimoteEventHandler.A_BUTTON);
 		}
 		
 		if (evt.wasPressed(WRButtonEvent.B)) {
-			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.B_BUTTON);
+			WiimoteEventHandler.ButtonPressed(WiimoteEventHandler.B_BUTTON);
 		}
 	}
 

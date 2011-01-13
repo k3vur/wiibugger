@@ -24,11 +24,18 @@ public class WiiuseJListener implements WiimoteListener{
 	
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent event) {
+		
 		if(event.isButtonAPressed())
-			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.A_BUTTON);
+			WiimoteEventHandler.ButtonPressed(WiimoteEventHandler.A_BUTTON);
+		
+		if(event.isButtonAJustReleased()) 
+			WiimoteEventHandler.ButtonReleased(WiimoteEventHandler.A_BUTTON);
 
 		if(event.isButtonBPressed())
-			WiimoteEventHandler.ButtonEvent(WiimoteEventHandler.B_BUTTON);
+			WiimoteEventHandler.ButtonPressed(WiimoteEventHandler.B_BUTTON);
+
+		if(event.isButtonBJustReleased()) 
+			WiimoteEventHandler.ButtonReleased(WiimoteEventHandler.B_BUTTON);
 	}
 
 	@Override

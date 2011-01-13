@@ -1,9 +1,8 @@
 package wiibugger.pc.wiimote;
 
-import wiibugger.nxt.Main;
+import wiibugger.communication.NXTMessage;
 import wiibugger.pc.Wiibugger;
 import wiibugger.pc.nxt.NXTDevice;
-import wiibugger.pc.nxt.NXTMessage;
 import wiibugger.pc.nxt.NXTMessager;
 
 public class WiimoteEventHandler {
@@ -13,21 +12,30 @@ public class WiimoteEventHandler {
 	public static void AccelerationEvent(float x, float y, float z, int wiimoteNumber) {
 		NXTMessager messager = NXTMessager.getNXTMessager();
 		NXTDevice nxt = (NXTDevice) Wiibugger.getNXTList().getElementAt(wiimoteNumber);
-		
-		// TODO
-		byte motor = 0;
-		short speed = 0;
-		messager.send(new NXTMessage(nxt, motor, speed));
+
 	}
-	public static void ButtonEvent(int button) {
-		NXTDevice nxt = (NXTDevice) Wiibugger.getNXTList().getElementAt(0);
+	public static void ButtonPressed(int button) {
 		switch(button) {
 		case A_BUTTON:
-			NXTMessager.getNXTMessager().send(new NXTMessage(nxt, Main.MOTOR_A , (short)0));
+			
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_FORWARD, (short)0));
 			break;
 		case B_BUTTON:
-			NXTMessager.getNXTMessager().send(new NXTMessage(nxt, Main.MOTOR_B , (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_FORWARD, (short)0));
+			
 			break;
 		}
+	}
+	public static void ButtonReleased(int button) {
+		switch(button) {
+		case A_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
+			
+			break;
+		case B_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
+			
+			break;
+		}		
 	}
 }

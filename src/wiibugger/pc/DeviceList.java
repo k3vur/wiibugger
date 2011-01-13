@@ -28,7 +28,7 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 	}
 	
 	@Override
-	public Object getElementAt(int i) {
+	public DeviceType getElementAt(int i) {
 		return this.deviceList.get(i);
 	}
 	
