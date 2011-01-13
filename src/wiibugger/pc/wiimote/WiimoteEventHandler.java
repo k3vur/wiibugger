@@ -18,10 +18,10 @@ public class WiimoteEventHandler {
 		switch(button) {
 		case A_BUTTON:
 			
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_FORWARD, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_BACKWARD, (short)0));
 			break;
 		case B_BUTTON:
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_FORWARD, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_BACKWARD, (short)0));
 			
 			break;
 		}

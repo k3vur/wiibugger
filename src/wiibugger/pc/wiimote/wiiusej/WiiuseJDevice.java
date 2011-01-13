@@ -20,7 +20,7 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	@Override
 	public String getBluetoothAddress() {
-		return wiimote.toString();
+		return wiimote.getId()+"";
 	}
 
 	@Override
