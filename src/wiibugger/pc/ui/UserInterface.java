@@ -77,9 +77,7 @@ public class UserInterface {
 	private static JList getNXTList() {
 		if (UserInterface.nxtList == null) {
 			nxtList = new JList();
-
 			nxtList.setModel(Wiibugger.getNXTList());
-			nxtList.setCellRenderer(new NXTListCellRenderer());
 		}
 		return UserInterface.nxtList;
 	}
@@ -158,7 +156,6 @@ public class UserInterface {
 		if (UserInterface.wiimoteList == null) {
 			wiimoteList = new JList();
 			wiimoteList.setModel(Wiibugger.getWiimoteList());
-			wiimoteList.setCellRenderer(new WiimoteListCellRenderer());
 		}
 		return UserInterface.wiimoteList;
 	}
