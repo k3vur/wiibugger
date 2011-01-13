@@ -58,5 +58,10 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 	public String getBluetoothAddress() {
 		return wiimote.getBluetoothAddress();
 	}
+	
+	@Override
+	public String toString() {
+		return wiimote.getBluetoothAddress();
+	}
 
 }
