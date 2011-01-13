@@ -1,14 +1,15 @@
 package wiibugger.pc.wiimote.wiiremotej;
 
-import java.io.IOException;
-
 import wiibugger.pc.DeviceList;
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiibugger.pc.wiimote.WiimoteScanner;
+import wiiremotej.WiiDevice;
 import wiiremotej.WiiRemote;
 import wiiremotej.WiiRemoteJ;
+import wiiremotej.event.WiiDeviceDiscoveredEvent;
+import wiiremotej.event.WiiDeviceDiscoveryListener;
 
-public class WiiRemoteJScanner extends WiimoteScanner {
+public class WiiRemoteJScanner extends WiimoteScanner implements WiiDeviceDiscoveryListener {
 
 	protected WiiRemoteJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
 		super(wiimoteList, numberOfScans, callback);
@@ -25,39 +26,34 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 	public void run() {
 		System.out.println("Scanning for Wiimotes using WiiRemoteJ...");
 		
-		WiiRemote remote = null;
-		for (int i = 0; i < numberOfScans; i++) {
-			
-			try {
-				remote = WiiRemoteJ.findRemote();
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			if (remote != null) {
-				WiiRemoteJDevice wiimoteDevice = new WiiRemoteJDevice(remote);
-				try {
-					wiimoteDevice.setLEDLights(new boolean[] { true, true, true, true });
-				} catch (Exception e) {
-					System.out.println("Could not set LED for " + wiimoteDevice.getBluetoothAddress());
-				} 
-				wiimoteList.add(wiimoteDevice);
-				remote = null;
-				wiimoteDevice = null;
-			}
-			
+		WiiRemoteJ.findRemotes(this, 2);
+		try {
+			Thread.sleep(15000);
+			WiiRemoteJ.stopFind();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		if (callback != null) {
-			callback.run();
-		}		
+	}
+
+	@Override
+	public void findFinished(int numberFound) {
 		System.out.println("Finished scanning");
+		callback.run();
+	}
+
+	@Override
+	public void wiiDeviceDiscovered(WiiDeviceDiscoveredEvent evt) {
+		WiiDevice device = evt.getWiiDevice();
+		if (device instanceof WiiRemote) {
+			WiiRemoteJDevice remote = new WiiRemoteJDevice((WiiRemote) device);
+			try {
+				remote.setLEDLights(new boolean[] { true, true, true, true });
+			} catch (Exception e) {
+				System.out.println("Could not set LED for " + remote.getBluetoothAddress());
+			} 
+			wiimoteList.add(remote);
+		}
 	}
 	
 }
