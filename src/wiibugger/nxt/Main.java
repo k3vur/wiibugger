@@ -42,6 +42,8 @@ public class Main {
 	public static void processMessage(short input) {
 		NXTMessage msg = new NXTMessage(input);
 		
+		System.out.println("msg value: " + msg.getValue());
+		
 		short port = msg.getPort();
 		if(port == NXTMessage.PORT_A || port == NXTMessage.PORT_B || port == NXTMessage.PORT_C)
 			motorAction(msg);

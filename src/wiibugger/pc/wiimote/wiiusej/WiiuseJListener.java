@@ -1,5 +1,7 @@
 package wiibugger.pc.wiimote.wiiusej;
+import wiibugger.pc.wiimote.WiimoteDevice;
 import wiibugger.pc.wiimote.WiimoteEventHandler;
+import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
@@ -84,11 +86,10 @@ public class WiiuseJListener implements WiimoteListener{
 
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent event) {
-		float x = event.getRawAcceleration().getX();
-		float y = event.getRawAcceleration().getY();
-		float z = event.getRawAcceleration().getZ();
+		float x = event.getOrientation().getRoll();
+		float y = event.getOrientation().getPitch();
 
-		System.out.println("x: " + x + "y: " + y + "z: " + z);
+		WiimoteEventHandler.orientationEvent(x, y, leftOrRight);
 	}
 
 	@Override

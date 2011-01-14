@@ -18,7 +18,7 @@ public class Wiibugger {
 	public static final String applicationTitle = "Wiibugger";
 	
 	private static DeviceList<NXTDevice> nxtList;
-	private static WiimoteDevice wiimote1, wiimote2; // TODO rename the two wiimotes?
+	private static WiimoteDevice wiimoteRight, wiimoteLeft; // TODO rename the two wiimotes?
 	
 	private static DeviceList<WiimoteDevice> wiimoteList;
 			
@@ -83,11 +83,11 @@ public class Wiibugger {
 	}
 	
 	public static WiimoteDevice getWiimote1() {
-		return Wiibugger.wiimote1;
+		return Wiibugger.wiimoteRight;
 	}
 
 	public static WiimoteDevice getWiimote2() {
-		return Wiibugger.wiimote2;
+		return Wiibugger.wiimoteLeft;
 	}
 
 	public static DeviceList<WiimoteDevice> getWiimoteList() {
@@ -108,16 +108,16 @@ public class Wiibugger {
 		if(Wiibugger.getWiimoteList().getSize() < 2)
 			return false;
 		
-		wiimote1 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(0);
-		wiimote1.setLEDLights(new boolean[] { true, false, false, false });
-		wiimote1.setAccelerometerEnabled(true);
-		wiimote1.enableEventHandling(WiimoteDevice.WIIMOTE_RIGHT);
+		wiimoteRight = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(0);
+		wiimoteRight.setLEDLights(new boolean[] { false, false, false, true});
+		wiimoteRight.setAccelerometerEnabled(true);
+		wiimoteRight.enableEventHandling(WiimoteDevice.WIIMOTE_RIGHT);
 		
 
-		wiimote2 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(1);
-		wiimote2.setLEDLights(new boolean[] { false, false, false, true });
-		wiimote2.setAccelerometerEnabled(true);
-		wiimote2.enableEventHandling(WiimoteDevice.WIIMOTE_LEFT);
+		wiimoteLeft = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(1);
+		wiimoteLeft.setLEDLights(new boolean[] { true, false, false, false});
+		wiimoteLeft.setAccelerometerEnabled(true);
+		wiimoteLeft.enableEventHandling(WiimoteDevice.WIIMOTE_LEFT);
 		// TODO enable Buttons on one of the wiimotes (driving!)
 		
 		return true;
@@ -169,7 +169,7 @@ public class Wiibugger {
 	}
 
 	public static boolean readyToRun() {
-		return (wiimote1 != null && wiimote2 != null);
+		return (wiimoteRight != null && wiimoteLeft != null);
 	}
 	
 	/**
@@ -184,32 +184,32 @@ public class Wiibugger {
 
 	public static void setWiimote1(WiimoteDevice wiimote) {
 		
-		if (wiimote1 != null) {
-			wiimote1.setLEDLights(new boolean[] { true, true, true, true });
+		if (wiimoteRight != null) {
+			wiimoteRight.setLEDLights(new boolean[] { true, true, true, true });
 		}
-		wiimote1 = wiimote;
-		wiimote1.setLEDLights(new boolean[] { true, false, false, false });
+		wiimoteRight = wiimote;
+		wiimoteRight.setLEDLights(new boolean[] { true, false, false, false });
 		
-		if (wiimote1 == wiimote2) {
-			wiimote2 = null;
+		if (wiimoteRight == wiimoteLeft) {
+			wiimoteLeft = null;
 		}
 		
-		System.out.println("Set Wiimote 1 to " + wiimote1.getBluetoothAddress());
+		System.out.println("Set Wiimote 1 to " + wiimoteRight.getBluetoothAddress());
 	}
 
 	public static void setWiimote2(WiimoteDevice wiimote) {
 
-		if (wiimote2 != null) {				
-			wiimote2.setLEDLights(new boolean[] { true, true, true, true });
+		if (wiimoteLeft != null) {				
+			wiimoteLeft.setLEDLights(new boolean[] { true, true, true, true });
 		}
-		wiimote2 = wiimote;
-		wiimote2.setLEDLights(new boolean[] { false, false, false, true });
+		wiimoteLeft = wiimote;
+		wiimoteLeft.setLEDLights(new boolean[] { false, false, false, true });
 		
-		if (wiimote2 == wiimote1) {
-			wiimote1 = null;
+		if (wiimoteLeft == wiimoteRight) {
+			wiimoteRight = null;
 		}
 		
-		System.out.println("Set Wiimote 2 to " + wiimote2.getBluetoothAddress());
+		System.out.println("Set Wiimote 2 to " + wiimoteLeft.getBluetoothAddress());
 	}
 
 	public static void startNXTMessager() {

@@ -29,7 +29,7 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	@Override
 	public void setAccelerometerEnabled(boolean enabled) {
-		//this.activateMotionSensing(wiimote.getId());
+		this.activateMotionSensing(wiimote.getId());
 	}
 
 	@Override
@@ -42,8 +42,7 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 		listener = new WiiuseJListener(leftOrRight);
 		wiimote.addWiiMoteEventListeners(listener);
-		
-		System.out.println("listener added");
+
 	}
 
 	@Override
