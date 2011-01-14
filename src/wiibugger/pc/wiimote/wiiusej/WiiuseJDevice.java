@@ -3,11 +3,12 @@ package wiibugger.pc.wiimote.wiiusej;
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
+import wiiusej.wiiusejevents.utils.WiimoteListener;
 
 public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	private Wiimote wiimote;
-	private WiiuseJListener listener;
+	private WiimoteListener listener;
 
 	WiiuseJDevice(Wiimote wiimote) {
 		this.wiimote = wiimote;
@@ -37,9 +38,11 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 	}
 
 	@Override
-	public void enableEventHandling() {
-		WiiuseJListener listener = new WiiuseJListener();
+	public void enableEventHandling(int leftOrRight) {
+
+		listener = new WiiuseJListener(leftOrRight);
 		wiimote.addWiiMoteEventListeners(listener);
+		
 		System.out.println("listener added");
 	}
 

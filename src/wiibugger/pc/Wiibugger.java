@@ -111,13 +111,13 @@ public class Wiibugger {
 		wiimote1 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(0);
 		wiimote1.setLEDLights(new boolean[] { true, false, false, false });
 		wiimote1.setAccelerometerEnabled(true);
-		wiimote1.enableEventHandling();
+		wiimote1.enableEventHandling(WiimoteDevice.WIIMOTE_RIGHT);
 		
 
 		wiimote2 = (WiimoteDevice) Wiibugger.getWiimoteList().getElementAt(1);
 		wiimote2.setLEDLights(new boolean[] { false, false, false, true });
 		wiimote2.setAccelerometerEnabled(true);
-		wiimote2.enableEventHandling();
+		wiimote2.enableEventHandling(WiimoteDevice.WIIMOTE_LEFT);
 		// TODO enable Buttons on one of the wiimotes (driving!)
 		
 		return true;
