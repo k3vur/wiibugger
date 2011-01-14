@@ -8,23 +8,23 @@ import wiibugger.pc.wiimote.wiiusej.WiiuseJScanner;
 
 public abstract class WiimoteScanner extends Thread {
 	
-	public static WiimoteScanner scan(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans) {
-		return scan(wiimoteList, numberOfScans, null);
+	public static WiimoteScanner scan(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes) {
+		return scan(wiimoteList, numberOfWiimotes, null);
 	}
 
-	public static WiimoteScanner scan(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callAfterFinish) {
-		WiimoteScanner scanner = getScanner(wiimoteList, numberOfScans, callAfterFinish);
+	public static WiimoteScanner scan(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callAfterFinish) {
+		WiimoteScanner scanner = getScanner(wiimoteList, numberOfWiimotes, callAfterFinish);
 		scanner.start();
 		return scanner;
 	}
 	
-	public static WiimoteScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
+	public static WiimoteScanner getScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {
 		WiimoteScanner scanner;
 		
 		if (Wiibugger.isMac()) {
-			scanner = WiiRemoteJScanner.getScanner(wiimoteList, numberOfScans, callback);
+			scanner = WiiRemoteJScanner.getScanner(wiimoteList, numberOfWiimotes, callback);
 		} else {
-			scanner = WiiuseJScanner.getScanner(wiimoteList, numberOfScans, callback);
+			scanner = WiiuseJScanner.getScanner(wiimoteList, numberOfWiimotes, callback);
 		}
 		
 		return scanner;
@@ -32,13 +32,13 @@ public abstract class WiimoteScanner extends Thread {
 
 	protected Runnable callback;
 	
-	protected int numberOfScans;
+	protected int numberOfWiimotes;
 	
 	protected DeviceList<WiimoteDevice> wiimoteList;
 	
-	protected WiimoteScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfScans, Runnable callback) {
+	protected WiimoteScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {
 		this.wiimoteList = wiimoteList;
-		this.numberOfScans = numberOfScans;
+		this.numberOfWiimotes = numberOfWiimotes;
 		this.callback = callback;
 	}	
 }
