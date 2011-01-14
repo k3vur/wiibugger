@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import wiibugger.pc.ui.UserInterface;
+import wiibugger.pc.wiimote.WiimoteDevice;
 import wiibugger.pc.wiimote.WiimoteScanner;
 
 public class ScanWiimoteAction extends AbstractAction implements Runnable {
@@ -19,7 +20,11 @@ public class ScanWiimoteAction extends AbstractAction implements Runnable {
 	public void actionPerformed(ActionEvent arg0) {
 		this.setEnabled(false);
 		UserInterface.getScanNXTAction().setEnabled(false);
-		WiimoteScanner.scan(Wiibugger.getWiimoteList(), 2, this);
+		DeviceList<WiimoteDevice> wiimoteList = Wiibugger.getWiimoteList();
+		int numberToScan = 2 - wiimoteList.getSize();
+		if (numberToScan > 0) {
+			WiimoteScanner.scan(wiimoteList, numberToScan, this);
+		}
 	}
 
 	@Override

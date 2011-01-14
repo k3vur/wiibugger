@@ -155,7 +155,7 @@ public class Wiibugger {
 			System.out.println(
 					"Your bluetooth-device:\n" +
 					"Name:\t" +bluetoothDevice.getFriendlyName() + "\n" +
-					"Adress:\t" + bluetoothDevice.getBluetoothAddress() + ")");
+					"Adress:\t" + bluetoothDevice.getBluetoothAddress());
 		} catch (BluetoothStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

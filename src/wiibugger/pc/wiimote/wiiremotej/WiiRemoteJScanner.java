@@ -1,15 +1,14 @@
 package wiibugger.pc.wiimote.wiiremotej;
 
+import java.io.IOException;
+
 import wiibugger.pc.DeviceList;
 import wiibugger.pc.wiimote.WiimoteDevice;
 import wiibugger.pc.wiimote.WiimoteScanner;
-import wiiremotej.WiiDevice;
 import wiiremotej.WiiRemote;
 import wiiremotej.WiiRemoteJ;
-import wiiremotej.event.WiiDeviceDiscoveredEvent;
-import wiiremotej.event.WiiDeviceDiscoveryListener;
 
-public class WiiRemoteJScanner extends WiimoteScanner implements WiiDeviceDiscoveryListener {
+public class WiiRemoteJScanner extends WiimoteScanner {
 
 	protected WiiRemoteJScanner(DeviceList<WiimoteDevice> wiimoteList, int numberOfWiimotes, Runnable callback) {
 		super(wiimoteList, numberOfWiimotes, callback);
@@ -19,6 +18,8 @@ public class WiiRemoteJScanner extends WiimoteScanner implements WiiDeviceDiscov
 		return new WiiRemoteJScanner(wiimoteList, numberOfWiimotes, callback);
 	}
 
+	private int foundDevices;
+	
 	/**
 	 * Scan for wiimotes
 	 */
@@ -26,34 +27,47 @@ public class WiiRemoteJScanner extends WiimoteScanner implements WiiDeviceDiscov
 	public void run() {
 		System.out.println("Scanning for Wiimotes using WiiRemoteJ...");
 		
-		WiiRemoteJ.findRemotes(this, numberOfWiimotes);
-		try {
-			Thread.sleep(15000);
-			WiiRemoteJ.stopFind();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		foundDevices = 0;
+		
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				foundDevices = numberOfWiimotes; 
+			}
+		}.start();
+		
+		while(foundDevices < numberOfWiimotes) {
+			WiiRemote remote = null;
+			
+			try {
+				remote = WiiRemoteJ.findRemote();
+				if (remote != null) {
+					remote.setLEDLights(new boolean[] { true, true, true, true });
+				}
+			} catch (IOException e) {
+				System.out.println("OH NOEZ CONNECT");
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if (remote != null) {
+				wiimoteList.add(new WiiRemoteJDevice(remote));
+				foundDevices++;
+			}
 		}
-	}
-
-	@Override
-	public void findFinished(int numberFound) {
+		
 		System.out.println("Finished scanning");
 		callback.run();
-	}
-
-	@Override
-	public void wiiDeviceDiscovered(WiiDeviceDiscoveredEvent evt) {
-		WiiDevice device = evt.getWiiDevice();
-		if (device instanceof WiiRemote) {
-			WiiRemoteJDevice remote = new WiiRemoteJDevice((WiiRemote) device);
-			try {
-				remote.setLEDLights(new boolean[] { true, true, true, true });
-			} catch (Exception e) {
-				System.out.println("Could not set LED for " + remote.getBluetoothAddress());
-			} 
-			wiimoteList.add(remote);
-		}
 	}
 	
 }

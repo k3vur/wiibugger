@@ -36,7 +36,7 @@ public class NXTMessager extends Thread {
 		messageQueue = new LinkedBlockingQueue<NXTMessage>();
 	}
 	
-	synchronized private void deliverNextMessage() throws InterruptedException, IOException {
+	private void deliverNextMessage() throws InterruptedException, IOException {
 		currMessage = messageQueue.take();
 		NXTDevice nxt = Wiibugger.getNXTList().getElementAt(currMessage.getNxtDevice());
 		nxt.send(currMessage.getOutput());
@@ -46,7 +46,6 @@ public class NXTMessager extends Thread {
 		while (sending) {					
 			try {
 				deliverNextMessage();
-				Thread.sleep(NXTMessager.interval);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -61,8 +60,10 @@ public class NXTMessager extends Thread {
 		messageQueue.offer(message);
 	}
 
-	synchronized public void quit() {
+	public void quit() {
 		sending = false;
 		messageQueue.clear();
+		System.out.println("Quitting NXT-messager");
+		send(new NXTMessage((short) 0));
 	}
 }
