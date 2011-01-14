@@ -38,7 +38,21 @@ public class NXTDevice {
 			e.printStackTrace();
 			return null;
 		}
-
+		
+		/*
+		try {
+			int available = communication.available();
+			if( available == 0) {
+				System.out.println("No NXT connected");
+				return null;
+			} else {
+				System.out.println(available + " NXTs available...");
+			}
+		} catch (IOException e1) {
+			System.out.println("No NXT available...");
+			e1.printStackTrace();
+		}
+		*/
 		NXTInfo[] nxtInfo = null;
 		try {
 			nxtInfo = communication.search(null ,NXTCommFactory.BLUETOOTH);

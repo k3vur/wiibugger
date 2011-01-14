@@ -27,7 +27,7 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 	}
 
 	@Override
-	public void enableEventHandling() {
+	public void enableEventHandling(int wiimotePosition) {
 		wiimote.addWiiRemoteListener(WiiRemoteJListener.getListener());
 	}
 

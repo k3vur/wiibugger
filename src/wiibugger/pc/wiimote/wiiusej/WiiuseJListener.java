@@ -16,26 +16,28 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 
 public class WiiuseJListener implements WiimoteListener{
-
-	public WiiuseJListener() {
-		System.out.println("WiiuseJListener added");
-		
+	
+	int leftOrRight;
+	
+	public WiiuseJListener(int wiimotePosition) {
+		System.out.println("WiiuseJListenerRight added");
+		this.leftOrRight = wiimotePosition;
 	}
 	
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent event) {
 		
 		if(event.isButtonAPressed())
-			WiimoteEventHandler.ButtonPressed(WiimoteEventHandler.A_BUTTON);
+			WiimoteEventHandler.buttonPressed(WiimoteEventHandler.A_BUTTON, leftOrRight);
 		
 		if(event.isButtonAJustReleased()) 
-			WiimoteEventHandler.ButtonReleased(WiimoteEventHandler.A_BUTTON);
+			WiimoteEventHandler.buttonReleased(WiimoteEventHandler.A_BUTTON, leftOrRight);
 
 		if(event.isButtonBPressed())
-			WiimoteEventHandler.ButtonPressed(WiimoteEventHandler.B_BUTTON);
+			WiimoteEventHandler.buttonPressed(WiimoteEventHandler.B_BUTTON, leftOrRight);
 
 		if(event.isButtonBJustReleased()) 
-			WiimoteEventHandler.ButtonReleased(WiimoteEventHandler.B_BUTTON);
+			WiimoteEventHandler.buttonReleased(WiimoteEventHandler.B_BUTTON, leftOrRight);
 	}
 
 	@Override

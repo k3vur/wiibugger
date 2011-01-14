@@ -9,33 +9,70 @@ public class WiimoteEventHandler {
 
 	public static final int A_BUTTON = 1;
 	public static final int B_BUTTON = 2;
-	public static void AccelerationEvent(float x, float y, float z, int wiimoteNumber) {
+	public static void accelerationEvent(float x, float y, float z, int wiimoteNumber) {
 		NXTMessager messager = NXTMessager.getNXTMessager();
 		NXTDevice nxt = (NXTDevice) Wiibugger.getNXTList().getElementAt(wiimoteNumber);
 
 	}
-	public static void ButtonPressed(int button) {
+	public static void buttonPressed(int button, int leftOrRight) {
+		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT)
+			buttonPressedLeft(button);
+		else
+			buttonPressedRight(button);
+	}
+	
+	private static void buttonPressedLeft(int button) {
 		switch(button) {
 		case A_BUTTON:
-			
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_BACKWARD, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_FORWARD, (short)0));
 			break;
 		case B_BUTTON:
 			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_BACKWARD, (short)0));
 			
 			break;
-		}
+		}				
 	}
-	public static void ButtonReleased(int button) {
+	
+	private static void buttonPressedRight(int button) {
 		switch(button) {
 		case A_BUTTON:
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
+			
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_FORWARD, (short)0));
+			break;
+		case B_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_BACKWARD, (short)0));
+			
+			break;
+		}		
+	}
+	public static void buttonReleased(int button, int leftOrRight) {
+		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT)
+			buttonReleasedLeft(button);
+		else
+			buttonReleasedRight(button);
+	}
+	private static void buttonReleasedLeft(int button) {
+		switch(button) {
+		case A_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
 			
 			break;
 		case B_BUTTON:
 			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
 			
 			break;
-		}		
+		}					
+	}
+	private static void buttonReleasedRight(int button) {
+		switch(button) {
+		case A_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
+			
+			break;
+		case B_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
+			
+			break;
+		}				
 	}
 }
