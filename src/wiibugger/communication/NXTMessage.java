@@ -19,11 +19,17 @@ public class NXTMessage {
 	public static final short MOTOR_ROTATE_TO = 4;
 	public static final short MOTOR_FLOAT = 5;
 	
+	public static final short CLOSE_MESSAGE = -127;
+	
 	private short nxtDevice;
 	private short port;
 	private short operation;
 	private short value;
-
+	
+	public static NXTMessage stopMessage(short nxtDevice) {
+		return new NXTMessage(nxtDevice, (short)7, (short)15, (short)511);
+	}
+	
 	public NXTMessage(short nxtDevice, short port, short operation, short value) throws IllegalArgumentException {
 		this.nxtDevice = nxtDevice; 
 		if(this.port > 7) throw new IllegalArgumentException();
@@ -32,8 +38,6 @@ public class NXTMessage {
 		this.operation = operation;
 		if(this.value > 511) throw new IllegalArgumentException();
 		this.value = value;
-		
-		
 	}
 		
 	public NXTMessage (short input) {	
@@ -57,10 +61,9 @@ public class NXTMessage {
 	public short getValue() {
 		return value;
 	}
-
-	
 	
 	public short getOutput () {
+		System.out.println((short)( (this.port << 13) | (this.operation << 9) | (this.value) ));
 		return (short)( (this.port << 13) | (this.operation << 9) | (this.value) ); 
 	}
 

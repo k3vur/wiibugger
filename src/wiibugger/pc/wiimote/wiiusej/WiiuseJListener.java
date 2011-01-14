@@ -1,7 +1,5 @@
 package wiibugger.pc.wiimote.wiiusej;
-import wiibugger.pc.wiimote.WiimoteDevice;
 import wiibugger.pc.wiimote.WiimoteEventHandler;
-import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
@@ -19,11 +17,32 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiuseJListener implements WiimoteListener{
 	
-	int leftOrRight;
+	private int leftOrRight;
+	private boolean sendMotion;
 	
 	public WiiuseJListener(int wiimotePosition) {
 		System.out.println("WiiuseJListenerRight added");
 		this.leftOrRight = wiimotePosition;
+		
+		new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(100);
+						enableSendMotion();
+					} catch (InterruptedException e) {}
+				}
+			}
+		}.start();
+	}
+	
+	synchronized private void enableSendMotion() {
+		this.sendMotion = true;
+	}
+	
+	synchronized private void disableSendMotion() {
+		this.sendMotion = false;
 	}
 	
 	@Override
@@ -86,10 +105,14 @@ public class WiiuseJListener implements WiimoteListener{
 
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent event) {
-		float x = event.getOrientation().getRoll();
-		float y = event.getOrientation().getPitch();
-
-		WiimoteEventHandler.orientationEvent(x, y, leftOrRight);
+		if (sendMotion) {
+			disableSendMotion();
+			float x = event.getOrientation().getRoll();
+			float y = event.getOrientation().getPitch();
+			
+			WiimoteEventHandler.orientationEvent(x, y, leftOrRight);
+		}
+		
 	}
 
 	@Override

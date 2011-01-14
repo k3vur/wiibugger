@@ -31,8 +31,8 @@ public class WiiuseJScanner extends WiimoteScanner {
 			Wiibugger.getWiimoteList().add(new WiiuseJDevice(wiimotes[i]));;
 			System.out.println("Found wiimote " + wiimotes[i].getId());
 		}
-		
 		System.out.println("Finished scanning");
+		callback.run();
 	}
 
 }

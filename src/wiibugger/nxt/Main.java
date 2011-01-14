@@ -34,12 +34,17 @@ public class Main {
 				input = inStream.readShort();
 				processMessage(input);
 			} catch (IOException e) {
-				System.out.println("IOException");
+				break;
 			}
 		}
 	}
 	
 	public static void processMessage(short input) {
+		if (input == NXTMessage.CLOSE_MESSAGE) {
+			running = false;
+			return;
+		}
+		
 		NXTMessage msg = new NXTMessage(input);
 		
 		System.out.println("msg value: " + msg.getValue());

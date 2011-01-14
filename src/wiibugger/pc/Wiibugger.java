@@ -7,8 +7,6 @@ import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiibugger.pc.wiimote.wiiusej.WiiuseJListener;
-import wiiusej.WiiUseApiManager;
 
 public class Wiibugger {
 

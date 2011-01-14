@@ -3,6 +3,8 @@ package wiibugger.pc.nxt;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import wiibugger.communication.NXTMessage;
+
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
@@ -95,6 +97,7 @@ public class NXTDevice {
 	public boolean close() {
 		
 		try {
+			if (dataOut != null) this.send(NXTMessage.CLOSE_MESSAGE);
 			this.communication.close();
 		} catch (IOException e) {
 			System.out.println("Could not close connection of NXT " + info.deviceAddress);
