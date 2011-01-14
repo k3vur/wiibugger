@@ -9,8 +9,6 @@ import wiibugger.pc.Wiibugger;
 
 
 public class NXTMessager extends Thread {
-
-	public static int interval = 10;
 	
 	private static NXTMessager messager;
 	

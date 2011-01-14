@@ -84,6 +84,7 @@ public class Main {
 			break;
 		case NXTMessage.MOTOR_ROTATE_TO:
 			motor.rotateTo(msg.getValue());
+			break;
 		case NXTMessage.MOTOR_FLOAT:
 			motor.flt();
 			break;

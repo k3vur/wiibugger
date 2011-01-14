@@ -26,11 +26,11 @@ public class NXTMessage {
 
 	public NXTMessage(short nxtDevice, short port, short operation, short value) throws IllegalArgumentException {
 		this.nxtDevice = nxtDevice; 
-		if(this.port > 7) throw new IllegalArgumentException();
+		if (port > 7) throw new IllegalArgumentException();
 		this.port = port;
-		if(this.operation > 15) throw new IllegalArgumentException();
+		if (operation > 15) throw new IllegalArgumentException();
 		this.operation = operation;
-		if(this.value > 511) throw new IllegalArgumentException();
+		if (value > 511) throw new IllegalArgumentException();
 		this.value = value;
 		
 		

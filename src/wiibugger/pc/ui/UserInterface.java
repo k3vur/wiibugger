@@ -194,16 +194,18 @@ public class UserInterface {
 
 	public static JButton getSetWiimote1Button() {	
 		if (UserInterface.setWiimote1Button == null) {
-			setWiimote1Button = new JButton("Set 1");
-			setWiimote1Button.addActionListener(getSetWiimoteListener());
+			JButton button = new JButton("Set 1");
+			button.addActionListener(getSetWiimoteListener());
+			UserInterface.setWiimote1Button = button;
 		} 	
 		return UserInterface.setWiimote1Button;
 	}
 	
 	public static JButton getSetWiimote2Button() {
 		if (UserInterface.setWiimote2Button == null) {
-			setWiimote2Button = new JButton("Set 2");
-			setWiimote2Button.addActionListener(getSetWiimoteListener());
+			JButton button = new JButton("Set 2");
+			button.addActionListener(getSetWiimoteListener());
+			setWiimote2Button = button;
 		}
 		return UserInterface.setWiimote2Button;
 	}

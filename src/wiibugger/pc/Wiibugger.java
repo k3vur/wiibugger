@@ -7,8 +7,6 @@ import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiibugger.pc.wiimote.wiiusej.WiiuseJListener;
-import wiiusej.WiiUseApiManager;
 
 public class Wiibugger {
 
@@ -40,6 +38,7 @@ public class Wiibugger {
 		System.out.println("Disconnecting Wiimotes...");
 
 		for (WiimoteDevice wiimote : getWiimoteList().toArrayList()) {
+			wiimote.disableEventHandling();
 			wiimote.disconnect();
 		}
 		
@@ -61,6 +60,7 @@ public class Wiibugger {
 			
 			if (removeCurrWiimote) {
 				wiimoteList.remove(currWiimote);
+				currWiimote.disableEventHandling();
 				currWiimote.disconnect();
 			} else {
 				removeCurrWiimote = true;

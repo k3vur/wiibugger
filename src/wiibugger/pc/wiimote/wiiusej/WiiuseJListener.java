@@ -17,7 +17,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiiuseJListener implements WiimoteListener{
 	
-	int leftOrRight;
+	private int leftOrRight;
 	
 	public WiiuseJListener(int wiimotePosition) {
 		System.out.println("WiiuseJListenerRight added");

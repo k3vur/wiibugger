@@ -29,6 +29,9 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 		
 		foundDevices = 0;
 		
+		/*
+		 * Stop scanning after 10 seconds
+		 */
 		new Thread() {
 			@Override
 			public void run() {
