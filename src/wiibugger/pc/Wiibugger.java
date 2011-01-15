@@ -28,10 +28,6 @@ public class Wiibugger {
 	
 	public static void disconnectNXTs() {
 		System.out.println("Disconnecting NXTs...");
-		
-		for (NXTDevice nxt: getNXTList().toArrayList()) {
-			nxt.close();
-		}
 		getNXTList().clear();
 	}
 	

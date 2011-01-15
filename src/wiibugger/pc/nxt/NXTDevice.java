@@ -3,11 +3,10 @@ package wiibugger.pc.nxt;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import wiibugger.communication.NXTMessage;
-
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
+import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 
 /**
@@ -18,12 +17,10 @@ import lejos.pc.comm.NXTInfo;
 public class NXTDevice {
 	
 	private DataOutputStream dataOut;
-	private NXTComm communication;
 	private NXTInfo info;
 	
-	public NXTDevice(NXTComm communication, NXTInfo info) {
+	public NXTDevice(NXTInfo info) {
 		this.info = info;
-		this.communication = communication;
 	}
 	
 	/**
@@ -40,21 +37,7 @@ public class NXTDevice {
 			e.printStackTrace();
 			return null;
 		}
-		
-		/*
-		try {
-			int available = communication.available();
-			if( available == 0) {
-				System.out.println("No NXT connected");
-				return null;
-			} else {
-				System.out.println(available + " NXTs available...");
-			}
-		} catch (IOException e1) {
-			System.out.println("No NXT available...");
-			e1.printStackTrace();
-		}
-		*/
+
 		NXTInfo[] nxtInfo = null;
 		try {
 			nxtInfo = communication.search(null ,NXTCommFactory.BLUETOOTH);
@@ -67,7 +50,7 @@ public class NXTDevice {
 		NXTDevice[] nxtDevices = new NXTDevice[nxtInfo.length];
 		
 		for(int i = 0; i < nxtInfo.length; i++) {
-			nxtDevices[i] = new NXTDevice(communication, nxtInfo[i]);
+			nxtDevices[i] = new NXTDevice(nxtInfo[i]);
 		}
 		return nxtDevices;
 		
@@ -75,63 +58,19 @@ public class NXTDevice {
 	
 	public boolean open() {
 		System.out.println("Open connection to NXT " + info.deviceAddress + "...");
-
-		try {
-			this.communication.open(info);
-		} catch (NXTCommException e) {
-			System.out.println("Could not open connection to NXT " + info.deviceAddress + "...");
-			e.printStackTrace();
-			return false;
-		}
-		
-		dataOut = new DataOutputStream(communication.getOutputStream());
-		
-		if(dataOut == null) {
-			System.out.println("DataOutputStream could not be created on NXT " + info.deviceAddress);
-			return false;
-		} 
-		System.out.println("Created Outputstream to NXT " + info.deviceAddress + "...");		
-		return true;
-	}
-	
-	public boolean close() {
 		
 		try {
-			if (dataOut != null) this.send(NXTMessage.CLOSE_MESSAGE);
-			this.communication.close();
+			NXTMessager.getNXTMessager().connectTo("btspp://" + info.deviceAddress);
+			System.out.println("Created Outputstream to NXT " + info.deviceAddress + "...");
+			return true;
 		} catch (IOException e) {
-			System.out.println("Could not close connection of NXT " + info.deviceAddress);
-			e.printStackTrace();
+			System.out.println("Could not connect to " + info.deviceAddress);
+			return false;
 		}
-		return true;
 	}
 	
 	public String getName() {
 		return info.name;
-	}
-	
-	public void send(byte data) throws IOException {
-		if(dataOut == null) {
-			this.open();
-		}
-		dataOut.writeByte(data);
-		dataOut.flush();
-	}
-	
-	public void send(int data) throws IOException {
-		if(dataOut == null) {
-			this.open();
-		}
-		dataOut.writeInt(data);
-		dataOut.flush();
-	}
-	
-	public void send(short data) throws IOException {
-		if(dataOut == null) {
-			this.open();
-		}
-		dataOut.writeShort(data);
-		dataOut.flush();
 	}
 	
 	@Override

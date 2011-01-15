@@ -1,10 +1,11 @@
 package wiibugger.pc.nxt;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import lejos.pc.comm.NXTConnector;
 import wiibugger.communication.NXTMessage;
-import wiibugger.pc.Wiibugger;
 
 
 
@@ -23,6 +24,10 @@ public class NXTMessager extends Thread {
 	
 	private NXTMessage currMessage;
 	
+	private NXTConnector connector;
+	
+	private DataOutputStream out;
+	
 	private LinkedBlockingQueue<NXTMessage> messageQueue;
 	
 	private boolean sending;
@@ -32,19 +37,20 @@ public class NXTMessager extends Thread {
 		 * Just a dummy to make the constructor private
 		 */
 		super();
+		connector = new NXTConnector();
 		sending = true;
 		messageQueue = new LinkedBlockingQueue<NXTMessage>();
 	}
 	
 	private void deliverNextMessage() throws InterruptedException, IOException {
 		currMessage = messageQueue.take();
-		NXTDevice nxt = Wiibugger.getNXTList().getElementAt(currMessage.getNxtDevice());
-		
-		System.out.println(nxt.getName());
-		nxt.send(currMessage.getOutput());
+		out.writeShort(currMessage.getOutput());
 	}
 
 	public void run() {
+		
+		out = connector.getDataOut();
+		
 		while (sending) {					
 			try {
 				deliverNextMessage();
@@ -59,13 +65,26 @@ public class NXTMessager extends Thread {
 	}
 	
 	public void send(NXTMessage message) {
-		messageQueue.offer(message);
+		if (message != null) {
+			messageQueue.offer(message);
+		}
 	}
 
 	public void quit() {
+		System.out.println("Quitting NXT-messager");
 		sending = false;
 		messageQueue.clear();
-		System.out.println("Quitting NXT-messager");
 		send(new NXTMessage((short) 0));
+		try {
+			connector.close();
+		} catch (IOException e) {
+			System.out.println("Could not disconnect NXTs correctly");
+		}
+	}
+	
+	public void connectTo(String addr) throws IOException {
+		if (!connector.connectTo(addr)) {
+			throw new IOException();
+		}
 	}
 }
