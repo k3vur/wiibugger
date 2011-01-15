@@ -1,17 +1,18 @@
 package wiibugger.pc.wiimote;
 
 import wiibugger.communication.NXTMessage;
-import wiibugger.pc.Wiibugger;
-import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 
 public class WiimoteEventHandler {
 
 	public static final int A_BUTTON = 1;
 	public static final int B_BUTTON = 2;
+	
+	private static short NXT_MOVE = -1;
+	private static short NXT_ARM = -1;
 
-	private static boolean motorARunning = false;
-	private static boolean motorBRunning = false;
+	private static boolean leftSensing = false;
+	private static boolean rightSensing = false;
 	
 	public static void buttonPressed(int button, int leftOrRight) {
 		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT)
@@ -23,12 +24,11 @@ public class WiimoteEventHandler {
 	private static void buttonPressedLeft(int button) {
 		switch(button) {
 		case A_BUTTON:
-			//motorBRunning = true;
+			leftSensing = true;
 			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_FORWARD, (short)0));
 			break;
 		case B_BUTTON:
-			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_BACKWARD, (short)0));
-			
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_MOVE, NXTMessage.PORT_B , NXTMessage.MOTOR_FORWARD, (short)0));
 			break;
 		}				
 	}
@@ -36,12 +36,11 @@ public class WiimoteEventHandler {
 	private static void buttonPressedRight(int button) {
 		switch(button) {
 		case A_BUTTON:
-			motorARunning = true;
+			rightSensing = true;
 			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage., (short)0));
 			break;
 		case B_BUTTON:
-			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_BACKWARD, (short)0));
-			
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_MOVE, NXTMessage.PORT_A , NXTMessage.MOTOR_FORWARD, (short)0));
 			break;
 		}		
 	}
@@ -54,33 +53,33 @@ public class WiimoteEventHandler {
 	private static void buttonReleasedLeft(int button) {
 		switch(button) {
 		case A_BUTTON:
-			//motorBRunning = false;
-			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
+			leftSensing = false;
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_ARM, NXTMessage.PORT_A , NXTMessage.MOTOR_FLOAT, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_MOVE, NXTMessage.PORT_C , NXTMessage.MOTOR_STOP, (short)0));
 			break;
 		case B_BUTTON:
-			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
-			
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_MOVE, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
 			break;
 		}					
 	}
 	private static void buttonReleasedRight(int button) {
 		switch(button) {
 		case A_BUTTON:
-			motorARunning = false;
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_STOP, (short)0));
+			rightSensing = false;
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_ARM, NXTMessage.PORT_B , NXTMessage.MOTOR_FLOAT, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_ARM, NXTMessage.PORT_C , NXTMessage.MOTOR_FLOAT, (short)0));
 
 			break;
 		case B_BUTTON:
-//			NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_MOVE, NXTMessage.PORT_A , NXTMessage.MOTOR_STOP, (short)0));
 			
 			break;
 		}				
 	}
 	
 	public static void accelerationEvent(float x, float y, float z, int wiimoteNumber) {
-		NXTMessager messager = NXTMessager.getNXTMessager();
-		NXTDevice nxt = (NXTDevice) Wiibugger.getNXTList().getElementAt(wiimoteNumber);
+		//NXTMessager messager = NXTMessager.getNXTMessager();
+		//NXTDevice nxt = (NXTDevice) Wiibugger.getNXTList().getElementAt(wiimoteNumber);
 
 	}
 	
@@ -95,8 +94,7 @@ public class WiimoteEventHandler {
 		else if( y > 0)
 			y = 0;
 		
-		System.out.println("x/roll after cut: " + x + " and y/pitch " + y);
-		
+		System.out.println("left or right" + leftOrRight);
 		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT) 
 			orientationEventLeft(x,y);
 		else
@@ -105,52 +103,80 @@ public class WiimoteEventHandler {
 	}
 
 	public static void orientationEventLeft(float x, float y) {
-		
-		/*
-		if(motorBRunning) {
-			short speed = calculateSpeedY(y);
-			short direction = -1;
-			if(speed > 0)
-				direction = NXTMessage.MOTOR_FORWARD;
-			else
-				direction = NXTMessage.MOTOR_BACKWARD;
+		if(leftSensing) {
+			short speedUpDown = calculateSpeedY(y);
+			short speedLeftRight = calculateSpeedX(x);
 			
-			NXTMessage msg = new NXTMessage((short)0, NXTMessage.PORT_B, direction, speed);
+			NXTMessage msg = null;
+			short direction = -1;
+			if(Math.abs(speedUpDown) > Math.abs(speedLeftRight)) {
+				if(speedUpDown > 0) {
+					direction = NXTMessage.MOTOR_FORWARD;
+				}
+				else {
+					speedUpDown *= -1;
+					direction = NXTMessage.MOTOR_BACKWARD;
+				}
+				msg = new NXTMessage(NXT_ARM, NXTMessage.PORT_A, direction, speedUpDown);
+			} else {
+				if(speedLeftRight > 0) 
+					direction = NXTMessage.MOTOR_FORWARD;
+				else {
+					speedLeftRight *= -1;
+					direction = NXTMessage.MOTOR_BACKWARD;
+				}
+				msg = new NXTMessage(NXT_MOVE, NXTMessage.PORT_A, direction, speedLeftRight);					
+			}
 			NXTMessager.getNXTMessager().send(msg);
 		}
-		*/
+		
 	}
 	
 	public static void orientationEventRight(float x, float y) {
-		if(motorARunning) {
-			short speed = calculateSpeedY(y);
-			short speedOrientation = -1;
-			if(speed > 0)
-				speedOrientation = NXTMessage.MOTOR_FORWARD;
-			else {
-				speed *= -1;
-				speedOrientation = NXTMessage.MOTOR_BACKWARD;
-			}
-			short direction = calculateSpeedX(x);
+		if(rightSensing) {
+			short speedUpDown = calculateSpeedY(y);
+			short speedLeftRight = calculateSpeedX(x);
 			
-			short directionOrientation = -1;
-			if(direction < 40 && direction > -40) {
-				NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A, speedOrientation, speed));
-				NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B, speedOrientation, speed));
-			} else if (direction > 0) {
-				NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B, speedOrientation, speed));
-			} else
-				NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A, speedOrientation, speed));
-
+			NXTMessage msg = null;
+			short direction = -1;
+			if(Math.abs(speedUpDown) > Math.abs(speedLeftRight)) {
+				
+				if(speedUpDown > 0) {
+					direction = NXTMessage.MOTOR_FORWARD;
+				}
+				else {
+					speedUpDown *= -1;
+					direction = NXTMessage.MOTOR_BACKWARD;
+				}
+				msg = new NXTMessage(NXT_ARM, NXTMessage.PORT_B, direction, speedUpDown);
+			} else {
+				if(speedLeftRight > 0) 
+					direction = NXTMessage.MOTOR_FORWARD;
+				else {
+					speedLeftRight *= -1;
+					direction = NXTMessage.MOTOR_BACKWARD;
+				}
+				msg = new NXTMessage(NXT_MOVE, NXTMessage.PORT_C, direction, speedLeftRight);					
+			}
+			NXTMessager.getNXTMessager().send(msg);
 	
 		}
 	}
 
 	private static short calculateSpeedY(float y) {
-		return (short) ((360f/90f)*(y+90f));
+		return (short) ((50f/90f)*(y+90f));
 	}
 	private static short calculateSpeedX(float x) {
-		return (short) ((360f/90f)*(x));
+		return (short) ((50f/90f)*(x));
 		
 	}
+	
+	public static void setNXTMove(int id) {
+		NXT_MOVE = (short)id;
+	}
+	
+	public static void setNXTArm(int id) {
+		NXT_ARM = (short)id;
+	}
+	
 }

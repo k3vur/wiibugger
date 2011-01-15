@@ -24,12 +24,12 @@ public class WiiuseJScanner extends WiimoteScanner {
 		
 		if(wiimotes.length == 0) {
 			System.out.println("No Wiimote Found");
-			return;
-		}
-		for(int i = 0; i < wiimotes.length; i++) {
-		//	wiimotes[i].setLeds(true, true, true, true);
-			Wiibugger.getWiimoteList().add(new WiiuseJDevice(wiimotes[i]));;
-			System.out.println("Found wiimote " + wiimotes[i].getId());
+		} else {
+			for(int i = 0; i < wiimotes.length; i++) {
+			//	wiimotes[i].setLeds(true, true, true, true);
+				Wiibugger.getWiimoteList().add(new WiiuseJDevice(wiimotes[i]));;
+				System.out.println("Found wiimote " + wiimotes[i].getId());
+			}
 		}
 		System.out.println("Finished scanning");
 		callback.run();

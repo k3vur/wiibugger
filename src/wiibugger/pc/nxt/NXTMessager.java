@@ -39,6 +39,8 @@ public class NXTMessager extends Thread {
 	private void deliverNextMessage() throws InterruptedException, IOException {
 		currMessage = messageQueue.take();
 		NXTDevice nxt = Wiibugger.getNXTList().getElementAt(currMessage.getNxtDevice());
+		
+		System.out.println(nxt.getName());
 		nxt.send(currMessage.getOutput());
 	}
 

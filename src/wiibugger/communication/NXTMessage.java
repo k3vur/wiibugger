@@ -26,17 +26,13 @@ public class NXTMessage {
 	private short operation;
 	private short value;
 	
-	public static NXTMessage stopMessage(short nxtDevice) {
-		return new NXTMessage(nxtDevice, (short)7, (short)15, (short)511);
-	}
-	
 	public NXTMessage(short nxtDevice, short port, short operation, short value) throws IllegalArgumentException {
 		this.nxtDevice = nxtDevice; 
-		if(this.port > 7) throw new IllegalArgumentException();
+		if(port > 7) throw new IllegalArgumentException();
 		this.port = port;
-		if(this.operation > 15) throw new IllegalArgumentException();
+		if(operation > 15) throw new IllegalArgumentException();
 		this.operation = operation;
-		if(this.value > 511) throw new IllegalArgumentException();
+		if(value > 511) throw new IllegalArgumentException();
 		this.value = value;
 	}
 		
@@ -63,7 +59,6 @@ public class NXTMessage {
 	}
 	
 	public short getOutput () {
-		System.out.println((short)( (this.port << 13) | (this.operation << 9) | (this.value) ));
 		return (short)( (this.port << 13) | (this.operation << 9) | (this.value) ); 
 	}
 
