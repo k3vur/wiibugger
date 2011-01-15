@@ -106,6 +106,10 @@ public class NXTDevice {
 		return true;
 	}
 	
+	public String getName() {
+		return info.name;
+	}
+	
 	public void send(byte data) throws IOException {
 		if(dataOut == null) {
 			this.open();
@@ -132,7 +136,7 @@ public class NXTDevice {
 	
 	@Override
 	public String toString() {
-		return info.deviceAddress;
+		return info.name;
 	}
 	
 }

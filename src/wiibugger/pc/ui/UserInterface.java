@@ -28,12 +28,12 @@ public class UserInterface {
 	
 	private static Font labelFont;
 	private static JFrame mainWindow;
-	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton, setWiimote1Button, setWiimote2Button;
+	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton, setNxtMoveButton, setNxtArmButton;
 	private static JSplitPane splitPane;
 	private static JLabel wiimoteLabel, nxtLabel;
 	private static JList wiimoteList, nxtList;
-	private static JPanel wiimotePanel, wiimoteToolbar, nxtPanel, runPanel;
-	private static SetWiimoteListener setWiimoteListener;
+	private static JPanel wiimotePanel, nxtToolbar, nxtPanel, runPanel;
+	private static SetNXTListener setNxtListener;
 	private static RunWiibuggerAction runWiibuggerAction;
 	private static StopWiibuggerAction stopWiibuggerAction;
 	private static ScanNxtAction scanNXTAction;
@@ -45,8 +45,21 @@ public class UserInterface {
 		}
 		return UserInterface.labelFont;
 	}
+	
+	public static void showRunningWindow() {
+		JFrame wiibuggerWindow = new JFrame("Wiibugger running...");
+		wiibuggerWindow.setSize(640, 480);
+		wiibuggerWindow.add(getStopButton());
+		wiibuggerWindow.addWindowListener(new WindowAdapter() {			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				getStopWiibuggerAction().actionPerformed(null);
+			}
+		});
+		wiibuggerWindow.setVisible(true);
+	}
 
-	private static JFrame getMainWindow() {
+	public static JFrame getMainWindow() {
 		if (UserInterface.mainWindow == null) {
 			mainWindow = new JFrame(Wiibugger.applicationTitle);
 			mainWindow.setSize(800, 600);
@@ -87,12 +100,7 @@ public class UserInterface {
 	private static JPanel getNXTPanel() {
 		if (UserInterface.nxtPanel == null) {
 			nxtPanel = new JPanel(new BorderLayout());
-			
-			JPanel topPanel = new JPanel(new BorderLayout());
-			topPanel.add(getNXTLabel(), BorderLayout.WEST);
-			topPanel.add(getScanNXTButton(), BorderLayout.EAST);
-			
-			nxtPanel.add(topPanel, BorderLayout.NORTH);			
+			nxtPanel.add(getNxtToolbar(), BorderLayout.NORTH);			
 			nxtPanel.add(new JScrollPane(getNXTList()), BorderLayout.CENTER);
 		}
 		return UserInterface.nxtPanel;
@@ -116,7 +124,6 @@ public class UserInterface {
 		if(runPanel == null) {
 			runPanel = new JPanel();
 			runPanel.add(getRunButton());
-			runPanel.add(getStopButton());
 		}
 		return UserInterface.runPanel;
 	}
@@ -164,9 +171,14 @@ public class UserInterface {
 
 	private static JPanel getWiimotePanel() {
 		if (UserInterface.wiimotePanel == null) {
-			wiimotePanel = new JPanel(new BorderLayout());      
-			wiimotePanel.add(getWiimoteToolbar(), BorderLayout.NORTH);      
-			wiimotePanel.add(new JScrollPane(getWiimoteList()), BorderLayout.CENTER);
+			wiimotePanel = new JPanel(new BorderLayout()); 
+			
+			JPanel topPanel = new JPanel(new BorderLayout());
+			topPanel.add(getWiiLabel(), BorderLayout.WEST);
+			topPanel.add(getScanWiimotesButton(), BorderLayout.EAST);
+			
+			wiimotePanel.add(topPanel, BorderLayout.NORTH);
+			wiimotePanel.add(getWiimoteList(), BorderLayout.CENTER);
 		}
 		return UserInterface.wiimotePanel;
 	}
@@ -192,41 +204,41 @@ public class UserInterface {
 	}
 	
 
-	public static JButton getSetWiimote1Button() {	
-		if (UserInterface.setWiimote1Button == null) {
-			setWiimote1Button = new JButton("Set 1");
-			setWiimote1Button.addActionListener(getSetWiimoteListener());
+	public static JButton getSetNXTArmButton() {	
+		if (UserInterface.setNxtArmButton == null) {
+			setNxtArmButton = new JButton("Set Arm");
+			setNxtArmButton.addActionListener(getSetNxtListener());
 		} 	
-		return UserInterface.setWiimote1Button;
+		return UserInterface.setNxtArmButton;
 	}
 	
-	public static JButton getSetWiimote2Button() {
-		if (UserInterface.setWiimote2Button == null) {
-			setWiimote2Button = new JButton("Set 2");
-			setWiimote2Button.addActionListener(getSetWiimoteListener());
+	public static JButton getSetNXTMoveButton() {
+		if (UserInterface.setNxtMoveButton == null) {
+			setNxtMoveButton = new JButton("Set Move");
+			setNxtMoveButton.addActionListener(getSetNxtListener());
 		}
-		return UserInterface.setWiimote2Button;
+		return UserInterface.setNxtMoveButton;
 	}
 	
-	private static ActionListener getSetWiimoteListener() {
-		if (UserInterface.setWiimoteListener == null) {
-			setWiimoteListener = new SetWiimoteListener(getWiimoteList());
+	private static ActionListener getSetNxtListener() {
+		if (UserInterface.setNxtListener == null) {
+			setNxtListener = new SetNXTListener(getNXTList());
 		}
-		return UserInterface.setWiimoteListener;
+		return UserInterface.setNxtListener;
 	}
 	
-	private static JPanel getWiimoteToolbar() {
-		if (UserInterface.wiimoteToolbar == null) {
-			wiimoteToolbar = new JPanel(new BorderLayout());
-			wiimoteToolbar.add(getWiiLabel(), BorderLayout.WEST);
+	private static JPanel getNxtToolbar() {
+		if (UserInterface.nxtToolbar == null) {
+			nxtToolbar = new JPanel(new BorderLayout());
+			nxtToolbar.add(getNXTLabel(), BorderLayout.WEST);
 
 			JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-			buttons.add(getSetWiimote1Button());
-			buttons.add(getSetWiimote2Button());
-			buttons.add(getScanWiimotesButton());
-			wiimoteToolbar.add(buttons, BorderLayout.EAST);
+			buttons.add(getSetNXTArmButton());
+			buttons.add(getSetNXTMoveButton());
+			buttons.add(getScanNXTButton());
+			nxtToolbar.add(buttons, BorderLayout.EAST);
 		}
-		return UserInterface.wiimoteToolbar;
+		return UserInterface.nxtToolbar;
 	}
 
 	public static RunWiibuggerAction getRunWiibuggerAction() {

@@ -27,5 +27,6 @@ public class ScanNxtAction extends AbstractAction implements Runnable {
 	public void run() {
 		this.setEnabled(true);
 		UserInterface.getScanWiimotesAction().setEnabled(true);
+		UserInterface.getRunWiibuggerAction().enableIfReady();
 	}
 }
