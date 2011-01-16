@@ -29,8 +29,8 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	@Override
 	public void setAccelerometerEnabled(boolean enabled) {
-		this.activateSmoothing(wiimote.getId());
 		this.activateMotionSensing(wiimote.getId());
+		this.activateSmoothing(wiimote.getId());
 	}
 
 	@Override

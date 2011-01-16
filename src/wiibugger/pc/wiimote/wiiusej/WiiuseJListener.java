@@ -25,7 +25,7 @@ public class WiiuseJListener implements WiimoteListener{
 		this.leftOrRight = wiimotePosition;
 		
 		/*
-		 * Only send motion event every 100 miliseconds
+		 * Only send motion event every 100 milliseconds
 		 */
 		new Thread() {
 			@Override
@@ -68,8 +68,27 @@ public class WiiuseJListener implements WiimoteListener{
 	public void onMotionSensingEvent(MotionSensingEvent event) {
 		if (sendMotion) {
 			disableSendMotion();
-			float x = event.getOrientation().getRoll();
-			float y = event.getOrientation().getPitch();
+			float xForce = event.getGforce().getX();
+			float yForce = event.getGforce().getY();
+			float zForce = event.getGforce().getZ();
+			
+			/*
+			 *  Calculate y
+			 */
+			float y = zForce;
+			float x = xForce;
+			
+			/*
+			 * When turning over 90 degrees in any,
+			 * yForce is > 1 but zForce and xForce decrease => add them.
+			 */
+			if (yForce > 1) {
+				if (y > 0) y += yForce;
+				else y -= yForce;
+				
+				if (x > 0) x += yForce;
+				else y -= yForce;
+			}
 			
 			WiimoteEventHandler.orientationEvent(x, y, leftOrRight);
 		}
