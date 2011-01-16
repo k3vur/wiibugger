@@ -9,6 +9,8 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 
 	private WiiRemote wiimote;
 	
+	private WiiRemoteJListener listener;
+	
 	public WiiRemoteJDevice(WiiRemote wiimote) {
 		this.wiimote = wiimote;
 	}
@@ -26,9 +28,17 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 
 	@Override
 	public void enableEventHandling(int wiimotePosition) {
-		wiimote.addWiiRemoteListener(WiiRemoteJListener.getListener());
+		listener = new WiiRemoteJListener(wiimotePosition);
+		wiimote.addWiiRemoteListener(listener);
 	}
 
+	@Override
+	public void disableEventHandling() {
+		if (listener != null) {
+			wiimote.removeWiiRemoteListener(listener);
+		}
+	}
+	
 	@Override
 	public void setAccelerometerEnabled(boolean enabled) {
 		try {
@@ -36,11 +46,6 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 		} catch (Exception e) {
 			setAccelerometerEnabled(enabled);
 		}
-	}
-
-	@Override
-	public void disableEventHandling() {
-		wiimote.removeWiiRemoteListener(WiiRemoteJListener.getListener());
 	}
 
 	@Override

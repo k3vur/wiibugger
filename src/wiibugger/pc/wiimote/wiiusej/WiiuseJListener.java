@@ -22,7 +22,6 @@ public class WiiuseJListener implements WiimoteListener{
 	private boolean sendMotion;
 	
 	public WiiuseJListener(int wiimotePosition) {
-		System.out.println("WiiuseJListenerRight added");
 		this.leftOrRight = wiimotePosition;
 		
 		/*
@@ -72,7 +71,6 @@ public class WiiuseJListener implements WiimoteListener{
 			GForce g = event.getGforce();
 			WiimoteEventHandler.orientationEvent(g.getX(), g.getY(), g.getZ(), leftOrRight);
 		}
-		
 	}
 
 	@Override

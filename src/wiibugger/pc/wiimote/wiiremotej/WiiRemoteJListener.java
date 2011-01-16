@@ -12,13 +12,34 @@ import wiiremotej.event.WiiRemoteListener;
 
 public class WiiRemoteJListener implements WiiRemoteListener {
 
-	private static WiiRemoteJListener listener;
+	private int leftOrRight;
+	private boolean sendMotion;
 	
-	public static WiiRemoteJListener getListener() {
-		if (listener == null) {
-			listener = new WiiRemoteJListener();
-		}
-		return listener;
+	public WiiRemoteJListener(int wiimotePosition) {
+		this.leftOrRight = wiimotePosition;
+		
+		/*
+		 * Only send motion event every 100 milliseconds
+		 */
+		new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(100);
+						enableSendMotion();
+					} catch (InterruptedException e) {}
+				}
+			}
+		}.start();
+	}
+	
+	synchronized private void enableSendMotion() {
+		this.sendMotion = true;
+	}
+	
+	synchronized private void disableSendMotion() {
+		this.sendMotion = false;
 	}
 	
 	@Override
@@ -26,11 +47,10 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 
 	@Override
 	public void accelerationInputReceived(WRAccelerationEvent evt) {
-//		double xAcceleration = evt.getXAcceleration();
-//		double yAcceleration = evt.getYAcceleration();
-//		double zAcceleration = evt.getZAcceleration();
-		
-		//System.out.println("x: " + xAcceleration + "y: " + yAcceleration + "z: " + zAcceleration);
+		if (sendMotion) {
+			disableSendMotion();
+			WiimoteEventHandler.orientationEvent(evt.getXAcceleration(), evt.getYAcceleration(), evt.getZAcceleration(), leftOrRight);
+		}
 	}
 
 	@Override

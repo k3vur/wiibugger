@@ -40,15 +40,15 @@ public class WiiuseJDevice extends WiiUseApiManager implements WiimoteDevice{
 
 	@Override
 	public void enableEventHandling(int leftOrRight) {
-
 		listener = new WiiuseJListener(leftOrRight);
 		wiimote.addWiiMoteEventListeners(listener);
-
 	}
 
 	@Override
 	public void disableEventHandling() {
-		wiimote.removeWiiMoteEventListeners(listener);
+		if (listener != null) {
+			wiimote.removeWiiMoteEventListeners(listener);
+		}
 	}
 	
 	@Override
