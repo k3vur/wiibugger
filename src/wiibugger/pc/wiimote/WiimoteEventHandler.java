@@ -90,104 +90,63 @@ public class WiimoteEventHandler {
 			else y -= yForce;
 			
 			if (x > 0) x += yForce;
-			else y -= yForce;
+			else x -= yForce;
 		}
 		
-		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT) 
-			orientationEventLeft(x,y);
-		else
-			orientationEventRight(x,y);
+		short speedY = calculateSpeed(y);
+		short speedX = calculateSpeed(x);
 		
-	}
-
-	public static void orientationEventLeft(double x, double y) {
-		if (!leftSensing) return;
-		
-		short speedUpDown = calculateSpeedY(y);
-		short speedLeftRight = calculateSpeedX(x);
-		
-		System.out.println("leftright: " + x);
-		System.out.println("updown: " + y);
-		
-		NXTMessage msg = null;
-		short direction = -1;
-		
-		// Check which movement is higher (only one move direction is detected)
-		if (Math.abs(speedUpDown) > Math.abs(speedLeftRight)) {
-			
-			// FORWARD
-			if (speedUpDown > 0) {
-				direction = NXTMessage.MOTOR_FORWARD;
-				
-			// BACKWARD
-			} else {
-				speedUpDown *= -1;
-				direction = NXTMessage.MOTOR_BACKWARD;
-			}
-			msg = new NXTMessage(NXTMessage.ARM, NXTMessage.WHOLE_ARM, direction, speedUpDown);
-			
-		// MOVE AROUND X-AXIS
+		short directionY;
+		if (speedY > 0) {
+			directionY = NXTMessage.MOTOR_FORWARD;
 		} else {
-			
-			// FORWARD
-			if (speedLeftRight > 0) { 
-				direction = NXTMessage.MOTOR_FORWARD;
-				
-			// BACKWARD
-			} else {
-				speedLeftRight *= -1;
-				direction = NXTMessage.MOTOR_BACKWARD;
-			}
-			msg = new NXTMessage(NXTMessage.MOVE, NXTMessage.TURN, direction, speedLeftRight);					
+			speedY *= -1;
+			directionY = NXTMessage.MOTOR_BACKWARD;
 		}
-		NXTMessager.getNXTMessager().send(msg);
+		
+		short directionX;
+		if (speedX > 0) {
+			directionX = NXTMessage.MOTOR_FORWARD;
+		} else {
+			speedX *= -1;
+			directionX = NXTMessage.MOTOR_BACKWARD;
+		}
+		
+		
+		/*
+		 * Determine action
+		 */
+		if (leftOrRight == WiimoteDevice.WIIMOTE_LEFT) {
+			if (Math.abs(y) > Math.abs(x)) orientationEventLeftY(speedY, directionY);
+			else orientationEventLeftX(speedX, directionX);
+		} else {
+			if (Math.abs(y) > Math.abs(x)) orientationEventRightY(speedY, directionY);
+			else orientationEventRightX(speedX, directionX);
+		}
+		
 	}
 	
-	public static void orientationEventRight(double x, double y) {
+	public static void orientationEventLeftY(short speed, short direction) {
+		if (!leftSensing) return;		
+		NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.WHOLE_ARM, direction, speed));
+	}
+	
+	public static void orientationEventLeftX(short speed, short direction) {
+		if (!leftSensing) return;
+		NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.TURN, direction, speed));
+	}
+	
+	public static void orientationEventRightY(short speed, short direction) {
 		if (!rightSensing) return;
-		
-		short speedUpDown = calculateSpeedY(y);
-		short speedLeftRight = calculateSpeedX(x);
-		
-		NXTMessage msg = null;
-		short direction = -1;
-		
-		// MOVE AROUND Y-AXIS
-		if(Math.abs(speedUpDown) > Math.abs(speedLeftRight)) {
-			
-			// FORWARD
-			if(speedUpDown > 0) {
-				direction = NXTMessage.MOTOR_FORWARD;
-				
-			// BACKWARD
-			} else {
-				speedUpDown *= -1;
-				direction = NXTMessage.MOTOR_BACKWARD;
-			}
-			msg = new NXTMessage(NXTMessage.ARM, NXTMessage.ARM_MIDDLE, direction, speedUpDown);
-			
-		// MOVE AROUND X-AXIS
-		} else {
-			
-			// FORWARD
-			if(speedLeftRight > 0) { 
-				direction = NXTMessage.MOTOR_FORWARD;
-			
-			// BACKWARD
-			} else {
-				speedLeftRight *= -1;
-				direction = NXTMessage.MOTOR_BACKWARD;
-			}
-			msg = new NXTMessage(NXTMessage.ARM, NXTMessage.CLAW, direction, speedLeftRight);					
-		}
-		NXTMessager.getNXTMessager().send(msg);
+		NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.ARM_MIDDLE, direction, speed));		
+	}
+	
+	public static void orientationEventRightX(short speed, short direction) {
+		if (!rightSensing) return;
+		NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.CLAW, direction, speed));		
 	}
 
-	private static short calculateSpeedY(double y) {
-		return (short) ((50f/90f)*(y+90f));
+	private static short calculateSpeed(double gForce) {
+		return (short) (50 * gForce);
 	}
-	private static short calculateSpeedX(double x) {
-		return (short) ((50f/90f)*(x));
-		
-	}	
 }
