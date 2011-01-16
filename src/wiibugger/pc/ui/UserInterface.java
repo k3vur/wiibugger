@@ -59,22 +59,24 @@ public class UserInterface {
 
 	public static JFrame getMainWindow() {
 		if (UserInterface.mainWindow == null) {
-			mainWindow = new JFrame(Wiibugger.applicationTitle);
-			mainWindow.setSize(500, 300);
+			JFrame frame = new JFrame(Wiibugger.applicationTitle);
+			frame.setSize(500, 300);
 			
 			JPanel mainWindowPanel = new JPanel(new BorderLayout());
 			mainWindowPanel.add(getSplitPane(), BorderLayout.CENTER);
 			mainWindowPanel.add(getRunPanel(), BorderLayout.SOUTH);
 			mainWindowPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
 			
-			mainWindow.addWindowListener(new WindowAdapter() {
+			frame.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent evt) {
 					Wiibugger.exit();
 				}
 			});
 			
-			mainWindow.add(mainWindowPanel);
+			frame.add(mainWindowPanel);
+			
+			mainWindow = frame;
 		}
 		return UserInterface.mainWindow;
 	}
@@ -89,8 +91,9 @@ public class UserInterface {
 
 	public static JList getNXTList() {
 		if (UserInterface.nxtList == null) {
-			nxtList = new JList();
-			nxtList.setModel(Wiibugger.getNXTList());
+			JList list = new JList();
+			list.setModel(Wiibugger.getNXTList());
+			nxtList = list;
 		}
 		return UserInterface.nxtList;
 	}
@@ -161,8 +164,9 @@ public class UserInterface {
 	
 	public static JList getWiimoteList() {
 		if (UserInterface.wiimoteList == null) {
-			wiimoteList = new JList();
-			wiimoteList.setModel(Wiibugger.getWiimoteList());
+			JList list = new JList();
+			list.setModel(Wiibugger.getWiimoteList());
+			wiimoteList = list;
 		}
 		return UserInterface.wiimoteList;
 	}
