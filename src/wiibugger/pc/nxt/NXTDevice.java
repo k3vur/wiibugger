@@ -1,12 +1,10 @@
 package wiibugger.pc.nxt;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
-import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo;
 
 /**
@@ -16,7 +14,6 @@ import lejos.pc.comm.NXTInfo;
  */
 public class NXTDevice {
 	
-	private DataOutputStream dataOut;
 	private NXTInfo info;
 	
 	public NXTDevice(NXTInfo info) {

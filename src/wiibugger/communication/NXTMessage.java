@@ -67,10 +67,14 @@ public class NXTMessage {
 		return value;
 	}
 	
-	public short getOutput () {
+	public short getNxt() {
+		return nxt;
+	}
+	
+	public short getOutput() {
 		return (short)( (this.nxt << 15) | (this.port << 13) | (this.operation << 9) | (this.value) ); 
 	}
-
+	
 //	public void setArm() {
 //		if (isArm()) return;
 //		
