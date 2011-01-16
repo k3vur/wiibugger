@@ -106,6 +106,9 @@ public class WiimoteEventHandler {
 		short speedUpDown = calculateSpeedY(y);
 		short speedLeftRight = calculateSpeedX(x);
 		
+		System.out.println("leftright: " + x);
+		System.out.println("updown: " + y);
+		
 		NXTMessage msg = null;
 		short direction = -1;
 		

@@ -2,6 +2,7 @@ package wiibugger.pc.nxt;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import lejos.pc.comm.NXTConnector;
@@ -26,7 +27,7 @@ public class NXTMessager extends Thread {
 	
 	private NXTConnector connector;
 	
-	private DataOutputStream out;
+	private ArrayList<DataOutputStream> out;
 	
 	private LinkedBlockingQueue<NXTMessage> messageQueue;
 	
@@ -40,18 +41,19 @@ public class NXTMessager extends Thread {
 		connector = new NXTConnector();
 		sending = true;
 		messageQueue = new LinkedBlockingQueue<NXTMessage>();
+		out = new ArrayList<DataOutputStream>();
 	}
 	
 	private void deliverNextMessage() throws InterruptedException, IOException {
 		currMessage = messageQueue.take();
-		out.writeShort(currMessage.getOutput());
-		out.flush();
+		for (DataOutputStream stream: out) {			
+			stream.writeShort(currMessage.getOutput());
+			stream.flush();
+		}
 	}
 
 	public void run() {
-		
-		out = connector.getDataOut();
-		
+				
 		while (sending) {					
 			try {
 				deliverNextMessage();
@@ -87,5 +89,6 @@ public class NXTMessager extends Thread {
 		if (!connector.connectTo(addr)) {
 			throw new IOException();
 		}
+		out.add(connector.getDataOut());
 	}
 }

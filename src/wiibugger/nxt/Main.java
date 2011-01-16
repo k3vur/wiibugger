@@ -61,18 +61,15 @@ public class Main {
 
 	public static void processMessage(short input) {
 		
-		System.out.println(Integer.toBinaryString(input));
+		System.out.print(Integer.toBinaryString(input).substring(0,1));
 		
-		/*
-		 *  close program
-		 */
+		// Close Program
 		if (input == NXTMessage.CLOSE_MESSAGE) {
 			running = false;
 			return;
 		}
 		
 		NXTMessage msg = new NXTMessage(input);
-//		System.out.println("msg value: " + msg.getValue());
 		
 		if (msg.getNxt() == mode) {
 			System.out.println("Accepted mode " + mode);

@@ -239,7 +239,7 @@ public class UserInterface {
 	}
 
 	public static void closeRunningWindow() {
-		runningWindow.dispose();
+		runningWindow.setVisible(false);
 		runningWindow = null;
 		getMainWindow().setVisible(true);
 	}
