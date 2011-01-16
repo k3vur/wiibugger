@@ -85,13 +85,13 @@ public class Main {
 		 */
 		Motor motor = null;
 		switch(msg.getPort()) {
-		case NXTMessage.PORT_A:
+		case NXTMessage.MOTOR_A:
 			motor = Motor.A;
 			break;
-		case NXTMessage.PORT_B:
+		case NXTMessage.MOTOR_B:
 			motor = Motor.B;
 			break;
-		case NXTMessage.PORT_C:
+		case NXTMessage.MOTOR_C:
 			motor = Motor.C;
 			break;
 		default:
