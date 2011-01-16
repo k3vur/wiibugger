@@ -1,5 +1,6 @@
 package wiibugger.pc.wiimote.wiiusej;
 import wiibugger.pc.wiimote.WiimoteEventHandler;
+import wiiusej.values.GForce;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
@@ -68,29 +69,8 @@ public class WiiuseJListener implements WiimoteListener{
 	public void onMotionSensingEvent(MotionSensingEvent event) {
 		if (sendMotion) {
 			disableSendMotion();
-			float xForce = event.getGforce().getX();
-			float yForce = event.getGforce().getY();
-			float zForce = event.getGforce().getZ();
-			
-			/*
-			 *  Calculate y
-			 */
-			float y = zForce;
-			float x = xForce;
-			
-			/*
-			 * When turning over 90 degrees in any,
-			 * yForce is > 1 but zForce and xForce decrease => add them.
-			 */
-			if (yForce > 1) {
-				if (y > 0) y += yForce;
-				else y -= yForce;
-				
-				if (x > 0) x += yForce;
-				else y -= yForce;
-			}
-			
-			WiimoteEventHandler.orientationEvent(x, y, leftOrRight);
+			GForce g = event.getGforce();
+			WiimoteEventHandler.orientationEvent(g.getX(), g.getY(), g.getZ(), leftOrRight);
 		}
 		
 	}

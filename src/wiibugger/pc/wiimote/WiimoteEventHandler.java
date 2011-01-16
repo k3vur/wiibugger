@@ -74,24 +74,24 @@ public class WiimoteEventHandler {
 		}				
 	}
 	
-	public static void accelerationEvent(float x, float y, float z, int wiimoteNumber) {
-		//NXTMessager messager = NXTMessager.getNXTMessager();
-		//NXTDevice nxt = (NXTDevice) Wiibugger.getNXTList().getElementAt(wiimoteNumber);
+	public static void orientationEvent(double xForce, double yForce, double zForce, int leftOrRight) {
+		
+		double x = xForce;
+		double y = zForce; // motion in y-direction causes zForce changing
 
-	}
-	
-	public static void orientationEvent(float x, float y, int leftOrRight) {
-		
-		// catch to big angles of wiimote
-		if(x < -90)
-			x = -90;
-		else if(x > 90)
-			x = 90;
-		
-		if(y > 90)
-			y = -180;
-		else if( y > 0)
-			y = 0;
+		/*
+		 * Compensate too big Angles
+		 * 
+		 * When turning over 90 degrees in any direction,
+		 * yForce is > 0 but zForce and xForce decrease => add them.
+		 */
+		if (yForce > 1) {
+			if (y > 0) y += yForce;
+			else y -= yForce;
+			
+			if (x > 0) x += yForce;
+			else y -= yForce;
+		}
 		
 		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT) 
 			orientationEventLeft(x,y);
@@ -100,7 +100,7 @@ public class WiimoteEventHandler {
 		
 	}
 
-	public static void orientationEventLeft(float x, float y) {
+	public static void orientationEventLeft(double x, double y) {
 		if (!leftSensing) return;
 		
 		short speedUpDown = calculateSpeedY(y);
@@ -143,7 +143,7 @@ public class WiimoteEventHandler {
 		NXTMessager.getNXTMessager().send(msg);
 	}
 	
-	public static void orientationEventRight(float x, float y) {
+	public static void orientationEventRight(double x, double y) {
 		if (!rightSensing) return;
 		
 		short speedUpDown = calculateSpeedY(y);
@@ -183,10 +183,10 @@ public class WiimoteEventHandler {
 		NXTMessager.getNXTMessager().send(msg);
 	}
 
-	private static short calculateSpeedY(float y) {
+	private static short calculateSpeedY(double y) {
 		return (short) ((50f/90f)*(y+90f));
 	}
-	private static short calculateSpeedX(float x) {
+	private static short calculateSpeedX(double x) {
 		return (short) ((50f/90f)*(x));
 		
 	}	
