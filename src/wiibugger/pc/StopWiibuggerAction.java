@@ -21,7 +21,7 @@ public class StopWiibuggerAction extends AbstractAction {
 		Wiibugger.disconnectNXTs();
 		NXTMessager.getNXTMessager().quit();
 		System.out.println("Stopped Wiibugger...");
-		UserInterface.getMainWindow().setVisible(true);
+		UserInterface.closeRunningWindow();
 	}
 }
 

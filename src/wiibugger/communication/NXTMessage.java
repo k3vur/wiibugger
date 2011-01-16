@@ -33,9 +33,9 @@ public class NXTMessage {
 	private short value;
 		
 	public NXTMessage(short nxt, short port, short operation, short value) throws IllegalArgumentException {
-		if (nxt > 1 || nxt < 0) throw new IllegalArgumentException();
+		if (nxt > 1) throw new IllegalArgumentException();
 		this.nxt = nxt;
-		if (port > 3 || port < 1) throw new IllegalArgumentException();
+		if (port > 3) throw new IllegalArgumentException();
 		this.port = port;
 		if (operation > 15) throw new IllegalArgumentException();
 		this.operation = operation;
@@ -75,26 +75,16 @@ public class NXTMessage {
 		return (short)( (this.nxt << 15) | (this.port << 13) | (this.operation << 9) | (this.value) ); 
 	}
 	
-//	public void setArm() {
-//		if (isArm()) return;
-//		
-//		this.armOrMove = true;
-//		this.port = (short) (ARM | port);
-//	}
-//
-//	public void setMove() {
-//		if (isMove()) return;
-//		
-//		this.armOrMove = false;
-//		this.port = (short) (port & 3); // 3 = 11 => last two bits
-//	}
-	
 	public boolean isArm() {
 		return nxt == ARM;
 	}
 	
 	public boolean isMove() {
 		return nxt == MOVE;
+	}
+	
+	public String toString() {
+		return Integer.toBinaryString(getOutput());
 	}
 }
 

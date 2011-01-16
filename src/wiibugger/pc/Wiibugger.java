@@ -7,7 +7,6 @@ import wiibugger.pc.nxt.NXTDevice;
 import wiibugger.pc.nxt.NXTMessager;
 import wiibugger.pc.ui.UserInterface;
 import wiibugger.pc.wiimote.WiimoteDevice;
-import wiibugger.pc.wiimote.WiimoteEventHandler;
 
 public class Wiibugger {
 
@@ -17,7 +16,6 @@ public class Wiibugger {
 	public static final String applicationTitle = "Wiibugger";
 	
 	private static DeviceList<NXTDevice> nxtList;
-	private static int nxtMove, nxtArm = -1;
 	
 	private static DeviceList<WiimoteDevice> wiimoteList;
 			
@@ -75,14 +73,6 @@ public class Wiibugger {
 			Wiibugger.nxtList = new DeviceList<NXTDevice>();
 		}
 		return Wiibugger.nxtList;
-	}
-	
-	public static int getNxtMove() {
-		return Wiibugger.nxtMove;
-	}
-
-	public static int getNxtArm() {
-		return Wiibugger.nxtArm;
 	}
 
 	public static DeviceList<WiimoteDevice> getWiimoteList() {
@@ -154,7 +144,7 @@ public class Wiibugger {
 	}
 
 	public static boolean readyToRun() {
-		return (wiimoteList.getSize() >= 2) && (nxtArm >= 0) && (nxtMove >= 0);
+		return (wiimoteList.getSize() >= 2) && (nxtList.getSize() >= 2);
 	}
 	
 	/**
@@ -165,37 +155,6 @@ public class Wiibugger {
 	 */
 	public static boolean runsAs64Bit() {
 		return System.getProperty("sun.arch.data.model").indexOf("64") != -1;
-	}
-
-	public static void setNxtArm(int nxt) {
-		nxtArm = nxt;
-		
-//		if(nxtArm.getName().equals(Wiibugger.getNXTList().getElementAt(0).getName()))
-//			WiimoteEventHandler.setNXTArm(0);
-//		else
-//			WiimoteEventHandler.setNXTArm(1);
-		
-		if (nxtArm == nxtMove) {
-			nxtMove = -1;
-		}
-		
-		System.out.println("Set NXT " + nxtList.getElementAt(nxtArm).getName() + " to arm");
-	}
-
-	public static void setNxtMove(int nxt) {
-		nxtMove = nxt;
-		
-//		if(nxtMove.getName().equals(Wiibugger.getNXTList().getElementAt(0).getName()))
-//			WiimoteEventHandler.setNXTMove(0);
-//		else
-//			WiimoteEventHandler.setNXTMove(1);
-		
-		if (nxtMove == nxtArm) {
-			nxtArm = -1;
-		}
-		
-		
-		System.out.println("Set NXT " + nxtList.getElementAt(nxtMove).getName() + " to move");
 	}
 
 	public static void startNXTMessager() {
@@ -228,10 +187,9 @@ public class Wiibugger {
 	}
 
 	public static void initNXTs() {
-		nxtList.getElementAt(getNxtArm()).open();
-		WiimoteEventHandler.setNXTArm(0);
-		nxtList.getElementAt(getNxtMove()).open();
-		WiimoteEventHandler.setNXTMove(1);
+		for (NXTDevice nxt: nxtList.toArrayList()) {
+			nxt.open();
+		}
 	}
 	
 }

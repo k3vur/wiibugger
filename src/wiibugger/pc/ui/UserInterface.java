@@ -2,9 +2,7 @@ package wiibugger.pc.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -28,16 +26,16 @@ public class UserInterface {
 	
 	private static Font labelFont;
 	private static JFrame mainWindow;
-	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton, setNxtMoveButton, setNxtArmButton;
+	private static JButton runButton, stopButton, scanWiimoteButton, scanNXTButton;
 	private static JSplitPane splitPane;
 	private static JLabel wiimoteLabel, nxtLabel;
 	private static JList wiimoteList, nxtList;
 	private static JPanel wiimotePanel, nxtToolbar, nxtPanel, runPanel;
-	private static SetNXTListener setNxtListener;
 	private static RunWiibuggerAction runWiibuggerAction;
 	private static StopWiibuggerAction stopWiibuggerAction;
 	private static ScanNxtAction scanNXTAction;
 	private static ScanWiimoteAction scanWiimoteAction;
+	private static JFrame runningWindow;
 	
 	private static Font getLabelFont() {
 		if (UserInterface.labelFont == null) {
@@ -47,22 +45,22 @@ public class UserInterface {
 	}
 	
 	public static void showRunningWindow() {
-		JFrame wiibuggerWindow = new JFrame("Wiibugger running...");
-		wiibuggerWindow.setSize(640, 480);
-		wiibuggerWindow.add(getStopButton());
-		wiibuggerWindow.addWindowListener(new WindowAdapter() {			
+		runningWindow = new JFrame("Wiibugger running...");
+		runningWindow.setSize(640, 480);
+		runningWindow.add(getStopButton());
+		runningWindow.addWindowListener(new WindowAdapter() {			
 			@Override
 			public void windowClosed(WindowEvent e) {
 				getStopWiibuggerAction().actionPerformed(null);
 			}
 		});
-		wiibuggerWindow.setVisible(true);
+		runningWindow.setVisible(true);
 	}
 
 	public static JFrame getMainWindow() {
 		if (UserInterface.mainWindow == null) {
 			mainWindow = new JFrame(Wiibugger.applicationTitle);
-			mainWindow.setSize(800, 600);
+			mainWindow.setSize(500, 300);
 			
 			JPanel mainWindowPanel = new JPanel(new BorderLayout());
 			mainWindowPanel.add(getSplitPane(), BorderLayout.CENTER);
@@ -89,7 +87,7 @@ public class UserInterface {
 		return UserInterface.nxtLabel;
 	}
 
-	private static JList getNXTList() {
+	public static JList getNXTList() {
 		if (UserInterface.nxtList == null) {
 			nxtList = new JList();
 			nxtList.setModel(Wiibugger.getNXTList());
@@ -147,7 +145,7 @@ public class UserInterface {
 			splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 			splitPane.setLeftComponent(getWiimotePanel());
 			splitPane.setRightComponent(getNXTPanel());
-			splitPane.setDividerLocation(0.5);
+			splitPane.setDividerLocation(230);
 			splitPane.setBorder(BorderFactory.createEmptyBorder());
 		}
 		return UserInterface.splitPane;
@@ -161,7 +159,7 @@ public class UserInterface {
 		return UserInterface.wiimoteLabel;
 	}
 	
-	private static JList getWiimoteList() {
+	public static JList getWiimoteList() {
 		if (UserInterface.wiimoteList == null) {
 			wiimoteList = new JList();
 			wiimoteList.setModel(Wiibugger.getWiimoteList());
@@ -178,7 +176,7 @@ public class UserInterface {
 			topPanel.add(getScanWiimotesButton(), BorderLayout.EAST);
 			
 			wiimotePanel.add(topPanel, BorderLayout.NORTH);
-			wiimotePanel.add(getWiimoteList(), BorderLayout.CENTER);
+			wiimotePanel.add(new JScrollPane(getWiimoteList()), BorderLayout.CENTER);
 		}
 		return UserInterface.wiimotePanel;
 	}
@@ -203,40 +201,11 @@ public class UserInterface {
 		getMainWindow().setVisible(true);
 	}
 	
-
-	public static JButton getSetNXTArmButton() {	
-		if (UserInterface.setNxtArmButton == null) {
-			setNxtArmButton = new JButton("Set Arm");
-			setNxtArmButton.addActionListener(getSetNxtListener());
-		} 	
-		return UserInterface.setNxtArmButton;
-	}
-	
-	public static JButton getSetNXTMoveButton() {
-		if (UserInterface.setNxtMoveButton == null) {
-			setNxtMoveButton = new JButton("Set Move");
-			setNxtMoveButton.addActionListener(getSetNxtListener());
-		}
-		return UserInterface.setNxtMoveButton;
-	}
-	
-	private static ActionListener getSetNxtListener() {
-		if (UserInterface.setNxtListener == null) {
-			setNxtListener = new SetNXTListener(getNXTList());
-		}
-		return UserInterface.setNxtListener;
-	}
-	
 	private static JPanel getNxtToolbar() {
 		if (UserInterface.nxtToolbar == null) {
 			nxtToolbar = new JPanel(new BorderLayout());
 			nxtToolbar.add(getNXTLabel(), BorderLayout.WEST);
-
-			JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-			buttons.add(getSetNXTArmButton());
-			buttons.add(getSetNXTMoveButton());
-			buttons.add(getScanNXTButton());
-			nxtToolbar.add(buttons, BorderLayout.EAST);
+			nxtToolbar.add(getScanNXTButton(), BorderLayout.EAST);
 		}
 		return UserInterface.nxtToolbar;
 	}
@@ -267,6 +236,12 @@ public class UserInterface {
 			scanNXTAction = new ScanNxtAction();
 		}
 		return scanNXTAction;
+	}
+
+	public static void closeRunningWindow() {
+		runningWindow.dispose();
+		runningWindow = null;
+		getMainWindow().setVisible(true);
 	}
 	
 }

@@ -45,6 +45,7 @@ public class NXTMessager extends Thread {
 	private void deliverNextMessage() throws InterruptedException, IOException {
 		currMessage = messageQueue.take();
 		out.writeShort(currMessage.getOutput());
+		out.flush();
 	}
 
 	public void run() {
@@ -74,7 +75,7 @@ public class NXTMessager extends Thread {
 		System.out.println("Quitting NXT-messager");
 		sending = false;
 		messageQueue.clear();
-		send(new NXTMessage((short) 0));
+		send(new NXTMessage(NXTMessage.CLOSE_MESSAGE));
 		try {
 			connector.close();
 		} catch (IOException e) {

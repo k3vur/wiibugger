@@ -61,6 +61,8 @@ public class Main {
 
 	public static void processMessage(short input) {
 		
+		System.out.println(Integer.toBinaryString(input));
+		
 		/*
 		 *  close program
 		 */

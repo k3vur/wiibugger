@@ -16,7 +16,8 @@ public class DeviceList<DeviceType> extends AbstractListModel {
 
 	public void add(DeviceType remote) {
 		this.deviceList.add(remote);
-		this.fireIntervalAdded(this, getSize()-1, getSize()-1);
+		int index = deviceList.indexOf(remote);
+		this.fireIntervalAdded(this, index, index);
 	}
 
 	public void clear() {

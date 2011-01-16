@@ -7,9 +7,6 @@ public class WiimoteEventHandler {
 
 	public static final int A_BUTTON = 1;
 	public static final int B_BUTTON = 2;
-	
-	private static short NXT_MOVE = -1;
-	private static short NXT_ARM = -1;
 
 	private static boolean leftSensing = false;
 	private static boolean rightSensing = false;
@@ -66,8 +63,8 @@ public class WiimoteEventHandler {
 		switch(button) {
 		case A_BUTTON:
 			rightSensing = false;
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_ARM, NXTMessage.ARM_MIDDLE , NXTMessage.MOTOR_FLOAT, (short)0));
-			NXTMessager.getNXTMessager().send(new NXTMessage((short)NXT_ARM, NXTMessage.CLAW , NXTMessage.MOTOR_FLOAT, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.ARM_MIDDLE , NXTMessage.MOTOR_FLOAT, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.CLAW , NXTMessage.MOTOR_FLOAT, (short)0));
 
 			break;
 		case B_BUTTON:
@@ -96,7 +93,6 @@ public class WiimoteEventHandler {
 		else if( y > 0)
 			y = 0;
 		
-		System.out.println("left or right" + leftOrRight);
 		if(leftOrRight == WiimoteDevice.WIIMOTE_LEFT) 
 			orientationEventLeft(x,y);
 		else
@@ -125,7 +121,7 @@ public class WiimoteEventHandler {
 				speedUpDown *= -1;
 				direction = NXTMessage.MOTOR_BACKWARD;
 			}
-			msg = new NXTMessage(NXT_ARM, NXTMessage.WHOLE_ARM, direction, speedUpDown);
+			msg = new NXTMessage(NXTMessage.ARM, NXTMessage.WHOLE_ARM, direction, speedUpDown);
 			
 		// MOVE AROUND X-AXIS
 		} else {
@@ -139,7 +135,7 @@ public class WiimoteEventHandler {
 				speedLeftRight *= -1;
 				direction = NXTMessage.MOTOR_BACKWARD;
 			}
-			msg = new NXTMessage(NXT_MOVE, NXTMessage.TURN, direction, speedLeftRight);					
+			msg = new NXTMessage(NXTMessage.MOVE, NXTMessage.TURN, direction, speedLeftRight);					
 		}
 		NXTMessager.getNXTMessager().send(msg);
 	}
@@ -165,7 +161,7 @@ public class WiimoteEventHandler {
 				speedUpDown *= -1;
 				direction = NXTMessage.MOTOR_BACKWARD;
 			}
-			msg = new NXTMessage(NXT_ARM, NXTMessage.ARM_MIDDLE, direction, speedUpDown);
+			msg = new NXTMessage(NXTMessage.ARM, NXTMessage.ARM_MIDDLE, direction, speedUpDown);
 			
 		// MOVE AROUND X-AXIS
 		} else {
@@ -179,7 +175,7 @@ public class WiimoteEventHandler {
 				speedLeftRight *= -1;
 				direction = NXTMessage.MOTOR_BACKWARD;
 			}
-			msg = new NXTMessage(NXT_ARM, NXTMessage.CLAW, direction, speedLeftRight);					
+			msg = new NXTMessage(NXTMessage.ARM, NXTMessage.CLAW, direction, speedLeftRight);					
 		}
 		NXTMessager.getNXTMessager().send(msg);
 	}
@@ -190,14 +186,5 @@ public class WiimoteEventHandler {
 	private static short calculateSpeedX(float x) {
 		return (short) ((50f/90f)*(x));
 		
-	}
-	
-	public static void setNXTMove(int id) {
-		NXT_MOVE = (short)id;
-	}
-	
-	public static void setNXTArm(int id) {
-		NXT_ARM = (short)id;
-	}
-	
+	}	
 }
