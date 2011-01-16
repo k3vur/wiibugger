@@ -9,9 +9,6 @@ import wiibugger.pc.ui.UserInterface;
 import wiibugger.pc.wiimote.WiimoteDevice;
 
 public class Wiibugger {
-
-//	static NXTConnector connector;
-//	static DataOutputStream nxtOut;
 	
 	public static final String applicationTitle = "Wiibugger";
 	
@@ -109,8 +106,7 @@ public class Wiibugger {
 					"Wiibugger can only run in 32 bit mode\n" +
 					"because it needs some 32 bit Libraries such as Bluecove.\n" +
 					"\n" +
-					"Make sure to run it in 32 bit mode by calling it with\n" + 
-					"\"java -d32 Wiibugger\"");
+					"Make sure to run it in 32 bit Java");
 			System.exit(0);
 		}
 		
@@ -139,7 +135,6 @@ public class Wiibugger {
 		}	
     	
     	UserInterface.init();
-
 	}
 
 	public static boolean readyToRun() {
@@ -165,24 +160,18 @@ public class Wiibugger {
 	}
 
 	public static boolean isWindows(){
-		 
 		String os = System.getProperty("os.name").toLowerCase();
-	    return (os.indexOf( "win" ) >= 0); 
- 
+	    return (os.indexOf( "win" ) >= 0);
 	}
  
 	public static boolean isMac(){
- 
 		String os = System.getProperty("os.name").toLowerCase();
 	    return (os.indexOf( "mac" ) >= 0); 
- 
 	}
  
 	public static boolean isLinux(){
- 
 		String os = System.getProperty("os.name").toLowerCase();
 	    return (os.indexOf("linux") >= 0);
- 
 	}
 
 	public static void initNXTs() {
