@@ -58,11 +58,14 @@ public class NXTMessager extends Thread {
 			try {
 				deliverNextMessage();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Could not wait for next Message");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if (e.getMessage().equals("Stream closed")) {
+					System.out.println("Stream closed");
+					sending = false;
+				} else {
+					System.out.println("Error while sending");
+				}
 			}
 		}
 	}

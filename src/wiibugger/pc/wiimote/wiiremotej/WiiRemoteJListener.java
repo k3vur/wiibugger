@@ -22,10 +22,7 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 	}
 	
 	@Override
-	public void IRInputReceived(WRIREvent evt) {
-		// TODO Auto-generated method stub
-
-	}
+	public void IRInputReceived(WRIREvent evt) { }
 
 	@Override
 	public void accelerationInputReceived(WRAccelerationEvent evt) {
@@ -48,51 +45,27 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 	}
 
 	@Override
-	public void combinedInputReceived(WRCombinedEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
+	public void combinedInputReceived(WRCombinedEvent evt) { }
 
 	@Override
-	public void disconnected() {
-		// TODO Auto-generated method stub
-
-	}
+	public void disconnected() { }
 
 	@Override
-	public void extensionConnected(WiiRemoteExtension extension) {
-		// TODO Auto-generated method stub
-
-	}
+	public void extensionConnected(WiiRemoteExtension extension) { }
 
 	@Override
-	public void extensionDisconnected(WiiRemoteExtension extension) {
-		// TODO Auto-generated method stub
-
-	}
+	public void extensionDisconnected(WiiRemoteExtension extension) { }
 
 	@Override
-	public void extensionInputReceived(WRExtensionEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
+	public void extensionInputReceived(WRExtensionEvent evt) { }
 
 	@Override
-	public void extensionPartiallyInserted() {
-		// TODO Auto-generated method stub
-
-	}
+	public void extensionPartiallyInserted() { }
 
 	@Override
-	public void extensionUnknown() {
-		// TODO Auto-generated method stub
-
-	}
+	public void extensionUnknown() { }
 
 	@Override
-	public void statusReported(WRStatusEvent evt) {
-		// TODO Auto-generated method stub
-
-	}
+	public void statusReported(WRStatusEvent evt) { }
 
 }

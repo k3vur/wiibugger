@@ -135,8 +135,7 @@ public class Wiibugger {
 					"Name:\t" +bluetoothDevice.getFriendlyName() + "\n" +
 					"Adress:\t" + bluetoothDevice.getBluetoothAddress());
 		} catch (BluetoothStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Could not detect local Bluetooth Device");
 		}	
     	
     	UserInterface.init();

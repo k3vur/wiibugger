@@ -11,9 +11,6 @@ public class ExitListener implements ButtonListener {
 	}
 
 	@Override
-	public void buttonReleased(Button arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void buttonReleased(Button arg0) { }
 
 }

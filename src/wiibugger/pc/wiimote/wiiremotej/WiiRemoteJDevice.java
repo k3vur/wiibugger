@@ -18,11 +18,9 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 		try {
 			wiimote.setLEDLights(LEDs);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Illegal LED states");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			setLEDLights(LEDs);
 		}
 	}
 
@@ -35,12 +33,8 @@ public class WiiRemoteJDevice implements WiimoteDevice {
 	public void setAccelerometerEnabled(boolean enabled) {
 		try {
 			wiimote.setAccelerometerEnabled(enabled);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			setAccelerometerEnabled(enabled);
 		}
 	}
 

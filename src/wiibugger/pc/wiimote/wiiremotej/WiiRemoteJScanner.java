@@ -34,10 +34,7 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 			public void run() {
 				try {
 					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} catch (InterruptedException e) { }
 				foundDevices = numberOfWiimotes; 
 			}
 		}.start();
@@ -53,12 +50,8 @@ public class WiiRemoteJScanner extends WiimoteScanner {
 			} catch (IOException e) {
 				System.out.println("OH NOEZ CONNECT");
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				System.out.println("Could not set LEDs");
+			} catch (InterruptedException e) { }
 			
 			if (remote != null) {
 				wiimoteList.add(new WiiRemoteJDevice(remote));

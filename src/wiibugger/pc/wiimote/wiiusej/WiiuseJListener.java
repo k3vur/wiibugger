@@ -24,6 +24,9 @@ public class WiiuseJListener implements WiimoteListener{
 		System.out.println("WiiuseJListenerRight added");
 		this.leftOrRight = wiimotePosition;
 		
+		/*
+		 * Only send motion event every 100 miliseconds
+		 */
 		new Thread() {
 			@Override
 			public void run() {
@@ -60,49 +63,7 @@ public class WiiuseJListener implements WiimoteListener{
 		if(event.isButtonBJustReleased()) 
 			WiimoteEventHandler.buttonReleased(WiimoteEventHandler.B_BUTTON, leftOrRight);
 	}
-
-	@Override
-	public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onClassicControllerRemovedEvent(ClassicControllerRemovedEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onDisconnectionEvent(DisconnectionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onExpansionEvent(ExpansionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onGuitarHeroRemovedEvent(GuitarHeroRemovedEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onIrEvent(IREvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent event) {
 		if (sendMotion) {
@@ -116,21 +77,33 @@ public class WiiuseJListener implements WiimoteListener{
 	}
 
 	@Override
-	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent arg0) { }
 
 	@Override
-	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onClassicControllerRemovedEvent(ClassicControllerRemovedEvent arg0) { }
 
 	@Override
-	public void onStatusEvent(StatusEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onDisconnectionEvent(DisconnectionEvent arg0) { }
+
+	@Override
+	public void onExpansionEvent(ExpansionEvent arg0) { }
+
+	@Override
+	public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent arg0) { }
+
+	@Override
+	public void onGuitarHeroRemovedEvent(GuitarHeroRemovedEvent arg0) { }
+
+	@Override
+	public void onIrEvent(IREvent arg0) { }
+
+	@Override
+	public void onNunchukInsertedEvent(NunchukInsertedEvent arg0) { }
+
+	@Override
+	public void onNunchukRemovedEvent(NunchukRemovedEvent arg0) { }
+
+	@Override
+	public void onStatusEvent(StatusEvent arg0) { }
 
 }
