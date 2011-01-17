@@ -1,1 +1,6 @@
-Wiibugger will be a Wiimote-NXT remote control system working via Bluetooth.
+Wiibugger is an os-independent project to control a Lego-NXT excavator with Wiimotes.
+
+It needs 2 NXTs with 6 Motors and 2 Wiimotes.
+
+Unfortunately, there is no jar-file whatsoever, so wiibugger currently only runs in Eclipse.
+If you really want to build an excavator with 2 NXTs contact me.
