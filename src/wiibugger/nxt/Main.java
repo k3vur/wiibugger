@@ -29,6 +29,10 @@ public class Main {
 		
 		inStream = btConnection.openDataInputStream();
 		
+		Motor.A.setPower(100);
+		Motor.B.setPower(100);
+		Motor.C.setPower(100);
+		
 		Sound.beep();
 		running = true;
 		short input;
@@ -60,9 +64,7 @@ public class Main {
 	}
 
 	public static void processMessage(short input) {
-		
-		System.out.print(Integer.toBinaryString(input).substring(0,1));
-		
+				
 		// Close Program
 		if (input == NXTMessage.CLOSE_MESSAGE) {
 			running = false;
@@ -72,7 +74,6 @@ public class Main {
 		NXTMessage msg = new NXTMessage(input);
 		
 		if (msg.getNxt() == mode) {
-			System.out.println("Accepted mode " + mode);
 			motorAction(msg);
 		}
 		

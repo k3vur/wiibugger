@@ -62,6 +62,12 @@ public class WiiuseJListener implements WiimoteListener{
 
 		if(event.isButtonBJustReleased()) 
 			WiimoteEventHandler.buttonReleased(WiimoteEventHandler.B_BUTTON, leftOrRight);
+		
+		if(event.isButtonDownPressed())
+			WiimoteEventHandler.buttonPressed(WiimoteEventHandler.DOWN_BUTTON, leftOrRight);
+		
+		if(event.isButtonDownJustReleased())
+			WiimoteEventHandler.buttonReleased(WiimoteEventHandler.DOWN_BUTTON, leftOrRight);
 	}
 	
 	@Override

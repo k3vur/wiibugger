@@ -7,6 +7,7 @@ public class WiimoteEventHandler {
 
 	public static final int A_BUTTON = 1;
 	public static final int B_BUTTON = 2;
+	public static final int DOWN_BUTTON = 3;
 
 	private static boolean leftSensing = false;
 	private static boolean rightSensing = false;
@@ -25,8 +26,10 @@ public class WiimoteEventHandler {
 			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_B , NXTMessage.MOTOR_FORWARD, (short)0));
 			break;
 		case B_BUTTON:
-			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.LEFT_WHEEL , NXTMessage.MOTOR_FORWARD, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.LEFT_WHEEL , NXTMessage.MOTOR_BACKWARD, (short)0));
 			break;
+		case DOWN_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.LEFT_WHEEL, NXTMessage.MOTOR_FORWARD, (short)0));
 		}				
 	}
 	
@@ -37,8 +40,10 @@ public class WiimoteEventHandler {
 			//NXTMessager.getNXTMessager().send(new NXTMessage((short)0, NXTMessage.PORT_A , NXTMessage., (short)0));
 			break;
 		case B_BUTTON:
-			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.RIGHT_WHEEL , NXTMessage.MOTOR_FORWARD, (short)0));
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.RIGHT_WHEEL , NXTMessage.MOTOR_BACKWARD, (short)0));
 			break;
+		case DOWN_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.RIGHT_WHEEL, NXTMessage.MOTOR_FORWARD, (short)0));
 		}		
 	}
 	public static void buttonReleased(int button, int leftOrRight) {
@@ -57,6 +62,8 @@ public class WiimoteEventHandler {
 		case B_BUTTON:
 			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.LEFT_WHEEL , NXTMessage.MOTOR_STOP, (short)0));
 			break;
+		case DOWN_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.LEFT_WHEEL, NXTMessage.MOTOR_STOP, (short)0));
 		}					
 	}
 	private static void buttonReleasedRight(int button) {
@@ -65,12 +72,12 @@ public class WiimoteEventHandler {
 			rightSensing = false;
 			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.ARM_MIDDLE , NXTMessage.MOTOR_FLOAT, (short)0));
 			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.ARM, NXTMessage.CLAW , NXTMessage.MOTOR_FLOAT, (short)0));
-
 			break;
 		case B_BUTTON:
 			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.RIGHT_WHEEL , NXTMessage.MOTOR_STOP, (short)0));
-			
 			break;
+		case DOWN_BUTTON:
+			NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.RIGHT_WHEEL, NXTMessage.MOTOR_STOP, (short)0));
 		}				
 	}
 	
