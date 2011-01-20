@@ -55,13 +55,17 @@ public class WiiRemoteJListener implements WiiRemoteListener {
 
 	@Override
 	public void buttonInputReceived(WRButtonEvent evt) {
-		if (evt.wasPressed(WRButtonEvent.A)) WiimoteEventHandler.buttonPressed(WiimoteEventHandler.A_BUTTON, 0);
+		if (evt.wasPressed(WRButtonEvent.A)) WiimoteEventHandler.buttonPressed(WiimoteEventHandler.A_BUTTON, leftOrRight);
 		
-		if (evt.wasPressed(WRButtonEvent.B)) WiimoteEventHandler.buttonPressed(WiimoteEventHandler.B_BUTTON, 0);
+		if (evt.wasPressed(WRButtonEvent.B)) WiimoteEventHandler.buttonPressed(WiimoteEventHandler.B_BUTTON, leftOrRight);
 		
-		if (evt.wasReleased(WRButtonEvent.A)) WiimoteEventHandler.buttonReleased(WiimoteEventHandler.A_BUTTON, 0);
+		if (evt.wasPressed(WRButtonEvent.DOWN)) WiimoteEventHandler.buttonPressed(WiimoteEventHandler.DOWN_BUTTON, leftOrRight);
 		
-		if (evt.wasReleased(WRButtonEvent.B)) WiimoteEventHandler.buttonReleased(WiimoteEventHandler.B_BUTTON, 0);
+		if (evt.wasReleased(WRButtonEvent.A)) WiimoteEventHandler.buttonReleased(WiimoteEventHandler.A_BUTTON, leftOrRight);
+		
+		if (evt.wasReleased(WRButtonEvent.B)) WiimoteEventHandler.buttonReleased(WiimoteEventHandler.B_BUTTON, leftOrRight);
+		
+		if (evt.wasReleased(WRButtonEvent.DOWN)) WiimoteEventHandler.buttonReleased(WiimoteEventHandler.DOWN_BUTTON, leftOrRight);
 	}
 
 	@Override
