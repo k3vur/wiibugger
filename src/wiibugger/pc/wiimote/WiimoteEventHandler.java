@@ -140,6 +140,7 @@ public class WiimoteEventHandler {
 	
 	public static void orientationEventLeftX(short speed, short direction) {
 		if (!leftSensing) return;
+		direction = (direction == NXTMessage.MOTOR_FORWARD) ? NXTMessage.MOTOR_BACKWARD : NXTMessage.MOTOR_FORWARD;
 		NXTMessager.getNXTMessager().send(new NXTMessage(NXTMessage.MOVE, NXTMessage.TURN, direction, speed));
 	}
 	
